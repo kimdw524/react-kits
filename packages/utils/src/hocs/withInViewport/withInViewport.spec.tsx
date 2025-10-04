@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { forwardRef, useState, type ReactNode } from 'react';
 
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -30,21 +30,19 @@ describe('withInViewport', () => {
   it('Viewport 내에 존재할 때만 컴포넌트가 업데이트 된다.', async () => {
     const user = userEvent.setup();
 
-    const ChildComponent = withInViewport(
-      ({
-        children,
-        ref,
-      }: {
-        children: ReactNode;
-        ref?: React.RefObject<HTMLDivElement>;
-      }) => {
-        return (
-          <div ref={ref} data-testid="component">
-            {children}
-          </div>
-        );
-      },
-    );
+    const ForwardRefChildComponent = forwardRef<
+      HTMLDivElement,
+      { children: ReactNode }
+    >(({ children }: { children: ReactNode }, ref) => {
+      return (
+        <div ref={ref} data-testid="component">
+          {children}
+        </div>
+      );
+    });
+    ForwardRefChildComponent.displayName = 'ChildComponent';
+
+    const ChildComponent = withInViewport(ForwardRefChildComponent);
 
     const TestComponent = () => {
       const [count, setCount] = useState<number>(0);
