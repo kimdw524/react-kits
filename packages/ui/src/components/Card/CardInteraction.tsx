@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
@@ -12,29 +12,25 @@ import * as s from './CardInteraction.css';
 
 type CardInteractionProps = UIComponent<'div'>;
 
-export const CardInteraction = ({
-  children,
-  ref,
-  className,
-  sx: propSx,
-  ...props
-}: CardInteractionProps) => {
-  const elementRef = useRef<HTMLDivElement>(null);
-  const { ripple } = useRipple<HTMLDivElement>(ref || elementRef);
+export const CardInteraction = forwardRef<HTMLDivElement, CardInteractionProps>(
+  ({ children, className, sx: propSx, ...props }, ref) => {
+    const { ripple } = useRipple<HTMLDivElement>(ref);
 
-  return (
-    <div
-      className={clsx(
-        className,
-        s.cardInteraction,
-        s.cardInteraction,
-        sx(propSx),
-      )}
-      ref={ref || elementRef}
-      {...props}
-    >
-      {children}
-      {ripple}
-    </div>
-  );
-};
+    return (
+      <div
+        ref={ref}
+        className={clsx(
+          className,
+          s.cardInteraction,
+          s.cardInteraction,
+          sx(propSx),
+        )}
+        {...props}
+      >
+        {children}
+        {ripple}
+      </div>
+    );
+  },
+);
+CardInteraction.displayName = 'CardInteraction';

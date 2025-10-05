@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, type ReactNode } from 'react';
+import { forwardRef, useContext, type ReactNode } from 'react';
 
 import clsx from 'clsx';
 
@@ -14,21 +14,19 @@ interface TabsContentProps extends UIComponent<'div'> {
   value: string | number;
 }
 
-export const TabsContent = ({
-  value,
-  className,
-  sx: propSx,
-  ...props
-}: TabsContentProps) => {
-  const tabsContext = useContext(TabsContext);
+export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
+  ({ value, className, sx: propSx, ...props }, ref) => {
+    const tabsContext = useContext(TabsContext);
 
-  if (tabsContext === undefined) {
-    throw new Error('TabsContext must be used within a Tabs.');
-  }
+    if (tabsContext === undefined) {
+      throw new Error('TabsContext must be used within a Tabs.');
+    }
 
-  if (tabsContext.value !== value) {
-    return null;
-  }
+    if (tabsContext.value !== value) {
+      return null;
+    }
 
-  return <div className={clsx(className, sx(propSx))} {...props} />;
-};
+    return <div ref={ref} className={clsx(className, sx(propSx))} {...props} />;
+  },
+);
+TabsContent.displayName = 'TabsContent';

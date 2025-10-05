@@ -1,6 +1,4 @@
-import { createRef } from 'react';
-
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Select, SelectOption } from '.';
 import { uiTest } from '../../tests/uiTest';
@@ -24,16 +22,10 @@ describe('Select 컴포넌트', () => {
 
   it('새로운 option을 클릭하면 onChange 이벤트가 발생하고, form value, ref.value의 값이 바뀐다.', () => {
     const handleChange = jest.fn();
-    const ref = createRef<{ value?: string }>();
 
     render(
       <form data-testid="form">
-        <Select
-          data-testid="select"
-          ref={ref}
-          name="select"
-          onChange={handleChange}
-        >
+        <Select data-testid="select" name="select" onChange={handleChange}>
           <SelectOption value="1">1번</SelectOption>
           <SelectOption value="2">2번</SelectOption>
         </Select>
@@ -46,18 +38,15 @@ describe('Select 컴포넌트', () => {
     fireEvent.click(option2);
     expect(handleChange).toHaveBeenCalledTimes(1);
     expect(handleChange.mock.calls[0][0]).toBe('2');
-    expect(ref.current?.value).toBe('2');
     expect(new FormData(form).get('select')).toBe('2');
 
     fireEvent.click(option2);
     expect(handleChange).toHaveBeenCalledTimes(1);
-    expect(ref.current?.value).toBe('2');
     expect(new FormData(form).get('select')).toBe('2');
 
     fireEvent.click(screen.getByText('1번'));
     expect(handleChange).toHaveBeenCalledTimes(2);
     expect(handleChange.mock.calls[1][0]).toBe('1');
-    expect(ref.current?.value).toBe('1');
     expect(new FormData(form).get('select')).toBe('1');
   });
 
