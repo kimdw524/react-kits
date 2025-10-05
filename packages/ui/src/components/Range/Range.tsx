@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 import clsx from 'clsx';
 
@@ -19,65 +19,72 @@ interface RangeProps
   onChange: (min: number, max: number) => void;
 }
 
-export const Range = ({
-  min,
-  max,
-  defaultMinValue,
-  defaultMaxValue,
-  onChange,
-  className,
-  color = 'primary',
-  size = 'md',
-  sx: propSx,
-  ...props
-}: RangeProps) => {
-  const barRef = useRef<HTMLDivElement>(null);
-  const leftThumbRef = useRef<HTMLSpanElement>(null);
-  const rightThumbRef = useRef<HTMLSpanElement>(null);
-  const leftValue = usePointerSlider(leftThumbRef, {
+export const Range = forwardRef<HTMLDivElement, RangeProps>(
+  (
+    {
       min,
       max,
-      defaultValue: defaultMinValue,
-    }),
-    rightValue = usePointerSlider(rightThumbRef, {
-      min,
-      max,
-      defaultValue: defaultMaxValue,
-    });
-  const initRef = useRef<boolean>(false);
+      defaultMinValue,
+      defaultMaxValue,
+      onChange,
+      className,
+      color = 'primary',
+      size = 'md',
+      sx: propSx,
+      ...props
+    },
+    ref,
+  ) => {
+    const barRef = useRef<HTMLDivElement>(null);
+    const leftThumbRef = useRef<HTMLSpanElement>(null);
+    const rightThumbRef = useRef<HTMLSpanElement>(null);
+    const leftValue = usePointerSlider(leftThumbRef, {
+        min,
+        max,
+        defaultValue: defaultMinValue,
+      }),
+      rightValue = usePointerSlider(rightThumbRef, {
+        min,
+        max,
+        defaultValue: defaultMaxValue,
+      });
+    const initRef = useRef<boolean>(false);
 
-  const minValue = Math.min(leftValue, rightValue),
-    maxValue = Math.max(leftValue, rightValue);
+    const minValue = Math.min(leftValue, rightValue),
+      maxValue = Math.max(leftValue, rightValue);
 
-  useEffect(() => {
-    if (!initRef.current) {
-      initRef.current = true;
-      return;
-    }
+    useEffect(() => {
+      if (!initRef.current) {
+        initRef.current = true;
+        return;
+      }
 
-    onChange(minValue, maxValue);
-    // eslint-disable-next-line
-  }, [minValue, maxValue]);
+      onChange(minValue, maxValue);
+      // eslint-disable-next-line
+    }, [minValue, maxValue]);
 
-  return (
-    <div
-      className={clsx(s.range({ color, size }), className, sx(propSx))}
-      {...props}
-    >
-      <div className={s.bar}>
-        <div
-          ref={barRef}
-          className={s.fill}
-          style={{
-            left: `${((minValue - min) / (max - min)) * 100}%`,
-            right: `${(1 - (maxValue - min) / (max - min)) * 100}%`,
-          }}
-        />
+    return (
+      <div
+        ref={ref}
+        className={clsx(s.range({ color, size }), className, sx(propSx))}
+        {...props}
+      >
+        <div className={s.bar}>
+          <div
+            ref={barRef}
+            className={s.fill}
+            style={{
+              left: `${((minValue - min) / (max - min)) * 100}%`,
+              right: `${(1 - (maxValue - min) / (max - min)) * 100}%`,
+            }}
+          />
+        </div>
+        <span ref={leftThumbRef} className={s.thumb} />
+        <span ref={rightThumbRef} className={s.thumb} />
       </div>
-      <span ref={leftThumbRef} className={s.thumb} />
-      <span ref={rightThumbRef} className={s.thumb} />
-    </div>
-  );
-};
+    );
+  },
+);
+Range.displayName = 'Range';
 
 export { s as rangeCss };

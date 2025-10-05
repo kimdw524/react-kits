@@ -1,6 +1,6 @@
 'use client';
 
-import { useReducer } from 'react';
+import { forwardRef, useReducer } from 'react';
 
 import clsx from 'clsx';
 
@@ -13,24 +13,22 @@ interface TabsProps extends UIComponent<'div'> {
   defaultValue?: number | string;
 }
 
-export const Tabs = ({
-  children,
-  defaultValue,
-  className,
-  sx: propSx,
-  ...props
-}: TabsProps) => {
-  const [value, setValue] = useReducer(tabsReducer, defaultValue);
+export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
+  ({ children, defaultValue, className, sx: propSx, ...props }, ref) => {
+    const [value, setValue] = useReducer(tabsReducer, defaultValue);
 
-  return (
-    <TabsContext.Provider value={{ value, setValue }}>
-      <div
-        className={clsx(className, sx(propSx))}
-        style={{ width: '100%' }}
-        {...props}
-      >
-        {children}
-      </div>
-    </TabsContext.Provider>
-  );
-};
+    return (
+      <TabsContext.Provider value={{ value, setValue }}>
+        <div
+          ref={ref}
+          className={clsx(className, sx(propSx))}
+          style={{ width: '100%' }}
+          {...props}
+        >
+          {children}
+        </div>
+      </TabsContext.Provider>
+    );
+  },
+);
+Tabs.displayName = 'Tabs';

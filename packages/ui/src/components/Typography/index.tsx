@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import clsx from 'clsx';
 
 import { sprinkles, type SprinklesProps } from '#styles';
@@ -18,31 +20,38 @@ type TypographyProps<T extends TypographyElement = TypographyElement> = Omit<
   'ref'
 >;
 
-export const Typography = ({
-  children,
-  as: Component = 'p',
-  className,
-  color = 'foreground',
-  fontSize = 'md',
-  fontWeight = 'normal',
-  lineHeight,
-  isEllipsis = false,
-  sx,
-  ...props
-}: TypographyProps) => {
-  return (
-    <Component
-      className={clsx(
-        s.typography({ isEllipsis }),
-        sprinkles({ color, fontSize, fontWeight, lineHeight }),
-        sx && sprinkles(sx),
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </Component>
-  );
-};
+export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
+  (
+    {
+      children,
+      as: Component = 'p',
+      className,
+      color = 'foreground',
+      fontSize = 'md',
+      fontWeight = 'normal',
+      lineHeight,
+      isEllipsis = false,
+      sx,
+      ...props
+    },
+    ref,
+  ) => {
+    return (
+      <Component
+        ref={ref}
+        className={clsx(
+          s.typography({ isEllipsis }),
+          sprinkles({ color, fontSize, fontWeight, lineHeight }),
+          sx && sprinkles(sx),
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </Component>
+    );
+  },
+);
+Typography.displayName = 'Typography';
 
 export { s as typographyCss };
