@@ -53,7 +53,7 @@ jobs:
             else
               NEW_VERSION=$(pnpm --filter $pkg exec pnpm version patch --no-git-tag-version)
             fi
-            echo -n "$pkg $NEW_VERSION " >> version-updates.txt
+            echo -n "$pkg to $NEW_VERSION " >> version-updates.txt
           done
 
 
@@ -62,8 +62,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          COMMIT_MSG="bump $(cat version-updates.txt)"
+          git add **/package.json
+          COMMIT_MSG="Bump $(cat version-updates.txt)"
           git commit -m "$COMMIT_MSG"
           git push
 
