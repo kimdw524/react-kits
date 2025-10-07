@@ -46,6 +46,7 @@ jobs:
           echo "changed_packages=$CHANGED" >> $GITHUB_OUTPUT
 
       - name: Bump changed packages
+        id: bump
         if: ${{ steps.changed.outputs.changed_packages }}
         run: |
           set -e
