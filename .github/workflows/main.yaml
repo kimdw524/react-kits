@@ -49,10 +49,11 @@ jobs:
             COMMITS=$(git log ${{ github.event.before }}..${{ github.sha }} --pretty=%B -- packages/$pkg || true)
             echo $pkg
             if echo "$COMMITS" | grep -q '^feat'; then
-              pnpm --filter $pkg exec pnpm version minor
+              NEW_VERSION=$(pnpm --filter $pkg exec pnpm version minor --no-git-tag-version)
             else
-              pnpm --filter $pkg exec pnpm version patch
+              NEW_VERSION=$(pnpm --filter $pkg exec pnpm version patch --no-git-tag-version)
             fi
+            echo -n "$pkg $NEW_VERSION " >> version-updates.txt
           done
 
 
@@ -62,7 +63,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "chore: bump package versions"
+          COMMIT_MSG="bump $(cat version-updates.txt)"
+          git commit -m "$COMMIT_MSG"
           git push
 
       # - name: Publish changed packages
