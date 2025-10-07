@@ -47,6 +47,8 @@ jobs:
           set -e
           for pkg in ${{ steps.changed.outputs.changed_packages }}; do
             COMMITS=$(git log ${{ github.event.before }}..${{ github.sha }} --pretty=%B -- packages/$pkg || true)
+            echo "github.event.before: ${{ github.event.before }}"
+            echo "github.sha: ${{ github.sha }}"
             echo $pkg
             if echo "$COMMITS" | grep -q '^feat'; then
               NEW_VERSION=$(pnpm --filter $pkg exec pnpm version minor --no-git-tag-version)
