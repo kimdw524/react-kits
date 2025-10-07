@@ -45,11 +45,11 @@ jobs:
           | tr '\n' ' ')
           echo "changed_packages=$CHANGED" >> $GITHUB_OUTPUT
 
-
       - name: Bump changed packages
         if: ${{ steps.changed.outputs.changed_packages }}
         run: |
           set -e
+          UPDATES=""
           for pkg in ${{ steps.changed.outputs.changed_packages }}; do
             COMMITS=$(git log ${{ github.event.before }}..${{ github.sha }} --pretty=%B -- packages/$pkg || true)
             echo "github.event.before: ${{ github.event.before }}"
@@ -60,17 +60,17 @@ jobs:
             else
               NEW_VERSION=$(pnpm --filter $pkg exec pnpm version patch --no-git-tag-version)
             fi
-            echo -n "$pkg to $NEW_VERSION " >> version-updates.txt
+            UPDATES="$UPDATES$pkg to $NEW_VERSION "
           done
+          echo "version_updates=$UPDATES" >> $GITHUB_OUTPUT
 
-
-      - name: commit
+      - name: Commit
         if: ${{ steps.changed.outputs.changed_packages }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add **/package.json
-          COMMIT_MSG="Bump $(cat version-updates.txt)"
+          COMMIT_MSG="Bump ${{ steps.bump.outputs.version_updates }}"
           git commit -m "$COMMIT_MSG"
           git push
 
