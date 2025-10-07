@@ -14,11 +14,12 @@ env:
   PNPM_VERSION: 9.0.0
 
 jobs:
-  test-and-version-up:
+  bump-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }} 
           fetch-depth: 0
 
       - name: Setup pnpm
