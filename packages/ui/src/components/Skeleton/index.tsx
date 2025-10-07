@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react';
+import { forwardRef, type CSSProperties } from 'react';
 
 import { clsx } from 'clsx';
 
@@ -12,19 +12,16 @@ interface SkeletonProps extends UIComponent<'div'> {
   height?: CSSProperties['height'];
 }
 
-export const Skeleton = ({
-  className,
-  width,
-  height,
-  style,
-  sx: propSx,
-  ...props
-}: SkeletonProps) => {
-  return (
-    <div
-      className={clsx(s.skeleton, className, sx(propSx))}
-      style={{ ...style, width, height }}
-      {...props}
-    />
-  );
-};
+export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
+  ({ className, width, height, style, sx: propSx, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={clsx(s.skeleton, className, sx(propSx))}
+        style={{ ...style, width, height }}
+        {...props}
+      />
+    );
+  },
+);
+Skeleton.displayName = 'Skeleton';
