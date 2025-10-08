@@ -81,5 +81,5 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           for pkg in ${{ steps.changed.outputs.changed_packages }}; do
-            pnpm --filter $pkg publish --access public
+            pnpm --filter $pkg publish --access public --yes
           done
