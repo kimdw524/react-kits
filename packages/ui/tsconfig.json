@@ -4,7 +4,8 @@
     "rootDir": "./src",
     "outDir": "dist",
     "types": ["@testing-library/jest-dom"],
-    "lib": ["ESNext", "DOM"]
+    "lib": ["ESNext", "DOM"],
+    "declaration": true,
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
