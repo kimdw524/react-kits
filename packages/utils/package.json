@@ -2,7 +2,7 @@
   "name": "@kimdw-rtk/utils",
   "version": "0.0.7",
   "private": false,
-  "main": "./src/index.ts",
+  "main": "./dist/index.js",
   "imports": {
     "#*": [
       "./src/*/index.ts",

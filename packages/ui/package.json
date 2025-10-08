@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "private": false,
   "type": "module",
+  "main": "./dist/index.js",
   "imports": {
     "#*": "./src/*/index.ts",
     "#styleUtils": "./src/utils/styleUtils.css.ts"
