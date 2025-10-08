@@ -12,7 +12,10 @@
     ]
   },
   "scripts": {
-    "test": "jest --verbose"
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "test": "jest --verbose",
+    "build": "tsc"
   },
   "files": [
     "dist",

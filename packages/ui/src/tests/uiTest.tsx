@@ -6,6 +6,7 @@ import { sprinkles } from '#styles';
 
 //eslint-disable-next-line
 export const uiTest = <T extends HTMLElement>(
+  // eslint-disable-next-line
   Component: React.ComponentType<any>,
   name: string,
 ) => {
