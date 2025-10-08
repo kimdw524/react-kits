@@ -75,11 +75,11 @@ jobs:
           git commit -m "$COMMIT_MSG"
           git push
 
-      # - name: Publish changed packages
-      #   if: ${{ steps.changed.outputs.changed_packages }}
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #   run: |
-      #     for pkg in ${{ steps.changed.outputs.changed_packages }}; do
-      #       pnpm --filter $pkg publish --access public
-      #     done
+      - name: Publish changed packages
+        if: ${{ steps.changed.outputs.changed_packages }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          for pkg in ${{ steps.changed.outputs.changed_packages }}; do
+            pnpm --filter $pkg publish --access public
+          done
