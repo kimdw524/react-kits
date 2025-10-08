@@ -3,6 +3,7 @@
   "version": "0.0.9",
   "private": false,
   "main": "./src/index.ts",
+  "type": "module",
   "imports": {
     "#*": [
       "./src/*/index.ts",
