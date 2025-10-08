@@ -3,10 +3,10 @@ name: main
 on:
   push:
     branches:
-      - develop
+      - main
   pull_request:
     branches:
-      - develop
+      - main
   workflow_dispatch:
 
 env:
@@ -75,11 +75,12 @@ jobs:
           git commit -m "$COMMIT_MSG"
           git push
 
-      - name: Publish changed packages
+      - name: Build and publish changed packages
         if: ${{ steps.changed.outputs.changed_packages }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           for pkg in ${{ steps.changed.outputs.changed_packages }}; do
-            pnpm --filter $pkg publish --access public --yes
+            pnpm --filter $pkg build
+            pnpm --filter $pkg publish --access public --no-git-checks
           done
