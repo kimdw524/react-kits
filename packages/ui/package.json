@@ -59,6 +59,10 @@
   "publishConfig": {
     "access": "public",
     "main": "./dist/index.js",
-    "types": "./dist/index.d.ts"
+    "types": "./dist/index.d.ts",
+    "imports": {
+      "#*": "./dist/*/index.js",
+      "#styleUtils": "./dist/utils/styleUtils.css.js"
+    }
   }
 }
