@@ -1,6 +1,6 @@
 {
   "name": "@kimdw-rtk/utils",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": false,
   "main": "./src/index.ts",
   "type": "module",
