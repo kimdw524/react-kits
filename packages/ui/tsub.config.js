@@ -4,7 +4,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/**/*.[jt]s', 'src/**/*.[jt]sx'],
-  format: ['esm', 'cjs'],
+  format: ['esm'],
   dts: true,
   sourcemap: true,
   bundle: false,
