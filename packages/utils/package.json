@@ -16,7 +16,7 @@
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit",
     "test": "jest --verbose",
-    "build": "rollup -c rollup.config.js"
+    "build": "tsc"
   },
   "files": [
     "dist",
