@@ -1,7 +1,11 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import fs from 'fs';
 
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+
+const peerDeps = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
 export default {
   input: 'src/index.ts',
   output: {
@@ -11,6 +15,7 @@ export default {
     preserveModulesRoot: './src',
     entryFileNames: '[name].js',
   },
+  external: peerDeps,
   plugins: [
     resolve({ extensions: ['.js', '.ts', '.tsx'] }),
 
