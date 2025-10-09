@@ -4,10 +4,11 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: ['src/**/*.[jt]s', 'src/**/*.[jt]sx'],
-  format: ['esm', 'cjs'], // dual publish 시 권장 [web:9]
+  format: ['esm', 'cjs'],
   dts: true,
   sourcemap: true,
   bundle: false,
+  splitting: true,
   clean: true,
   esbuildPlugins: [esbuildPluginFilePathExtensions()],
 });
