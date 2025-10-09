@@ -8,6 +8,7 @@ export default {
     dir: 'dist',
     format: 'esm',
     preserveModules: true,
+    preserveModulesRoot: './src',
     entryFileNames: '[name].js',
   },
   plugins: [
