@@ -6,6 +6,7 @@
     "outDir": "dist",
     "types": ["@testing-library/jest-dom"],
     "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
     "target": "ESNext",
     "declaration": true
   },
