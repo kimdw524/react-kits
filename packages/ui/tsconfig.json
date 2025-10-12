@@ -10,7 +10,11 @@
     "target": "ESNext",
     "declaration": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "#*": ["./src/*/index.ts"],
+      "#styleUtils": ["./src/utils/styleUtils.css.ts"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
