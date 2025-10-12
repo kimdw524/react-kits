@@ -7,7 +7,7 @@ export default defineConfig({
   format: ['esm'],
   dts: true,
   sourcemap: true,
-  bundle: true,
+  bundle: false,
   splitting: true,
   clean: true,
   esbuildPlugins: [esbuildPluginFilePathExtensions()],
