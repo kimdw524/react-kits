@@ -11,4 +11,7 @@ export default defineConfig({
   splitting: true,
   clean: true,
   esbuildPlugins: [esbuildPluginFilePathExtensions()],
+  outExtension({ format }) {
+    return format === 'esm' ? { js: '.mjs' } : { js: '.cjs' };
+  },
 });
