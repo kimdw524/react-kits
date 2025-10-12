@@ -57,11 +57,11 @@
   },
   "publishConfig": {
     "access": "public",
-    "main": "./dist/index.js",
+    "main": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
     "imports": {
-      "#*": "./dist/*/index.js",
-      "#styleUtils": "./dist/utils/styleUtils.css.js"
+      "#*": "./dist/*/index.mjs",
+      "#styleUtils": "./dist/utils/styleUtils.css.mjs"
     }
   }
 }
