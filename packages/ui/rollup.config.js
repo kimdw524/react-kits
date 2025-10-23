@@ -21,7 +21,7 @@ export default {
     tryCatchDeoptimization: false,
     unknownGlobalSideEffects: false,
   },
-  external: peerDeps,
+  external: [...peerDeps, 'react/jsx-runtime'],
   plugins: [
     resolve({ extensions: ['.js', '.ts', '.tsx'] }),
 
