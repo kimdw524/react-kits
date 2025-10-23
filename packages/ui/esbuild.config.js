@@ -1,7 +1,5 @@
 import { build } from 'esbuild';
 
-console.log('asd');
-
 await build({
   entryPoints: ['src/**/*'],
   bundle: true,

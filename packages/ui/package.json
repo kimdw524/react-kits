@@ -10,7 +10,7 @@
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit",
     "test": "jest --verbose",
-    "build": "node esbuild.config.ts"
+    "build": "node esbuild.config.js"
   },
   "files": [
     "dist",
