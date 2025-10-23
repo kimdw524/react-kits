@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import { sprinkles } from '#styles';
+import { sprinkles } from '@/styles';
 
 //eslint-disable-next-line
 export const uiTest = <T extends HTMLElement>(

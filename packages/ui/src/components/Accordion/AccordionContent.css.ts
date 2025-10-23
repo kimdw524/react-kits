@@ -1,4 +1,4 @@
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
+import { recipeWithLayer, styleWithLayer } from '@/styleUtils';
 
 import { paddingVar } from './Accordion.css';
 

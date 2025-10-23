@@ -1,6 +1,11 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/styleUtils": ["src/utils/styleUtils.css.ts"],
+      "@/*": ["src/*/index.ts", "src/*"]
+    },
     "moduleResolution": "bundler",
     "rootDir": "./src",
     "outDir": "dist",
@@ -10,11 +15,7 @@
     "target": "ESNext",
     "declaration": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "paths": {
-      "#*": ["./src/*/index.ts"],
-      "#styleUtils": ["./src/utils/styleUtils.css.ts"]
-    }
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

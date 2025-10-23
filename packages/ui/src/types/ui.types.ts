@@ -3,7 +3,7 @@ import type { ComponentPropsWithRef, ElementType } from 'react';
 import type { ComplexStyleRule } from '@vanilla-extract/css';
 import type { RecipeVariants, RuntimeFn } from '@vanilla-extract/recipes';
 
-import type { SprinklesProps } from '#styles';
+import type { SprinklesProps } from '@/styles';
 
 type VariantGroups = Record<string, Record<string, ComplexStyleRule | string>>;
 

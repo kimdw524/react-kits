@@ -1,7 +1,7 @@
 import { createContainer } from '@vanilla-extract/css';
 
-import { recipeWithLayer } from '#styleUtils';
-import { theme } from '#themes';
+import { recipeWithLayer } from '@/styleUtils';
+import { theme } from '@/themes';
 
 export const navigationBarContainer = createContainer();
 

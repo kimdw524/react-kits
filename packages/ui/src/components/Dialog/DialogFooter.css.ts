@@ -1,4 +1,4 @@
-import { styleWithLayer } from '#styleUtils';
+import { styleWithLayer } from '@/styleUtils';
 
 export const container = styleWithLayer({
   maxWidth: 'calc(100vw - 2rem)',
@@ -7,7 +7,7 @@ export const container = styleWithLayer({
   borderRadius: '0.25rem',
   boxSizing: 'border-box',
 
-  backgroundColor: '#fff',
+  backgroundColor: '@/fff',
 
   userSelect: 'none',
 });

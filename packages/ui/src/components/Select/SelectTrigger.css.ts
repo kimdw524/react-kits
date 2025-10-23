@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { theme } from '#themes';
+import { theme } from '@/themes';
 
 export const children = style({
   overflow: 'hidden',

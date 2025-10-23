@@ -4,9 +4,9 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { useRipple } from '#hooks';
-import { sx } from '#styles';
-import type { UIComponent } from '#types';
+import { useRipple } from '@/hooks';
+import { sx } from '@/styles';
+import type { UIComponent } from '@/types';
 
 import * as s from './CardInteraction.css';
 

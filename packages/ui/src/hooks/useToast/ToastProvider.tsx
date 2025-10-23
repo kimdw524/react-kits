@@ -12,7 +12,7 @@ import {
 
 import { CSSTransition, TransitionGroup } from '@kimdw-rtk/utils';
 
-import { Toast } from '#components';
+import { Toast } from '@/components';
 
 import { ToastContainer } from './ToastContainer';
 

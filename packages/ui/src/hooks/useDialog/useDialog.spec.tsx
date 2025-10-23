@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 
-import { UIProvider } from '#contexts';
-import { useDialog } from '#hooks';
+import { UIProvider } from '@/contexts';
+import { useDialog } from '@/hooks';
 
 describe('useDialog 테스트', () => {
   const mockFn = jest.fn();
