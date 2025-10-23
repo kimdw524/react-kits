@@ -46,6 +46,7 @@
     "@types/react": "^18.0.0 || ^19.0.0",
     "@types/react-dom": "^18.0.0 || ^19.0.0",
     "@vanilla-extract/jest-transform": "^1.1.14",
+    "@vanilla-extract/rollup-plugin": "^1.4.1",
     "esbuild": "^0.25.11",
     "esbuild-plugin-file-path-extensions": "^2.1.4",
     "esbuild-plugin-tsconfig-paths": "^1.0.1",
