@@ -15,6 +15,9 @@ export default {
     preserveModules: true,
     preserveModulesRoot: './src',
     entryFileNames: '[name].js',
+    assetFileNames({ name }) {
+      return name?.replace(/^src\//, '') ?? '';
+    },
   },
   treeshake: {
     moduleSideEffects: false,
