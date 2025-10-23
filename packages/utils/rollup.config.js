@@ -15,7 +15,7 @@ export default {
     preserveModulesRoot: './src',
     entryFileNames: '[name].js',
   },
-  external: peerDeps,
+  external: [...peerDeps, 'react/jsx-runtime'],
   plugins: [
     resolve({ extensions: ['.js', '.ts', '.tsx'] }),
 
