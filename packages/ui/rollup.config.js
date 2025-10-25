@@ -3,7 +3,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import { vanillaExtractPlugin } from '@vanilla-extract/rollup-plugin';
 import fs from 'fs';
-import postcss from 'rollup-plugin-postcss';
 import preserveDirectives from 'rollup-plugin-preserve-directives';
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
@@ -35,9 +34,6 @@ export default {
       tsconfig: './tsconfig.json',
     }),
     preserveDirectives(),
-    postcss({
-      extract: true,
-    }),
     vanillaExtractPlugin(),
   ],
 };
