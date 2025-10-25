@@ -34,7 +34,9 @@ export default {
       include: /node_modules/,
       defaultIsModuleExports: true,
     }),
-    typescript({ tsconfig: './tsconfig.json' }),
+    typescript({
+      tsconfig: './tsconfig.json',
+    }),
     preserveDirectives(),
     postcss({
       extract: true,

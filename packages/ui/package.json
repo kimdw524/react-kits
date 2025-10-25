@@ -9,7 +9,7 @@
     "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit",
     "test": "jest --verbose",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.js && tsc-alias"
   },
   "files": [
     "dist",
@@ -56,6 +56,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-preserve-directives": "^0.4.0",
     "ts-jest": "^29.3.4",
+    "tsc-alias": "^1.8.16",
     "tsup": "^8.5.0",
     "typescript": "5.8.2"
   },
