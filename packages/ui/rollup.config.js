@@ -22,10 +22,7 @@ export default {
     },
   },
   treeshake: {
-    moduleSideEffects: false,
-    propertyReadSideEffects: false,
-    tryCatchDeoptimization: false,
-    unknownGlobalSideEffects: false,
+    moduleSideEffects: (id) => /\.css$/.test(id),
   },
   external: [...peerDeps, 'react/jsx-runtime'],
   plugins: [
