@@ -4,7 +4,7 @@ import { useImperativeHandle, type ReactNode, type Ref } from 'react';
 
 import { useOverlay, usePreventKeyboardInput } from '@kimdw-rtk/utils';
 
-import { Box, Button, Dialog, DialogContent, DialogFooter } from '#components';
+import { Box, Button, Dialog, DialogContent, DialogFooter } from '@/components';
 
 interface ConfirmProps {
   children: ReactNode;

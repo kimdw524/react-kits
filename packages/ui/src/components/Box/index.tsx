@@ -2,9 +2,9 @@ import { forwardRef } from 'react';
 
 import { clsx } from 'clsx';
 
-import { sprinkles, sx, type SprinklesProps } from '#styles';
-import type { UIComponent } from '#types';
-import { filterSprinkles, omitSprinkles } from '#utils';
+import { sprinkles, sx, type SprinklesProps } from '@/styles';
+import type { UIComponent } from '@/types';
+import { filterSprinkles, omitSprinkles } from '@/utils';
 
 import * as s from './Box.css';
 

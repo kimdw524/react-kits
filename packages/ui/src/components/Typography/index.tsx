@@ -2,8 +2,8 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { sprinkles, type SprinklesProps } from '#styles';
-import { type UIComponent } from '#types';
+import { sprinkles, type SprinklesProps } from '@/styles';
+import { type UIComponent } from '@/types';
 
 import * as s from './Typography.css';
 

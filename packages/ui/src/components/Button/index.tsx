@@ -4,9 +4,9 @@ import { forwardRef, type ReactElement } from 'react';
 
 import { clsx } from 'clsx';
 
-import { useRipple } from '#hooks';
-import { sx } from '#styles';
-import type { UIComponent } from '#types';
+import { useRipple } from '@/hooks';
+import { sx } from '@/styles';
+import type { UIComponent } from '@/types';
 
 import * as s from './Button.css';
 

@@ -1,7 +1,7 @@
 import { keyframes } from '@vanilla-extract/css';
 
-import { recipeWithLayer } from '#styleUtils';
-import { theme } from '#themes';
+import { recipeWithLayer } from '@/styleUtils';
+import { theme } from '@/themes';
 
 const fadeIn = keyframes({
   '0%': {

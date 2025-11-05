@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
-import { sx } from '#styles';
-import type { UIComponent } from '#types';
+import { sx } from '@/styles';
+import type { UIComponent } from '@/types';
 
 type TableBodyProps = UIComponent<'tbody'>;
 

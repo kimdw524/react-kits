@@ -1,6 +1,6 @@
-import { recipeWithLayer } from '#styleUtils';
-import { theme } from '#themes';
-import { spacing, typography } from '#tokens';
+import { recipeWithLayer } from '@/styleUtils';
+import { theme } from '@/themes';
+import { spacing, typography } from '@/tokens';
 
 import { narrow } from './NavigationDrawer.css';
 

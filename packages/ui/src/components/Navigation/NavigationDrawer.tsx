@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 import { AlignJustifyIcon, XIcon } from 'lucide-react';
 
-import { Box, Button } from '#components';
+import { Box, Button } from '@/components';
 
 import * as s from './NavigationDrawer.css';
 
