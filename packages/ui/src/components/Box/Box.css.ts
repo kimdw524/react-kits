@@ -1,5 +1,5 @@
-import { recipeWithLayer } from '#styleUtils';
-import { theme } from '#themes';
+import { recipeWithLayer } from '@/styleUtils';
+import { theme } from '@/themes';
 
 export const box = recipeWithLayer({
   variants: {

@@ -1,6 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { Dialog, DialogContent, DialogFooter, DialogHeader } from '#components';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+} from '@/components';
 
 import { uiTest } from '../../tests/uiTest';
 

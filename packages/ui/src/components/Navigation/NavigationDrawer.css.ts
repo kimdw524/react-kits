@@ -1,5 +1,5 @@
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
-import { theme } from '#themes';
+import { recipeWithLayer, styleWithLayer } from '@/styleUtils';
+import { theme } from '@/themes';
 
 import { navigationBarContainer } from './NavigationBar.css';
 

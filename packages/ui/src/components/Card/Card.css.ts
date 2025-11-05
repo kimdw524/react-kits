@@ -1,6 +1,6 @@
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
-import { theme } from '#themes';
-import { semanticColor } from '#tokens';
+import { recipeWithLayer, styleWithLayer } from '@/styleUtils';
+import { theme } from '@/themes';
+import { semanticColor } from '@/tokens';
 
 import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 import { cardInteraction } from './CardInteraction.css';

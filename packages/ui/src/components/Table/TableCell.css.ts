@@ -1,5 +1,5 @@
-import { styleWithLayer } from '#styleUtils';
-import { theme } from '#themes';
+import { styleWithLayer } from '@/styleUtils';
+import { theme } from '@/themes';
 
 import { striped } from './Table.css';
 import { interactive } from './TableRow.css';

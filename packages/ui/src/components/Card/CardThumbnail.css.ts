@@ -1,4 +1,4 @@
-import { styleWithLayer } from '#styleUtils';
+import { styleWithLayer } from '@/styleUtils';
 
 export const thumbnail = styleWithLayer({
   width: 'auto',

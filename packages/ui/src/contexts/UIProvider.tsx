@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 
 import { OverlayProvider, type OverlayOption } from '@kimdw-rtk/utils';
 
-import { ToastProvider } from '#hooks';
+import { ToastProvider } from '@/hooks';
 
 import * as overlayStyle from '../styles/overlay.css';
 
