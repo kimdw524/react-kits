@@ -1,8 +1,8 @@
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
-import { sprinklesLayer } from '@/styles';
-import { theme } from '@/themes';
-import { breakpoint, lightColor, spacing, typography } from '@/tokens';
+import { sprinklesLayer } from '#styles';
+import { theme } from '#themes';
+import { breakpoint, lightColor, spacing, typography } from '#tokens';
 
 type ColorName = keyof typeof lightColor;
 type ColorScale<C extends ColorName> = keyof (typeof lightColor)[C];

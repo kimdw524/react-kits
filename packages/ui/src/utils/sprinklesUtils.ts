@@ -1,4 +1,4 @@
-import { sprinkles } from '@/styles';
+import { sprinkles } from '#styles';
 
 type SprinklesKey =
   typeof sprinkles.properties extends Set<infer U> ? U : never;

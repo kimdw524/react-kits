@@ -5,9 +5,9 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
-import { useMouseScroll } from '@/hooks/useMouseScroll';
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { useMouseScroll } from '#hooks/useMouseScroll';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './ScrollArea.css';
 

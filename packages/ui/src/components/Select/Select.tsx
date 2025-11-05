@@ -13,8 +13,8 @@ import {
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './Select.css';
 import { SelectContext, selectReducer } from './SelectContext';

@@ -3,9 +3,9 @@ import { forwardRef } from 'react';
 import clsx from 'clsx';
 import { XIcon } from 'lucide-react';
 
-import { Box } from '@/components';
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { Box } from '#components';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './DialogHeader.css';
 

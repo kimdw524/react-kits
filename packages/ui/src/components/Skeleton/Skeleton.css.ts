@@ -1,7 +1,7 @@
 import { keyframes } from '@vanilla-extract/css';
 
-import { styleWithLayer } from '@/styleUtils';
-import { theme } from '@/themes';
+import { styleWithLayer } from '#styleUtils';
+import { theme } from '#themes';
 
 const shimmer = keyframes({
   '0%': {

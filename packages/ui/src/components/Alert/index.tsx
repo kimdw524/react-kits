@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 
 import { useOverlay, usePreventKeyboardInput } from '@kimdw-rtk/utils';
 
-import { Button, Dialog, DialogContent, DialogFooter } from '@/components';
+import { Button, Dialog, DialogContent, DialogFooter } from '#components';
 
 interface AlertProps {
   children: ReactNode;

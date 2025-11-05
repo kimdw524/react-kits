@@ -4,7 +4,7 @@ import {
   NavigationItem,
   NavigationLogo,
   NavigationMenu,
-} from '@/components';
+} from '#components';
 
 import { uiTest } from '../../tests/uiTest';
 import { NavigationContainer } from './NavigationContainer';

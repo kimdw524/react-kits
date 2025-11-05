@@ -4,8 +4,8 @@ import { forwardRef, useContext } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import { TabsContext } from './TabsProvider';
 import * as s from './TabsTrigger.css';

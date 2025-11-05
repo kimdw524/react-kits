@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 
-import { styleWithLayer } from '@/styleUtils';
+import { styleWithLayer } from '#styleUtils';
 
 const MASK_SIZE = '3rem';
 
