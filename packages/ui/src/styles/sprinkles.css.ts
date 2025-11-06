@@ -125,6 +125,12 @@ export const typographyProperties = defineProperties({
     fontSize: typography.size,
     fontWeight: typography.weight,
     wordBreak: ['break-all', 'break-word', 'keep-all'],
+    textAlign: {
+      left: 'left',
+      right: 'right',
+      center: 'center',
+      inherit: 'inherit',
+    },
   },
 });
 
