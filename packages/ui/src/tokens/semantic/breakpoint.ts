@@ -1,6 +1,6 @@
+import { width } from './width';
+
 export const breakpoint = {
-  sm: 768,
-  md: 1024,
-  lg: 1440,
-  desktop: 1024,
+  ...width,
+  desktop: width.md,
 } as const;
