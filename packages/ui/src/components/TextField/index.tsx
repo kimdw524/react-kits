@@ -26,8 +26,8 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     return (
       <input
         ref={ref}
-        type={type}
         className={clsx(className, s.textField({ size, color }), sx(propSx))}
+        type={type}
         {...props}
       />
     );

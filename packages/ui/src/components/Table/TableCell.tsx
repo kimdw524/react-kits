@@ -22,8 +22,8 @@ export const TableCell = ({
 }: TableCellProps) => {
   return (
     <td
-      style={{ ...style, width, textAlign }}
       className={clsx(s.tableCell, className, sx(propSx))}
+      style={{ ...style, width, textAlign }}
       {...props}
     />
   );

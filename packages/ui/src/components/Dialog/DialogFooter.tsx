@@ -13,9 +13,9 @@ export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
     return (
       <Box
         ref={ref}
-        flex
-        justifyContent="flex-end"
         className={clsx(className, sx(propSx))}
+        justifyContent="flex-end"
+        flex
         {...props}
       >
         {children}

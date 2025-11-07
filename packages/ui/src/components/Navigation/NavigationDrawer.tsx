@@ -40,8 +40,8 @@ export const NavigationDrawer = ({ menu, aside }: NavigationDrawerProps) => {
       </div>
       <div className={s.narrow}>
         <Button
-          size="icon-md"
           color="secondary"
+          size="icon-md"
           variant="ghost"
           onClick={handleClick}
         >
@@ -49,11 +49,11 @@ export const NavigationDrawer = ({ menu, aside }: NavigationDrawerProps) => {
         </Button>
         <div className={s.popup({ isVisible: isExpanded })}>
           <Box
-            flex
-            gap="xl"
-            flexDirection="column-reverse"
             alignItems="flex-end"
+            flexDirection="column-reverse"
+            gap="xl"
             paddingY="lg"
+            flex
           >
             <Box width="100%" onClick={() => setIsExpanded(false)}>
               {menu}

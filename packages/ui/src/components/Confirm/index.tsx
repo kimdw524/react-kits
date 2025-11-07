@@ -30,7 +30,7 @@ export const Confirm = ({
     <Dialog>
       <DialogContent>{children}</DialogContent>
       <DialogFooter>
-        <Box flex gap="md">
+        <Box gap="md" flex>
           <Button size="sm" onClick={onConfirm}>
             확인
           </Button>

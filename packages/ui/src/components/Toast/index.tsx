@@ -28,8 +28,8 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
       <Box
         ref={ref}
         boxShadow="accent-sm"
-        rounded
         className={clsx(s.toast({ color }), className, sx(propSx))}
+        rounded
         {...props}
       >
         <div

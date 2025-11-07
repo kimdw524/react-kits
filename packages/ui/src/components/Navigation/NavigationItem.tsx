@@ -14,8 +14,8 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
     return (
       <div
         ref={ref}
-        style={{ ...style }}
         className={clsx(s.container({ isSelected }), className, sx(propSx))}
+        style={{ ...style }}
         {...props}
       />
     );

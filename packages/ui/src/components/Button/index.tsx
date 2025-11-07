@@ -10,8 +10,7 @@ import type { UIComponent } from '#types';
 
 import * as s from './Button.css';
 
-interface ButtonProps
-  extends Omit<UIComponent<'button', typeof s.button>, 'hasIcon'> {
+interface ButtonProps extends UIComponent<'button', typeof s.button> {
   icon?: ReactElement;
 }
 

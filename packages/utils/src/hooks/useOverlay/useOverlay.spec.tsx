@@ -39,7 +39,7 @@ describe('useOverlay', () => {
 
   const TestComponent = () => {
     return (
-      <OverlayProvider unmountOn={'exit'} closeOnBack={false}>
+      <OverlayProvider closeOnBack={false} unmountOn={'exit'}>
         <ChildComponent />
       </OverlayProvider>
     );
@@ -196,9 +196,9 @@ describe('useOverlay', () => {
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
-            unmountOn="transitionEnd"
-            requestUnmount={mock}
             isActive={false}
+            requestUnmount={mock}
+            unmountOn="transitionEnd"
           >
             Overlay
           </Overlay>
@@ -226,8 +226,8 @@ describe('useOverlay', () => {
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
-            requestUnmount={mock}
             isActive={false}
+            requestUnmount={mock}
           >
             Overlay
           </Overlay>
@@ -250,9 +250,9 @@ describe('useOverlay', () => {
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
-            unmountOn="exit"
-            requestUnmount={mock}
             isActive={false}
+            requestUnmount={mock}
+            unmountOn="exit"
           >
             Overlay
           </Overlay>
@@ -274,9 +274,9 @@ describe('useOverlay', () => {
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
-            unmountOn={200}
-            requestUnmount={mock}
             isActive={false}
+            requestUnmount={mock}
+            unmountOn={200}
           >
             Overlay
           </Overlay>
