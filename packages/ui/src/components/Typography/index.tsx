@@ -17,6 +17,8 @@ type TypographyProps<T extends TypographyElement = TypographyElement> = Omit<
     fontWeight?: SprinklesProps['fontWeight'];
     lineHeight?: SprinklesProps['lineHeight'];
     textAlign?: SprinklesProps['textAlign'];
+    gradientFrom?: SprinklesProps['gradientFrom'];
+    gradientTo?: SprinklesProps['gradientTo'];
   },
   'ref'
 >;
@@ -32,7 +34,10 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
       fontWeight = 'normal',
       lineHeight,
       textAlign,
+      gradientFrom,
+      gradientTo,
       isEllipsis = false,
+      isGradient = false,
       sx,
       ...props
     },
@@ -42,8 +47,16 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
       <Component
         ref={ref}
         className={clsx(
-          s.typography({ isEllipsis }),
-          sprinkles({ color, fontSize, fontWeight, lineHeight, textAlign }),
+          s.typography({ isEllipsis, isGradient }),
+          sprinkles({
+            color,
+            fontSize,
+            fontWeight,
+            lineHeight,
+            textAlign,
+            gradientFrom,
+            gradientTo,
+          }),
           sx && sprinkles(sx),
           className,
         )}

@@ -1,3 +1,4 @@
+import { createVar, style } from '@vanilla-extract/css';
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 import { sprinklesLayer } from '#styles';
@@ -28,12 +29,33 @@ const colors = Object.assign(
   ],
 ) as Record<keyof Color | keyof SemanticColor, string>;
 
+export const gradientFrom = createVar();
+export const gradientTo = createVar();
+
 export const colorProperties = defineProperties({
   '@layer': sprinklesLayer,
   properties: {
     color: colors,
     borderColor: colors,
     backgroundColor: colors,
+    gradientFrom: {
+      ...(Object.entries(colors).reduce(
+        (prev, [key, value]) => ({
+          ...prev,
+          [key]: { vars: { [gradientFrom]: value } },
+        }),
+        {},
+      ) as Record<keyof Color | keyof SemanticColor, string>),
+    },
+    gradientTo: {
+      ...(Object.entries(colors).reduce(
+        (prev, [key, value]) => ({
+          ...prev,
+          [key]: { vars: { [gradientTo]: value } },
+        }),
+        {},
+      ) as Record<keyof Color | keyof SemanticColor, string>),
+    },
   },
 });
 
