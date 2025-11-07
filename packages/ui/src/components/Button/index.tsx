@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, type ReactElement } from 'react';
+import { forwardRef, useRef, type ReactElement } from 'react';
 
 import { clsx } from 'clsx';
 
@@ -29,11 +29,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const { ripple } = useRipple<HTMLButtonElement>(ref);
+    const localRef = useRef(null);
+    const elementRef = ref || localRef;
+    const { ripple } = useRipple<HTMLButtonElement>(elementRef);
 
     return (
       <button
-        ref={ref}
+        ref={elementRef}
         className={clsx(
           className,
           s.button({
