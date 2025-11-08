@@ -17,6 +17,8 @@ type TypographyProps<T extends TypographyElement = TypographyElement> = Omit<
     fontWeight?: SprinklesProps['fontWeight'];
     lineHeight?: SprinklesProps['lineHeight'];
     textAlign?: SprinklesProps['textAlign'];
+    letterSpacing?: SprinklesProps['letterSpacing'];
+    wordBreak?: SprinklesProps['wordBreak'];
     gradientFrom?: SprinklesProps['gradientFrom'];
     gradientTo?: SprinklesProps['gradientTo'];
   },
@@ -34,6 +36,8 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
       fontWeight = 'normal',
       lineHeight,
       textAlign,
+      letterSpacing,
+      wordBreak,
       gradientFrom,
       gradientTo,
       isEllipsis = false,
@@ -54,6 +58,8 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
             fontWeight,
             lineHeight,
             textAlign,
+            letterSpacing,
+            wordBreak,
             gradientFrom,
             gradientTo,
           }),

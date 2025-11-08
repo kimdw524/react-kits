@@ -88,6 +88,9 @@ export const card = recipeWithLayer({
     color: {
       ...semanticColors,
       ...scaleColors,
+      transparent: {
+        backgroundColor: 'transparent',
+      },
     },
   },
 });

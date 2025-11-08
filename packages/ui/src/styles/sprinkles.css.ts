@@ -146,6 +146,7 @@ export const typographyProperties = defineProperties({
     lineHeight: typography.lineHeight,
     fontSize: typography.size,
     fontWeight: typography.weight,
+    letterSpacing: ['1px'],
     wordBreak: ['break-all', 'break-word', 'keep-all'],
     textAlign: {
       left: 'left',
