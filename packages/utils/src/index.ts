@@ -1,5 +1,3 @@
-export * from './components/CSSTransition';
-export * from './components/TransitionGroup';
 export * from './hocs/withInViewport';
 export * from './hocs/withSuspense';
 export * from './hooks/useCombineRefs';
