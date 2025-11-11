@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react';
 
 import { cleanup, render, screen } from '@testing-library/react';
 
-import { Typography } from '@/components';
+import { Typography } from '#components';
 
 import { uiTest } from '../../tests/uiTest';
 

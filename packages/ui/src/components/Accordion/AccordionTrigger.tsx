@@ -28,8 +28,8 @@ export const AccordionTrigger = ({
 
   return (
     <div
-      className={s.triggerContainer({ iconPosition })}
       aria-expanded={isExpanded}
+      className={s.triggerContainer({ iconPosition })}
       onClick={() => dispatch(!isExpanded)}
     >
       <span>{children}</span>

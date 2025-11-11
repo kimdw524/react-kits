@@ -1,6 +1,6 @@
-import { styleWithLayer } from '@/styleUtils';
-import { theme } from '@/themes';
-import { spacing } from '@/tokens';
+import { styleWithLayer } from '#styleUtils';
+import { theme } from '#themes';
+import { spacing } from '#tokens';
 
 import { narrow } from './NavigationDrawer.css';
 

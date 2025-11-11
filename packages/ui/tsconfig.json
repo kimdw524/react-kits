@@ -2,10 +2,6 @@
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {
-      "@/styleUtils": ["src/utils/styleUtils.css.ts"],
-      "@/*": ["src/*/index.ts", "src/*"]
-    },
     "moduleResolution": "bundler",
     "rootDir": "./src",
     "outDir": "dist",

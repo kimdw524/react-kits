@@ -1,7 +1,7 @@
 import { style, type StyleRule } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
 
-import { componentsLayer } from '@/styles';
+import { componentsLayer } from '#styles';
 
 type StyleRuleWithoutLayer =
   | Omit<StyleRule, '@layer'>

@@ -1,5 +1,5 @@
-import { styleWithLayer } from '@/styleUtils';
-import { theme } from '@/themes';
+import { styleWithLayer } from '#styleUtils';
+import { theme } from '#themes';
 
 export const container = styleWithLayer({
   display: 'flex',

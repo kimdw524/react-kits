@@ -6,9 +6,5 @@
     "^.+\\.(ts|tsx)?$": "ts-jest",
     "^.+\\.[t|j]sx?$": "babel-jest"
   },
-  "moduleNameMapper": {
-    "@/styleUtils": "<rootDir>/src/utils/styleUtils.css.ts",
-    "@/(.*)$": "<rootDir>/src/$1"
-  },
   "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
 }

@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import clsx from 'clsx';
 import { ChevronDownIcon } from 'lucide-react';
 
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import { SelectContext } from './SelectContext';
 import * as s from './SelectTrigger.css';

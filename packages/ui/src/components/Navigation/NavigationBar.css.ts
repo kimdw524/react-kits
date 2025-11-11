@@ -1,7 +1,7 @@
 import { createContainer } from '@vanilla-extract/css';
 
-import { recipeWithLayer } from '@/styleUtils';
-import { theme } from '@/themes';
+import { recipeWithLayer } from '#styleUtils';
+import { theme } from '#themes';
 
 export const navigationBarContainer = createContainer();
 
@@ -12,7 +12,7 @@ export const navigationBar = recipeWithLayer({
     top: '0',
 
     width: '100%',
-    borderBottom: `1px solid rgb(${theme.color['border.weak']})`,
+    borderBottom: '1px solid',
 
     backgroundColor: `rgba(${theme.color.background}, 0.75)`,
     backdropFilter: 'blur(2rem) saturate(150%)',
@@ -36,6 +36,14 @@ export const navigationBar = recipeWithLayer({
 
       lg: {
         height: '6em',
+      },
+    },
+    isStuck: {
+      true: {
+        borderBottomColor: `rgb(${theme.color.border})`,
+      },
+      false: {
+        borderBottomColor: 'transparent',
       },
     },
   },

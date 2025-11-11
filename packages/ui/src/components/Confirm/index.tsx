@@ -4,7 +4,7 @@ import { useImperativeHandle, type ReactNode, type Ref } from 'react';
 
 import { useOverlay, usePreventKeyboardInput } from '@kimdw-rtk/utils';
 
-import { Box, Button, Dialog, DialogContent, DialogFooter } from '@/components';
+import { Box, Button, Dialog, DialogContent, DialogFooter } from '#components';
 
 interface ConfirmProps {
   children: ReactNode;
@@ -30,7 +30,7 @@ export const Confirm = ({
     <Dialog>
       <DialogContent>{children}</DialogContent>
       <DialogFooter>
-        <Box flex gap="md">
+        <Box gap="md" flex>
           <Button size="sm" onClick={onConfirm}>
             확인
           </Button>

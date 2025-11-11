@@ -2,9 +2,9 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { Box } from '@/components';
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { Box } from '#components';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 type DialogFooterProps = Omit<UIComponent<'div'>, 'color'>;
 
@@ -13,9 +13,9 @@ export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
     return (
       <Box
         ref={ref}
-        flex
-        justifyContent="flex-end"
         className={clsx(className, sx(propSx))}
+        justifyContent="flex-end"
+        flex
         {...props}
       >
         {children}

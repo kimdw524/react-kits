@@ -4,8 +4,8 @@ import { forwardRef, useReducer } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './Accordion.css';
 import { AccordionContext, accordionReducer } from './AccordionContext';

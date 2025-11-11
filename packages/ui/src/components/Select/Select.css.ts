@@ -1,5 +1,5 @@
-import { recipeWithLayer } from '@/styleUtils';
-import { typography } from '@/tokens';
+import { recipeWithLayer } from '#styleUtils';
+import { typography } from '#tokens';
 
 export const select = recipeWithLayer({
   base: {

@@ -3,9 +3,9 @@ import { forwardRef } from 'react';
 import clsx from 'clsx';
 import { XIcon } from 'lucide-react';
 
-import { Box } from '@/components';
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { Box } from '#components';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './DialogHeader.css';
 
@@ -18,16 +18,16 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
     return (
       <Box
         ref={ref}
-        flex
-        justifyContent="space-between"
         alignItems="center"
+        className={clsx(s.container, className, sx(propSx))}
         fontSize="lg"
         fontWeight="normal"
-        className={clsx(s.container, className, sx(propSx))}
+        justifyContent="space-between"
+        flex
         {...props}
       >
         <span>{children}</span>
-        <button className={s.close} onClick={onCloseClick} aria-label="닫기">
+        <button aria-label="닫기" className={s.close} onClick={onCloseClick}>
           <XIcon />
         </button>
       </Box>

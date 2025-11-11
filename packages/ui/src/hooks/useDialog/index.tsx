@@ -4,7 +4,7 @@ import { type ReactNode, useCallback, useMemo, useRef } from 'react';
 
 import { useOverlay } from '@kimdw-rtk/utils';
 
-import { Alert, Confirm } from '@/components';
+import { Alert, Confirm } from '#components';
 
 export const useDialog = () => {
   const { push } = useOverlay();
@@ -35,8 +35,8 @@ export const useDialog = () => {
         push(
           <Confirm
             ref={dialogRef}
-            onConfirm={handleConfirm}
             onCancle={handleCancle}
+            onConfirm={handleConfirm}
           >
             {message}
           </Confirm>,

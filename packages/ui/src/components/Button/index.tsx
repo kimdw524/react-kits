@@ -1,17 +1,16 @@
 'use client';
 
-import { forwardRef, type ReactElement } from 'react';
+import { forwardRef, useRef, type ReactElement } from 'react';
 
 import { clsx } from 'clsx';
 
-import { useRipple } from '@/hooks';
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { useRipple } from '#hooks';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './Button.css';
 
-interface ButtonProps
-  extends Omit<UIComponent<'button', typeof s.button>, 'hasIcon'> {
+interface ButtonProps extends UIComponent<'button', typeof s.button> {
   icon?: ReactElement;
 }
 
@@ -30,11 +29,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const { ripple } = useRipple<HTMLButtonElement>(ref);
+    const localRef = useRef(null);
+    const elementRef = ref || localRef;
+    const { ripple } = useRipple<HTMLButtonElement>(elementRef);
 
     return (
       <button
-        ref={ref}
+        ref={elementRef}
         className={clsx(
           className,
           s.button({

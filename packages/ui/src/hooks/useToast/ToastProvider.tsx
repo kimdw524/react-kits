@@ -10,9 +10,9 @@ import {
   type ReactNode,
 } from 'react';
 
-import { CSSTransition, TransitionGroup } from '@kimdw-rtk/utils';
+import { CSSTransition, TransitionGroup } from '@kimdw-rtk/animation';
 
-import { Toast } from '@/components';
+import { Toast } from '#components';
 
 import { ToastContainer } from './ToastContainer';
 
@@ -99,20 +99,20 @@ export const ToastProvider = ({
         <TransitionGroup>
           {toasts.map((toast) => (
             <CSSTransition
-              as="div"
               key={toast.id}
-              initial={{
-                opacity: 0,
-                transform: 'translateY(1rem)',
-                height: '0',
-              }}
               animate={{
                 opacity: 1,
                 transform: 'translateY(0)',
                 height: '3.5rem',
               }}
-              exit={{ opacity: 0, height: '0' }}
+              as="div"
               duration={500}
+              exit={{ opacity: 0, height: '0' }}
+              initial={{
+                opacity: 0,
+                transform: 'translateY(1rem)',
+                height: '0',
+              }}
               style={{ display: 'flex', flexDirection: 'column-reverse' }}
             >
               <Toast

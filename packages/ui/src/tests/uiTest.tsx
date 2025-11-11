@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 
-import { sprinkles } from '@/styles';
+import { sprinkles } from '#styles';
 
 export const uiTest = <T extends HTMLElement>(
   // eslint-disable-next-line
@@ -28,7 +28,7 @@ export const uiTest = <T extends HTMLElement>(
     });
 
     test('sx를 사용할 수 있다.', () => {
-      render(<Component sx={{ margin: 'md' }} data-testid="component" />);
+      render(<Component data-testid="component" sx={{ margin: 'md' }} />);
       expect(screen.getByTestId('component')).toHaveClass(
         sprinkles({ margin: 'md' }),
       );
@@ -40,7 +40,7 @@ export const uiTest = <T extends HTMLElement>(
     });
 
     test('inline style을 적용할 수 있다.', () => {
-      render(<Component style={{ color: 'red' }} data-testid="component" />);
+      render(<Component data-testid="component" style={{ color: 'red' }} />);
       expect(screen.getByTestId('component')).toHaveStyle({ color: 'red' });
     });
 

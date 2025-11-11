@@ -2,8 +2,8 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './NavigationItem.css';
 
@@ -14,8 +14,8 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
     return (
       <div
         ref={ref}
-        style={{ ...style }}
         className={clsx(s.container({ isSelected }), className, sx(propSx))}
+        style={{ ...style }}
         {...props}
       />
     );

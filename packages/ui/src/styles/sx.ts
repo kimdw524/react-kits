@@ -1,4 +1,4 @@
-import { sprinkles } from '@/styles';
+import { sprinkles } from '#styles';
 
 export const sx = (param?: Parameters<typeof sprinkles>[0] | string) => {
   if (param === undefined) {

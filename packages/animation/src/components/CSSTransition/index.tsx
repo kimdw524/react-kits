@@ -10,36 +10,8 @@ import {
 } from 'react';
 
 import { TransitionGroupContext } from '#components/TransitionGroup';
-
-type AnimationStyle = string | CSSProperties;
-
-const setStyle = <T extends HTMLElement>(element: T, style: AnimationStyle) => {
-  if (typeof style === 'string') {
-    element.classList.add(style);
-    return;
-  }
-
-  Object.assign(element.style, style);
-};
-
-const removeStyle = <T extends HTMLElement>(
-  element: T,
-  style: AnimationStyle,
-) => {
-  if (typeof style === 'string') {
-    element.classList.remove(style);
-    return;
-  }
-
-  for (const key in style) {
-    element.style.removeProperty(key);
-  }
-};
-
-const forceReflow = <T extends HTMLElement>(element: T) => {
-  // eslint-disable-next-line
-  element.offsetTop;
-};
+import type { AnimationStyle } from '#types';
+import { removeStyle, setStyle } from '#utils';
 
 type CSSTransitionProps<T extends ElementType> = {
   as?: T;
@@ -47,6 +19,7 @@ type CSSTransitionProps<T extends ElementType> = {
   animate: AnimationStyle;
   exit: AnimationStyle;
   duration: number;
+  timingFunction?: CSSProperties['animationTimingFunction'];
 } & Omit<ComponentProps<T>, 'as'>;
 
 export const CSSTransition = <T extends ElementType>({
@@ -56,6 +29,7 @@ export const CSSTransition = <T extends ElementType>({
   animate,
   exit,
   duration,
+  timingFunction = 'ease',
   style,
   ...props
 }: CSSTransitionProps<T>) => {
@@ -75,11 +49,11 @@ export const CSSTransition = <T extends ElementType>({
       return;
     }
 
-    element.style.transition = `all ${duration}ms ease`;
+    element.style.transition = `all ${duration}ms ${timingFunction}`;
 
-    forceReflow(element);
+    void element.offsetTop;
     setStyle(element, initial);
-    forceReflow(element);
+    void element.offsetTop;
 
     removeStyle(element, initial);
     setStyle(element, animate);
@@ -106,6 +80,7 @@ export const CSSTransition = <T extends ElementType>({
 
     removeStyle(element, initial);
     removeStyle(element, animate);
+    element.style.pointerEvents = 'none';
     setStyle(element, exit);
 
     return () => {

@@ -2,8 +2,8 @@ import { type CSSProperties } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './TableCell.css';
 
@@ -22,8 +22,8 @@ export const TableCell = ({
 }: TableCellProps) => {
   return (
     <td
-      style={{ ...style, width, textAlign }}
       className={clsx(s.tableCell, className, sx(propSx))}
+      style={{ ...style, width, textAlign }}
       {...props}
     />
   );

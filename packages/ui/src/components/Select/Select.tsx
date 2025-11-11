@@ -13,8 +13,8 @@ import {
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './Select.css';
 import { SelectContext, selectReducer } from './SelectContext';
@@ -92,15 +92,15 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       <SelectContext.Provider value={{ state, dispatch }}>
         <div
           ref={targetRef}
-          style={{ ...style, width }}
           className={clsx(s.select({ size }), className, sx(propSx))}
+          style={{ ...style, width }}
           {...props}
         >
           <SelectTrigger variant={variant}>
             {state.selected !== null && state.items.get(state.selected || '')}
           </SelectTrigger>
           <SelectOptionList>{children}</SelectOptionList>
-          <input type="hidden" name={name} value={state.selected || ''} />
+          <input name={name} type="hidden" value={state.selected || ''} />
         </div>
       </SelectContext.Provider>
     );

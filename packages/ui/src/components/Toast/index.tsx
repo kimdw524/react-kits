@@ -2,9 +2,9 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { Box } from '@/components';
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { Box } from '#components';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './Toast.css';
 
@@ -28,8 +28,8 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
       <Box
         ref={ref}
         boxShadow="accent-sm"
-        rounded
         className={clsx(s.toast({ color }), className, sx(propSx))}
+        rounded
         {...props}
       >
         <div

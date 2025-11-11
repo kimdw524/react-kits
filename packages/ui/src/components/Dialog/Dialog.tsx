@@ -2,9 +2,9 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { Box } from '@/components';
-import { sx } from '@/styles';
-import type { UIComponent } from '@/types';
+import { Box } from '#components';
+import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
 import * as s from './Dialog.css';
 
@@ -15,11 +15,11 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     return (
       <Box
         ref={ref}
-        flex
-        flexDirection="row"
-        gap="lg"
         boxShadow="border-sm"
         className={clsx(s.container, className, sx(propSx))}
+        flexDirection="row"
+        gap="lg"
+        flex
         {...props}
       >
         {children}

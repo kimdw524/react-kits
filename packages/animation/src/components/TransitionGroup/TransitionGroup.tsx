@@ -93,8 +93,8 @@ export const TransitionGroup = ({ children }: TransitionGroupProps) => {
       {rendered.map((child) => (
         <TransitionChild
           key={child.children.key}
-          id={child.id}
           elementKey={child.children.key}
+          id={child.id}
           isUnmounted={child.isUnmounted}
           onRequestUnmount={handleRequestUnmount}
         >

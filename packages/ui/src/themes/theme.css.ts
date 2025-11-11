@@ -1,6 +1,6 @@
 import { createThemeContract } from '@vanilla-extract/css';
 
-import { semanticColor } from '@/tokens';
+import { semanticColor } from '#tokens';
 
 import { lightColor } from '../tokens/scale/color';
 

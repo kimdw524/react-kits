@@ -94,8 +94,8 @@ export const Overlay = ({
   return (
     <div
       ref={wrapperRef}
-      onTransitionEnd={handleTransitionEnd}
       onClick={handleClick}
+      onTransitionEnd={handleTransitionEnd}
     >
       <div onClick={(e) => e.stopPropagation()}>{children}</div>
     </div>

@@ -2,7 +2,7 @@ import { useContext, useMemo, useRef, type ReactNode } from 'react';
 
 import clsx from 'clsx';
 
-import { sprinkles } from '@/styles';
+import { sprinkles } from '#styles';
 
 import { SelectContext } from './SelectContext';
 import * as s from './SelectOptionList.css';

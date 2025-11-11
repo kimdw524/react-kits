@@ -30,7 +30,7 @@ describe('useIsInViewport', () => {
       const { isInViewport } = useIsInViewport(ref);
 
       return (
-        <div data-testid="target" ref={ref}>
+        <div ref={ref} data-testid="target">
           {isInViewport ? 'true' : 'false'}
         </div>
       );

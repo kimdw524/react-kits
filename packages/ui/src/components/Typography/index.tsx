@@ -2,8 +2,8 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { sprinkles, type SprinklesProps } from '@/styles';
-import { type UIComponent } from '@/types';
+import { sprinkles, type SprinklesProps } from '#styles';
+import { type UIComponent } from '#types';
 
 import * as s from './Typography.css';
 
@@ -16,6 +16,11 @@ type TypographyProps<T extends TypographyElement = TypographyElement> = Omit<
     fontSize?: SprinklesProps['fontSize'];
     fontWeight?: SprinklesProps['fontWeight'];
     lineHeight?: SprinklesProps['lineHeight'];
+    textAlign?: SprinklesProps['textAlign'];
+    letterSpacing?: SprinklesProps['letterSpacing'];
+    wordBreak?: SprinklesProps['wordBreak'];
+    gradientFrom?: SprinklesProps['gradientFrom'];
+    gradientTo?: SprinklesProps['gradientTo'];
   },
   'ref'
 >;
@@ -30,7 +35,13 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
       fontSize = 'md',
       fontWeight = 'normal',
       lineHeight,
+      textAlign,
+      letterSpacing,
+      wordBreak,
+      gradientFrom,
+      gradientTo,
       isEllipsis = false,
+      isGradient = false,
       sx,
       ...props
     },
@@ -40,8 +51,18 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
       <Component
         ref={ref}
         className={clsx(
-          s.typography({ isEllipsis }),
-          sprinkles({ color, fontSize, fontWeight, lineHeight }),
+          s.typography({ isEllipsis, isGradient }),
+          sprinkles({
+            color,
+            fontSize,
+            fontWeight,
+            lineHeight,
+            textAlign,
+            letterSpacing,
+            wordBreak,
+            gradientFrom,
+            gradientTo,
+          }),
           sx && sprinkles(sx),
           className,
         )}

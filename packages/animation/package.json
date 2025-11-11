@@ -1,0 +1,54 @@
+{
+  "name": "@kimdw-rtk/animation",
+  "version": "0.1.0",
+  "private": false,
+  "main": "./src/index.ts",
+  "type": "module",
+  "imports": {
+    "#*": [
+      "./src/*/index.ts",
+      "./src/*/index.tsx",
+      "./src/*.ts",
+      "./src/*.tsx"
+    ]
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "test": "node -e \"process.exit(0)\"",
+    "build": "rollup -c rollup.config.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "@kimdw-rtk/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.7",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.2",
+    "@rollup/plugin-typescript": "^12.1.4",
+    "@types/react": "^18.0.0 || ^19.0.0",
+    "eslint": "^9.24.0",
+    "rollup": "^4.52.4",
+    "typescript": "5.8.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "imports": {
+      "#*": [
+        "./dist/*/index.js"
+      ]
+    }
+  }
+}
