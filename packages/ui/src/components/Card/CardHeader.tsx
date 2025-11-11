@@ -1,20 +1,20 @@
-import { forwardRef, type ComponentProps } from 'react';
+import { forwardRef } from 'react';
 
 import { clsx } from 'clsx';
 
-import { Box } from '#components';
 import { sx } from '#styles';
+import type { UIComponent } from '#types';
 
-type CardHeaderProps = ComponentProps<typeof Box>;
+import * as s from './CardHeader.css';
+
+type CardHeaderProps = UIComponent<'div'>;
 
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, sx: propSx, ...props }, ref) => {
     return (
-      <Box
+      <div
         ref={ref}
-        className={clsx(className, sx(propSx))}
-        padding="md"
-        paddingBottom="none"
+        className={clsx(s.cardHeader, className, sx(propSx))}
         {...props}
       />
     );

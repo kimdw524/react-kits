@@ -2,8 +2,7 @@ import { styleWithLayer } from '#styleUtils';
 
 import { paddingVar } from './Card.css';
 
-export const cardContent = styleWithLayer({
-  flex: '1 1 auto',
-
+export const cardHeader = styleWithLayer({
   padding: paddingVar,
+  paddingBottom: '0',
 });
