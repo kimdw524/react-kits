@@ -28,9 +28,10 @@
     "lucide-react": "^0.503.0"
   },
   "peerDependencies": {
-    "@kimdw-rtk/utils": "workspace:*",
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "@kimdw-rtk/animation": "workspace:^",
+    "@kimdw-rtk/utils": "workspace:*"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.26.9",

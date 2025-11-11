@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from 'react';
 
-import { CSSTransition, TransitionGroup } from '@kimdw-rtk/utils';
+import { CSSTransition, TransitionGroup } from '@kimdw-rtk/animation';
 
 import { Toast } from '#components';
 

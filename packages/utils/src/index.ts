@@ -4,7 +4,6 @@ export * from './hooks/useCombineRefs';
 export * from './hooks/useHasAppeared';
 export * from './hooks/useIsInViewport';
 export * from './hooks/useIsScrolled';
-export * from './hooks/useOnViewport';
 export * from './hooks/useOverlay';
 export * from './hooks/usePreventKeyboardInput';
 export * from './hooks/usePreventScroll';
