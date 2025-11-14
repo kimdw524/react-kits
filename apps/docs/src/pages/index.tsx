@@ -1,8 +1,8 @@
+import { Animated } from '@kimdw-rtk/animation';
 import { Box, Button, Flex, Typography } from '@kimdw-rtk/ui';
-import type { HeadFC, PageProps } from 'gatsby';
+import { Link, type HeadFC, type PageProps } from 'gatsby';
 
 import { Layout } from '#components';
-import '#styles/globalStyle.css';
 
 import { FeatureCard } from '../components/Landing/FeatureCard';
 
@@ -11,40 +11,54 @@ const LandingPage: React.FC<PageProps> = () => {
     <Layout>
       <Box paddingX="xl">
         {/* Summary and Link */}
-        <Box
-          marginTop="5xl"
-          paddingX="lg"
-          paddingY={{ mobile: '3xl', desktop: '5xl' }}
-          textAlign="center"
+        <Animated.Box
+          duration={1000}
+          initial={{ opacity: 0, transform: 'translateY(2rem)' }}
+          animate={{ opacity: 1, transform: 'translateY(0)' }}
         >
-          <Typography
-            as="p"
-            fontSize="5xl"
-            fontWeight="black"
-            letterSpacing="1px"
-            gradientFrom="blue-700"
-            gradientTo="blue-300"
-            isGradient
+          <Box
+            marginTop="5xl"
+            paddingX="lg"
+            paddingY={{ mobile: '3xl', desktop: '5xl' }}
+            textAlign="center"
           >
-            An all-in-one React toolkit
-          </Typography>
-          <Typography
-            as="p"
-            color="blue-900"
-            fontSize="xl"
-            fontWeight="semiBold"
-            lineHeight="md"
-            sx={{ marginTop: 'xl' }}
-          >
-            that centralizes components, hooks, utilities, and animations.
-          </Typography>
-          <Flex gap="lg" justifyContent="center" marginTop="3xl">
-            <Button size="lg">Get Started</Button>
-            <Button color="secondary" size="lg">
-              Try It Live
-            </Button>
-          </Flex>
-        </Box>
+            <Typography
+              as="p"
+              fontSize="5xl"
+              fontWeight="black"
+              letterSpacing="1px"
+              gradientFrom="blue-700"
+              gradientTo="blue-300"
+              isGradient
+            >
+              An all-in-one React toolkit
+            </Typography>
+            <Typography
+              as="p"
+              color="blue-900"
+              fontSize="xl"
+              fontWeight="semiBold"
+              lineHeight="md"
+              sx={{ marginTop: 'xl' }}
+            >
+              <Animated.Text
+                duration={750}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                that centralizes components, hooks, utilities, and animations.
+              </Animated.Text>
+            </Typography>
+            <Flex gap="lg" justifyContent="center" marginTop="3xl">
+              <Button size="lg">Get Started</Button>
+              <Link to="/theme">
+                <Button color="secondary" size="lg">
+                  Customize the theme
+                </Button>
+              </Link>
+            </Flex>
+          </Box>
+        </Animated.Box>
 
         {/* Feature */}
         <Flex gap="lg" flexDirection={{ mobile: 'column', desktop: 'row' }}>

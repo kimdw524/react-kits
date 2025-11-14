@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 
 import {
   Container,
@@ -9,8 +9,16 @@ import {
   NavigationItem,
   NavigationMenu,
 } from '@kimdw-rtk/ui';
+import { Link } from 'gatsby';
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+import '#styles/globalStyle.css';
+
+interface LayoutProps {
+  children: ReactNode;
+  size?: ComponentProps<typeof Container>['size'];
+}
+
+export const Layout = ({ children, size = 'md' }: LayoutProps) => {
   return (
     <>
       <header>
@@ -22,7 +30,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             <NavigationDrawer
               menu={
                 <NavigationMenu>
-                  <NavigationItem>react-kits</NavigationItem>
+                  <NavigationItem>
+                    <Link to="/">react-kits</Link>
+                  </NavigationItem>
                 </NavigationMenu>
               }
               aside={
@@ -42,7 +52,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         </NavigationBar>
       </header>
       <main>
-        <Container size="md">{children}</Container>
+        <Container size={size}>{children}</Container>
       </main>
     </>
   );
