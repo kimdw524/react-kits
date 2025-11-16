@@ -1,13 +1,20 @@
-import { Box, Flex, lightThemeVars, Typography } from '@kimdw-rtk/ui';
+import { useState } from 'react';
+
+import { darkThemeVars, Flex, lightThemeVars, Typography } from '@kimdw-rtk/ui';
+
+import { ThemeVars } from '#types/theme.js';
 
 import { GridItem } from './GridItem';
 
 export const ColorPalette = () => {
-  console.log(lightThemeVars);
+  const [vars, setVars] = useState<ThemeVars>({
+    light: lightThemeVars.color,
+    dark: darkThemeVars.color,
+  });
 
   return (
     <Flex flexWrap="wrap" gap="2xl" justifyContent="space-between">
-      {Object.entries(lightThemeVars.color)
+      {Object.entries(vars)
         .filter(([, value]) => typeof value === 'object')
         .map(([key, value]) => (
           <div>

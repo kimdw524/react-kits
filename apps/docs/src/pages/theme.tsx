@@ -1,22 +1,45 @@
 import { useState } from 'react';
 
-import { Box, Button, Flex } from '@kimdw-rtk/ui';
+import {
+  Box,
+  Button,
+  darkThemeVars,
+  Flex,
+  lightThemeVars,
+} from '@kimdw-rtk/ui';
 import { type HeadFC, type PageProps } from 'gatsby';
 
 import { Layout, ThemeToggleButton } from '#components';
-import { Preview } from '#components/Theme';
+import { Preview, TokenEditor } from '#components/Theme';
+import { ThemeColor, ThemeVars } from '#types';
+import { filterObjectValue } from '#utils';
 
 const ThemePage: React.FC<PageProps> = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [vars, setVars] = useState<ThemeVars>(() => ({
+    light: filterObjectValue(lightThemeVars.color) as unknown as ThemeColor,
+    dark: filterObjectValue(darkThemeVars.color) as unknown as ThemeColor,
+  }));
+
+  const handleVarsUpdate = (vars: ThemeVars) => {
+    setVars(vars);
+  };
 
   return (
     <Layout size="lg">
-      <Box className={theme} backgroundColor="background" padding="lg" rounded>
+      <Box
+        className={theme}
+        flex
+        flexDirection="column"
+        gap="lg"
+        padding="md"
+        backgroundColor="background"
+        rounded
+      >
         <Box
           flex
           alignItems="center"
           justifyContent="space-between"
-          marginBottom="lg"
           padding="md"
           backgroundColor="accent"
           rounded
@@ -28,18 +51,13 @@ const ThemePage: React.FC<PageProps> = () => {
                 setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
               }
             />
-            <Button color="blue" size="sm" sx={{ marginLeft: 'sm' }}>
-              Blue
-            </Button>
-            <Button color="red" size="sm">
-              Red
-            </Button>
           </Flex>
           <div>
             <Button size="sm">Generate Code</Button>
           </div>
         </Box>
-        <Preview />
+        <TokenEditor vars={vars} onUpdate={handleVarsUpdate} />
+        <Preview theme={theme} vars={vars} />
       </Box>
     </Layout>
   );

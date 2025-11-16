@@ -1,5 +1,9 @@
+import { useMemo } from 'react';
+
 import { Animated } from '@kimdw-rtk/animation';
-import { Flex } from '@kimdw-rtk/ui';
+import { Flex, theme as themeCss } from '@kimdw-rtk/ui';
+
+import { ThemeColor, ThemeVars } from '#types';
 
 import { Confirm } from './Confirm';
 import { Payments } from './Payments';
@@ -8,7 +12,27 @@ import { Profile } from './Profile';
 import { Search } from './Search';
 import { SignIn } from './SignIn';
 
-export const Preview = () => {
+interface PreviewProps {
+  theme: 'light' | 'dark';
+  vars: ThemeVars;
+}
+
+export const Preview = ({ theme, vars }: PreviewProps) => {
+  const cssVars = useMemo(() => {
+    const inlineVars: Record<string, string> = {};
+
+    for (const key in vars[theme]) {
+      const strippedKey = themeCss.color[key as keyof ThemeColor]
+        .split('var(')![1]
+        .split(')')![0];
+      inlineVars[strippedKey] = vars[theme][key as keyof ThemeColor];
+    }
+
+    return inlineVars;
+  }, [theme, vars]);
+
+  console.log(cssVars);
+
   return (
     <Animated.Box
       duration={800}
@@ -20,6 +44,8 @@ export const Preview = () => {
         alignItems="flex-start"
         justifyContent="center"
         flexWrap="wrap"
+        backgroundColor="background"
+        style={cssVars}
       >
         <Flex
           flexDirection="column"
