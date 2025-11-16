@@ -18,4 +18,5 @@ export * from './Table';
 export * from './Tabs';
 export * from './TextField';
 export * from './Toast';
+export * from './Tooltip';
 export * from './Typography';
