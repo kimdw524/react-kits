@@ -12,6 +12,7 @@ export * from './Navigation';
 export * from './Range';
 export * from './ScrollArea';
 export * from './Select';
+export * from './Separator';
 export * from './Skeleton';
 export * from './Table';
 export * from './Tabs';
