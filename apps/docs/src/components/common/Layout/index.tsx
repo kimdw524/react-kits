@@ -8,6 +8,7 @@ import {
   NavigationDrawer,
   NavigationItem,
   NavigationMenu,
+  UIProvider,
 } from '@kimdw-rtk/ui';
 import { Link } from 'gatsby';
 
@@ -20,7 +21,7 @@ interface LayoutProps {
 
 export const Layout = ({ children, size = 'md' }: LayoutProps) => {
   return (
-    <>
+    <UIProvider container={document.getElementById('container')!}>
       <header>
         <NavigationBar size="sm">
           <NavigationContainer
@@ -54,6 +55,6 @@ export const Layout = ({ children, size = 'md' }: LayoutProps) => {
       <main>
         <Container size={size}>{children}</Container>
       </main>
-    </>
+    </UIProvider>
   );
 };
