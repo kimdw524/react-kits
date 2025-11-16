@@ -17,14 +17,18 @@ export const TokenEditor = ({ vars, onUpdate }: TokenEditorProps) => {
         <Flex flexDirection="column" gap="xl">
           <ThemePreset onUpdate={onUpdate} />
           <ColorList
-            className="light"
+            theme="light"
+            vars={vars}
             header="Light Theme"
             themeColor={vars.light}
+            onUpdate={onUpdate}
           />
           <ColorList
-            className="dark"
+            theme="dark"
+            vars={vars}
             header="Dark Theme"
             themeColor={vars.dark}
+            onUpdate={onUpdate}
           />
         </Flex>
       </CardContent>

@@ -3,8 +3,8 @@ import { style } from '@vanilla-extract/css';
 export const gridItem = style({
   display: 'inline-block',
 
-  width: '2.5rem',
-  height: '3rem',
+  width: '2rem',
+  height: '2.5rem',
 
   transition: 'all 0.1s ease',
 

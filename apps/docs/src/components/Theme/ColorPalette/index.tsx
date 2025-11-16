@@ -1,33 +1,26 @@
-import { useState } from 'react';
-
-import { darkThemeVars, Flex, lightThemeVars, Typography } from '@kimdw-rtk/ui';
-
-import { ThemeVars } from '#types/theme.js';
+import { Flex, lightColor, Tooltip, Typography } from '@kimdw-rtk/ui';
 
 import { GridItem } from './GridItem';
 
-export const ColorPalette = () => {
-  const [vars, setVars] = useState<ThemeVars>({
-    light: lightThemeVars.color,
-    dark: darkThemeVars.color,
-  });
+interface ColorPaletteProps {
+  onClick: (color: string) => void;
+}
 
+export const ColorPalette = ({ onClick }: ColorPaletteProps) => {
   return (
-    <Flex flexWrap="wrap" gap="2xl" justifyContent="space-between">
-      {Object.entries(vars)
+    <Flex flexWrap="wrap" gap="sm" justifyContent="space-between">
+      {Object.entries(lightColor)
         .filter(([, value]) => typeof value === 'object')
         .map(([key, value]) => (
-          <div>
-            <Flex gap="lg" paddingY="lg">
-              <Typography fontSize="sm" fontWeight="light">
-                {key}
-              </Typography>
-            </Flex>
-            <div>
-              {Object.entries(value).map(([scale, color]) => (
-                <GridItem color={`rgb(${color})`} />
-              ))}
-            </div>
+          <div key={key}>
+            {Object.entries(value).map(([scale, color]) => (
+              <Tooltip key={scale} content={`${key}-${scale}`}>
+                <GridItem
+                  color={`rgb(${color})`}
+                  onClick={() => onClick(color)}
+                />
+              </Tooltip>
+            ))}
           </div>
         ))}
     </Flex>

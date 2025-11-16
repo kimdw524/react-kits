@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 import { Flex, theme, Typography } from '@kimdw-rtk/ui';
 
-import { ThemeColor } from '#types';
+import { ThemeColor, ThemeVars } from '#types';
 
 import { ColorItem } from '../ColorItem';
 
@@ -20,15 +20,19 @@ const colorGroup = [
 ] satisfies (keyof ThemeColor)[][];
 
 interface ColorListProps {
-  className: string;
+  theme: 'light' | 'dark';
   header: string;
   themeColor: ThemeColor;
+  vars: ThemeVars;
+  onUpdate: (vars: ThemeVars) => void;
 }
 
 export const ColorList = ({
-  className,
+  theme: propTheme,
   header,
   themeColor,
+  vars,
+  onUpdate,
 }: ColorListProps) => {
   return (
     <div
@@ -41,11 +45,21 @@ export const ColorList = ({
       <Typography fontSize="sm" fontWeight="medium">
         {header}
       </Typography>
-      <Flex className={className} flexWrap="wrap" gap="md" marginTop="md">
+      <Flex className={propTheme} flexWrap="wrap" gap="md" marginTop="md">
         {colorGroup.map((colors, index) => (
           <Flex key={index}>
             {colors.map((color) => (
-              <ColorItem key={color} name={color} color={themeColor[color]} />
+              <ColorItem
+                key={color}
+                name={color}
+                color={themeColor[color]}
+                onChange={(value) =>
+                  onUpdate({
+                    ...vars,
+                    [propTheme]: { ...vars[propTheme], [color]: value },
+                  })
+                }
+              />
             ))}
           </Flex>
         ))}
