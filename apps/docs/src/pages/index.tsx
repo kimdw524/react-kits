@@ -91,6 +91,5 @@ export default LandingPage;
 export const Head: HeadFC = () => (
   <>
     <title>Home Page</title>
-    <body className="light" />
   </>
 );
