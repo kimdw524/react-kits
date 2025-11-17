@@ -1,7 +1,6 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 
 import { OverlayProvider, type OverlayOption } from '@kimdw-rtk/utils';
 
@@ -22,15 +21,15 @@ export const UIProvider = ({
 }: UIProviderProps) => {
   return (
     <ContainerProvider container={container}>
-      {createPortal(
+      <ToastProvider>
         <OverlayProvider
           className={{ ...overlayStyle }}
+          container={container}
           unmountOn={overlayUnmountOn}
         >
-          <ToastProvider>{children}</ToastProvider>
-        </OverlayProvider>,
-        container,
-      )}
+          {children}
+        </OverlayProvider>
+      </ToastProvider>
     </ContainerProvider>
   );
 };
