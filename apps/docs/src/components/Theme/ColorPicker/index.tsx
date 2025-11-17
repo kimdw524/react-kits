@@ -79,7 +79,6 @@ export const ColorPicker = ({ defaultColor, onChange }: ColorPickerProps) => {
                           prev[2],
                         ])
                       }
-                      style={{ width: '100%' }}
                     />
                   </Flex>
                   <Flex flexDirection="column" gap="md" alignItems="center">
@@ -95,7 +94,6 @@ export const ColorPicker = ({ defaultColor, onChange }: ColorPickerProps) => {
                           prev[2],
                         ])
                       }
-                      style={{ width: '100%' }}
                     />
                   </Flex>
                   <Flex flexDirection="column" gap="md" alignItems="center">
@@ -111,7 +109,6 @@ export const ColorPicker = ({ defaultColor, onChange }: ColorPickerProps) => {
                           formatNumber(e.target.value),
                         ])
                       }
-                      style={{ width: '100%' }}
                     />
                   </Flex>
                 </Flex>
