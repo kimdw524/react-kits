@@ -15,6 +15,10 @@
     "#*": "./src/*/index.ts",
     "#styleUtils": "./src/utils/styleUtils.css.ts"
   },
+  "exports": {
+    ".": "./src/index.ts",
+    "./theme": "./src/themes/theme.css.ts"
+  },
   "files": [
     "dist",
     "README.md"
@@ -62,6 +66,12 @@
   "publishConfig": {
     "access": "public",
     "main": "./dist/index.js",
-    "types": "./dist/index.d.ts"
+    "types": "./dist/index.d.ts",
+    "exports": {
+      "./theme": {
+        "import": "./dist/themes/theme.css.js",
+        "types": "./dist/themes/theme.css.d.ts"
+      }
+    }
   }
 }
