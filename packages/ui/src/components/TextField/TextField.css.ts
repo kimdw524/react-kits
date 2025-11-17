@@ -34,6 +34,7 @@ const scaleColors = SCALE_COLOR.reduce(
 
 export const textField = recipeWithLayer({
   base: {
+    width: '100%',
     height: '2.5em',
     padding: '0 0.75em',
     border: `1px solid`,
