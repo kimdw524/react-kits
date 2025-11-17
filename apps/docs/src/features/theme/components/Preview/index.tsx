@@ -17,18 +17,10 @@ interface PreviewProps {
 }
 
 export const Preview = ({ theme, vars }: PreviewProps) => {
-  const cssVars = useMemo(() => {
-    const inlineVars: Record<string, string> = {};
-
-    for (const key in vars[theme]) {
-      const strippedKey = themeCss.color[key as keyof ThemeToken]
-        .split('var(')![1]
-        .split(')')![0];
-      inlineVars[strippedKey] = vars[theme][key as keyof ThemeToken];
-    }
-
-    return inlineVars;
-  }, [theme, vars]);
+  const cssVars = useMemo(
+    () => ThemeToken.generateInlineStyle(vars[theme]),
+    [theme, vars],
+  );
 
   return (
     <Animated.Box

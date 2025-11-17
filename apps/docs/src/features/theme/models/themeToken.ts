@@ -1,3 +1,7 @@
+import { CSSProperties } from 'react';
+
+import { theme } from '@kimdw-rtk/ui';
+
 export const themeTokenKeys = [
   'background',
   'foreground',
@@ -36,5 +40,18 @@ export const ThemeToken = {
     }
 
     return result;
+  },
+
+  // ThemeToken의 css inline style을 생성한다.
+  generateInlineStyle(themeToken: ThemeToken): CSSProperties {
+    const inlineVars: Record<string, string> = {};
+
+    for (const key in themeToken) {
+      const strippedKey = theme.color[key as keyof ThemeToken]
+        .split('var(')![1]
+        .split(')')![0];
+      inlineVars[strippedKey] = themeToken[key as keyof ThemeToken];
+    }
+    return inlineVars;
   },
 };
