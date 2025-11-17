@@ -1,12 +1,7 @@
 import { useState } from 'react';
 
-import {
-  Box,
-  Button,
-  darkThemeVars,
-  Flex,
-  lightThemeVars,
-} from '@kimdw-rtk/ui';
+import { Animated } from '@kimdw-rtk/animation';
+import { Box, Button, darkThemeVars, lightThemeVars } from '@kimdw-rtk/ui';
 import { useOverlay } from '@kimdw-rtk/utils';
 import { type HeadFC, type PageProps } from 'gatsby';
 
@@ -32,39 +27,48 @@ const ThemePage: React.FC<PageProps> = () => {
 
   return (
     <Layout size="lg">
-      <Box
-        className={theme}
-        flex
-        flexDirection="column"
-        gap="lg"
-        padding="md"
-        backgroundColor="background"
-        rounded
+      <Animated.Box
+        duration={500}
+        initial={{ opacity: 0, transform: 'translateY(1rem)' }}
+        animate={{ opacity: 1, transform: 'translateY(0)' }}
       >
-        {/* page header */}
         <Box
+          className={theme}
           flex
-          alignItems="center"
-          justifyContent="space-between"
+          flexDirection="column"
+          gap="lg"
           padding="md"
-          backgroundColor="accent"
+          backgroundColor="background"
           rounded
         >
-          <ThemeToggleButton
-            theme={theme}
-            onClick={() =>
-              setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
-            }
-          />
-          <Button size="sm" onClick={() => push(<GenerateCode vars={vars} />)}>
-            Generate Code
-          </Button>
+          {/* page header */}
+          <Box
+            flex
+            alignItems="center"
+            justifyContent="space-between"
+            padding="md"
+            backgroundColor="accent"
+            rounded
+          >
+            <ThemeToggleButton
+              theme={theme}
+              onClick={() =>
+                setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+              }
+            />
+            <Button
+              size="sm"
+              onClick={() => push(<GenerateCode vars={vars} />)}
+            >
+              Generate Code
+            </Button>
+          </Box>
+          {/* Token Editor */}
+          <TokenEditor vars={vars} onUpdate={handleVarsUpdate} />
+          {/* Preview samples */}
+          <Preview theme={theme} vars={vars} />
         </Box>
-        {/* Token Editor */}
-        <TokenEditor vars={vars} onUpdate={handleVarsUpdate} />
-        {/* Preview samples */}
-        <Preview theme={theme} vars={vars} />
-      </Box>
+      </Animated.Box>
     </Layout>
   );
 };
