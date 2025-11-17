@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import {
+  Box,
   Button,
   Dialog,
   DialogContent,
@@ -11,6 +12,8 @@ import {
 } from '@kimdw-rtk/ui';
 import { useOverlay } from '@kimdw-rtk/utils';
 
+import { useClipboard } from '@/shared/hooks';
+
 import { ThemeVars } from '../../models';
 
 interface GenerateCodeProps {
@@ -19,33 +22,34 @@ interface GenerateCodeProps {
 
 export const GenerateCode = ({ vars }: GenerateCodeProps) => {
   const { close } = useOverlay();
+  const { copy } = useClipboard();
 
-  const code = useMemo(() => {
-    const result = `globalStyle('.light', {
-  vars: {
-  ${Object.entries(vars.light)
-    .map((key, value) => `theme.color['${key}']: '${value}'`)
-    .join(',\n')}
-    [theme.color.background]: '255, 0, 0',
-  },
-});`;
+  const lines = useMemo(() => ThemeVars.generateCode(vars), [vars]);
 
-    return result;
-  }, [vars]);
+  const handleClick = () => {
+    copy(lines.join('\n'));
+  };
 
   return (
     <Dialog style={{ maxWidth: '800px' }}>
       <DialogHeader onCloseClick={close}>Generate Code</DialogHeader>
       <DialogContent>
-        <Typography>
-          {code.split('\n').map((line) => (
-            <p>{line}</p>
-          ))}
-        </Typography>
+        <Box
+          backgroundColor="secondary"
+          padding="lg"
+          rounded
+          style={{ maxHeight: '50vh', overflowY: 'scroll' }}
+        >
+          <Typography fontSize="sm">
+            {lines.map((line) => (
+              <pre>{line}</pre>
+            ))}
+          </Typography>
+        </Box>
       </DialogContent>
       <DialogFooter>
         <Flex gap="md" padding="xl">
-          <Button>Copy to Clipboard</Button>
+          <Button onClick={handleClick}>Copy to Clipboard</Button>
         </Flex>
       </DialogFooter>
     </Dialog>
