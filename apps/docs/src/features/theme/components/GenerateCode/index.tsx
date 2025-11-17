@@ -11,7 +11,7 @@ import {
 } from '@kimdw-rtk/ui';
 import { useOverlay } from '@kimdw-rtk/utils';
 
-import { ThemeVars } from '#types';
+import { ThemeVars } from '@/features/theme/types';
 
 interface GenerateCodeProps {
   vars: ThemeVars;

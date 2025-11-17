@@ -1,6 +1,6 @@
 import { Card, CardContent, Flex } from '@kimdw-rtk/ui';
 
-import { ThemeVars } from '#types';
+import { ThemeVars } from '@/features/theme/types';
 
 import { ColorList } from '../ColorList';
 import { ThemePreset } from '../ThemePreset';

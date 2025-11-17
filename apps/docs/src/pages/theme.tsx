@@ -10,10 +10,14 @@ import {
 import { useOverlay } from '@kimdw-rtk/utils';
 import { type HeadFC, type PageProps } from 'gatsby';
 
-import { Layout, ThemeToggleButton } from '#components';
-import { GenerateCode, Preview, TokenEditor } from '#components/Theme';
-import { ThemeColor, ThemeVars } from '#types';
-import { filterObjectValue } from '#utils';
+import {
+  GenerateCode,
+  Preview,
+  TokenEditor,
+} from '@/features/theme/components';
+import { ThemeColor, ThemeVars } from '@/features/theme/types';
+import { Layout, ThemeToggleButton } from '@/shared/components';
+import { filterObjectValue } from '@/shared/utils';
 
 const ThemePage: React.FC<PageProps> = () => {
   const { push } = useOverlay();

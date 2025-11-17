@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 import { Flex, theme, Typography } from '@kimdw-rtk/ui';
 
-import { ThemeColor, ThemeVars } from '#types';
+import { ThemeColor, ThemeVars } from '@/features/theme/types';
 
 import { ColorItem } from '../ColorItem';
 

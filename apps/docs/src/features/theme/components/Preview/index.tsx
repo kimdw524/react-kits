@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Animated } from '@kimdw-rtk/animation';
 import { Flex, theme as themeCss } from '@kimdw-rtk/ui';
 
-import { ThemeColor, ThemeVars } from '#types';
+import { ThemeColor, ThemeVars } from '@/features/theme/types';
 
 import { Confirm } from './Confirm';
 import { Payments } from './Payments';
@@ -30,8 +30,6 @@ export const Preview = ({ theme, vars }: PreviewProps) => {
 
     return inlineVars;
   }, [theme, vars]);
-
-  console.log(cssVars);
 
   return (
     <Animated.Box

@@ -2,9 +2,8 @@ import { Animated } from '@kimdw-rtk/animation';
 import { Box, Button, Flex, Typography } from '@kimdw-rtk/ui';
 import { Link, type HeadFC, type PageProps } from 'gatsby';
 
-import { Layout } from '#components';
-
-import { FeatureCard } from '../components/Landing/FeatureCard';
+import { FeatureCard } from '@/features/landing';
+import { Layout } from '@/shared/components';
 
 const LandingPage: React.FC<PageProps> = () => {
   return (

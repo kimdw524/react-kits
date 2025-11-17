@@ -27,6 +27,14 @@ const config: GatsbyConfig = {
         id: 'container',
       },
     },
+    {
+      resolve: 'gatsby-plugin-alias-imports',
+      options: {
+        alias: {
+          '@/*': 'src/*',
+        },
+      },
+    },
   ],
   jsxRuntime: 'automatic',
 };

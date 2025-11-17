@@ -44,9 +44,6 @@ importers:
       '@vanilla-extract/css':
         specifier: ^1.17.4
         version: 1.17.4(babel-plugin-macros@3.1.0)
-      '@vanilla-extract/webpack-plugin':
-        specifier: ^2.3.22
-        version: 2.3.22(babel-plugin-macros@3.1.0)(webpack@5.98.0)
       gatsby:
         specifier: ^5.14.6
         version: 5.15.0(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-jest@25.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint-plugin-testing-library@5.11.1(eslint@7.32.0)(typescript@5.8.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.41.0)(typescript@5.8.2)
@@ -81,6 +78,12 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.19
         version: 18.3.7(@types/react@18.3.25)
+      '@vanilla-extract/webpack-plugin':
+        specifier: ^2.3.22
+        version: 2.3.22(babel-plugin-macros@3.1.0)(webpack@5.98.0)
+      gatsby-plugin-alias-imports:
+        specifier: ^1.0.5
+        version: 1.0.5(gatsby@5.15.0(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-jest@25.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint-plugin-testing-library@5.11.1(eslint@7.32.0)(typescript@5.8.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.41.0)(typescript@5.8.2))
       gatsby-plugin-portal:
         specifier: ^1.0.7
         version: 1.0.7(gatsby@5.15.0(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-jest@25.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint-plugin-testing-library@5.11.1(eslint@7.32.0)(typescript@5.8.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.41.0)(typescript@5.8.2))
@@ -4636,6 +4639,11 @@ packages:
     engines: {parcel: 2.x}
     peerDependencies:
       '@parcel/core': ^2.0.0
+
+  gatsby-plugin-alias-imports@1.0.5:
+    resolution: {integrity: sha512-q58JrSjuVNh4NApamqElR0zqwm55FOb9vFAVb2i2ftPRu0uYzWJkbOz2IN3vSw7a+5PmGzX7VL8XDFXlNHrMNA==}
+    peerDependencies:
+      gatsby: '>2.0.0'
 
   gatsby-plugin-mdx@5.15.0:
     resolution: {integrity: sha512-JYT6OHxmgBJ7J8q9IPz/01OyK3GQFJ+2snEtdsENbucXH/DYFpeit8r2N2m/nwiTz4lfuYyg7S7ht3By5epL3w==}
@@ -14496,6 +14504,11 @@ snapshots:
       '@parcel/transformer-js': 2.8.3(@parcel/core@2.8.3)
       '@parcel/transformer-json': 2.8.3(@parcel/core@2.8.3)
 
+  gatsby-plugin-alias-imports@1.0.5(gatsby@5.15.0(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-jest@25.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint-plugin-testing-library@5.11.1(eslint@7.32.0)(typescript@5.8.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.41.0)(typescript@5.8.2)):
+    dependencies:
+      '@babel/runtime': 7.28.4
+      gatsby: 5.15.0(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-jest@25.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint-plugin-testing-library@5.11.1(eslint@7.32.0)(typescript@5.8.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.41.0)(typescript@5.8.2)
+
   gatsby-plugin-mdx@5.15.0(@mdx-js/react@3.1.1(@types/react@18.3.25)(react@18.3.1))(gatsby-source-filesystem@5.15.0(gatsby@5.15.0(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-jest@25.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint-plugin-testing-library@5.11.1(eslint@7.32.0)(typescript@5.8.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.41.0)(typescript@5.8.2)))(gatsby@5.15.0(babel-eslint@10.1.0(eslint@7.32.0))(eslint-plugin-jest@25.7.0(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint@7.32.0)(typescript@5.8.2))(eslint-plugin-testing-library@5.11.1(eslint@7.32.0)(typescript@5.8.2))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.41.0)(typescript@5.8.2))(graphql@16.12.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@mdx-js/mdx': 2.3.0
@@ -16515,7 +16528,7 @@ snapshots:
 
   media-query-parser@2.0.2:
     dependencies:
-      '@babel/runtime': 7.27.6
+      '@babel/runtime': 7.28.4
 
   media-typer@0.3.0: {}
 
