@@ -1,4 +1,5 @@
 export * from './ColorItem';
+export * from './ColorList';
 export * from './ColorPalette';
 export * from './ColorPicker';
 export * from './GenerateCode';

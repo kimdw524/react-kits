@@ -1,9 +1,7 @@
 import { Card, CardContent, Flex } from '@kimdw-rtk/ui';
 
-import { ThemeVars } from '@/features/theme/types';
-
-import { ColorList } from '../ColorList';
-import { ThemePreset } from '../ThemePreset';
+import { ColorList, ThemePreset } from '../../components';
+import { ThemeVars } from '../../models';
 
 interface TokenEditorProps {
   vars: ThemeVars;
@@ -20,14 +18,14 @@ export const TokenEditor = ({ vars, onUpdate }: TokenEditorProps) => {
             theme="light"
             vars={vars}
             header="Light Theme"
-            themeColor={vars.light}
+            token={vars.light}
             onUpdate={onUpdate}
           />
           <ColorList
             theme="dark"
             vars={vars}
             header="Dark Theme"
-            themeColor={vars.dark}
+            token={vars.dark}
             onUpdate={onUpdate}
           />
         </Flex>

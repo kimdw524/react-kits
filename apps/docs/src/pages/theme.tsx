@@ -15,16 +15,15 @@ import {
   Preview,
   TokenEditor,
 } from '@/features/theme/components';
-import { ThemeColor, ThemeVars } from '@/features/theme/types';
+import { ThemeToken, ThemeVars } from '@/features/theme/models';
 import { Layout, ThemeToggleButton } from '@/shared/components';
-import { filterObjectValue } from '@/shared/utils';
 
 const ThemePage: React.FC<PageProps> = () => {
   const { push } = useOverlay();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [vars, setVars] = useState<ThemeVars>(() => ({
-    light: filterObjectValue(lightThemeVars.color) as unknown as ThemeColor,
-    dark: filterObjectValue(darkThemeVars.color) as unknown as ThemeColor,
+    light: ThemeToken.filterObject(lightThemeVars.color),
+    dark: ThemeToken.filterObject(darkThemeVars.color),
   }));
 
   const handleVarsUpdate = (vars: ThemeVars) => {
@@ -42,6 +41,7 @@ const ThemePage: React.FC<PageProps> = () => {
         backgroundColor="background"
         rounded
       >
+        {/* page header */}
         <Box
           flex
           alignItems="center"
@@ -50,24 +50,19 @@ const ThemePage: React.FC<PageProps> = () => {
           backgroundColor="accent"
           rounded
         >
-          <Flex alignItems="center" gap="sm">
-            <ThemeToggleButton
-              theme={theme}
-              onClick={() =>
-                setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
-              }
-            />
-          </Flex>
-          <div>
-            <Button
-              size="sm"
-              onClick={() => push(<GenerateCode vars={vars} />)}
-            >
-              Generate Code
-            </Button>
-          </div>
+          <ThemeToggleButton
+            theme={theme}
+            onClick={() =>
+              setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+            }
+          />
+          <Button size="sm" onClick={() => push(<GenerateCode vars={vars} />)}>
+            Generate Code
+          </Button>
         </Box>
+        {/* Token Editor */}
         <TokenEditor vars={vars} onUpdate={handleVarsUpdate} />
+        {/* Preview samples */}
         <Preview theme={theme} vars={vars} />
       </Box>
     </Layout>

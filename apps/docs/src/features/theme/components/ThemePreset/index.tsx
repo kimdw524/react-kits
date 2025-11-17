@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@kimdw-rtk/ui';
 
-import { ThemeVars } from '@/features/theme/types';
+import { ThemeVars } from '../../models';
 
 const presets = [
   'blue',

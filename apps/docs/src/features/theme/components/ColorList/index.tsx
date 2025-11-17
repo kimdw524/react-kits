@@ -2,8 +2,7 @@ import { CSSProperties } from 'react';
 
 import { Flex, theme, Typography } from '@kimdw-rtk/ui';
 
-import { ThemeColor, ThemeVars } from '@/features/theme/types';
-
+import { ThemeToken, ThemeVars } from '../../models';
 import { ColorItem } from '../ColorItem';
 
 const colorGroup = [
@@ -17,12 +16,12 @@ const colorGroup = [
   ['success', 'success-foreground'],
   ['danger', 'danger-foreground'],
   ['warning', 'warning-foreground'],
-] satisfies (keyof ThemeColor)[][];
+] satisfies (keyof ThemeToken)[][];
 
 interface ColorListProps {
   theme: 'light' | 'dark';
   header: string;
-  themeColor: ThemeColor;
+  token: ThemeToken;
   vars: ThemeVars;
   onUpdate: (vars: ThemeVars) => void;
 }
@@ -30,7 +29,7 @@ interface ColorListProps {
 export const ColorList = ({
   theme: propTheme,
   header,
-  themeColor,
+  token,
   vars,
   onUpdate,
 }: ColorListProps) => {
@@ -52,7 +51,7 @@ export const ColorList = ({
               <ColorItem
                 key={color}
                 name={color}
-                color={themeColor[color]}
+                color={token[color]}
                 onChange={(value) =>
                   onUpdate({
                     ...vars,

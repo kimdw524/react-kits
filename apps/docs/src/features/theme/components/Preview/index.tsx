@@ -3,8 +3,7 @@ import { useMemo } from 'react';
 import { Animated } from '@kimdw-rtk/animation';
 import { Flex, theme as themeCss } from '@kimdw-rtk/ui';
 
-import { ThemeColor, ThemeVars } from '@/features/theme/types';
-
+import { ThemeToken, ThemeVars } from '../../models';
 import { Confirm } from './Confirm';
 import { Payments } from './Payments';
 import { PictureCard } from './PictureCard';
@@ -22,10 +21,10 @@ export const Preview = ({ theme, vars }: PreviewProps) => {
     const inlineVars: Record<string, string> = {};
 
     for (const key in vars[theme]) {
-      const strippedKey = themeCss.color[key as keyof ThemeColor]
+      const strippedKey = themeCss.color[key as keyof ThemeToken]
         .split('var(')![1]
         .split(')')![0];
-      inlineVars[strippedKey] = vars[theme][key as keyof ThemeColor];
+      inlineVars[strippedKey] = vars[theme][key as keyof ThemeToken];
     }
 
     return inlineVars;
