@@ -120,6 +120,12 @@ export const card = recipeWithLayer({
           [paddingVar]: spacing.xl,
         },
       },
+
+      '2xl': {
+        vars: {
+          [paddingVar]: spacing['2xl'],
+        },
+      },
     },
   },
 });
