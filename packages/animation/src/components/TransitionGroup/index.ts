@@ -1,3 +1,3 @@
 export * from './TransitionGroup';
 export * from './TransitionGroupContext';
-export * from './PresenceChild';
+export * from './TransitionChild';

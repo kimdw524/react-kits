@@ -19,7 +19,7 @@ type CSSTransitionProps<T extends ElementType> = {
   animate: AnimationStyle;
   exit: AnimationStyle;
   duration: number;
-  timingFunction?: CSSProperties['animationTimingFunction'];
+  easing?: CSSProperties['animationTimingFunction'];
 } & Omit<ComponentProps<T>, 'as'>;
 
 export const CSSTransition = <T extends ElementType>({
@@ -29,7 +29,7 @@ export const CSSTransition = <T extends ElementType>({
   animate,
   exit,
   duration,
-  timingFunction = 'ease',
+  easing = 'ease',
   style,
   ...props
 }: CSSTransitionProps<T>) => {
@@ -38,7 +38,7 @@ export const CSSTransition = <T extends ElementType>({
   const context = useContext(TransitionGroupContext);
 
   if (context === undefined) {
-    throw new Error('CSSTransition must be used within an AnimationPresence');
+    throw new Error('CSSTransition must be used within an TransitionGroup');
   }
 
   const { isUnmounted, key, requestUnmount } = context;
@@ -49,7 +49,7 @@ export const CSSTransition = <T extends ElementType>({
       return;
     }
 
-    element.style.transition = `all ${duration}ms ${timingFunction}`;
+    element.style.transition = `all ${duration}ms ${easing}`;
 
     void element.offsetTop;
     setStyle(element, initial);
