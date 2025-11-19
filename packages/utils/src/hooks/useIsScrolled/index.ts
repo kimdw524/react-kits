@@ -1,32 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type RefObject } from 'react';
 
-export const useIsScrolled = <T extends (HTMLElement | null) | typeof window>(
+export const useIsScrolled = <
+  T extends RefObject<HTMLElement | null> | typeof window,
+>(
   element: T,
 ) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
-    if (element === null) {
+    const current = element instanceof Window ? element : element.current;
+    if (current === null) {
       return;
     }
 
     const handleScroll = () => {
-      if (element instanceof Window) {
-        setIsScrolled(element.scrollY !== 0);
+      if (current instanceof Window) {
+        setIsScrolled(current.scrollY !== 0);
         return;
       }
 
-      setIsScrolled(element.scrollTop !== 0);
+      setIsScrolled(current.scrollTop !== 0);
     };
 
     handleScroll();
 
-    element.addEventListener('scroll', handleScroll);
+    current.addEventListener('scroll', handleScroll);
 
     return () => {
-      element.removeEventListener('scroll', handleScroll);
+      current.removeEventListener('scroll', handleScroll);
     };
   }, [element]);
 
