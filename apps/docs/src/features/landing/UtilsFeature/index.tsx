@@ -5,33 +5,30 @@ import { FeatureCard } from '../FeatureCard';
 import { FeatureContent } from '../FeatureContent';
 import { FeatureDescription } from '../FeatureDescription';
 
-export const ComponentFeature = () => {
+export const UtilsFeature = () => {
   return (
-    <FeatureBox header="Fast UI Development">
+    <FeatureBox header="Enhance DX and UX">
       <FeatureDescription>
-        <FeatureCard header="20+ Components">
+        <FeatureCard header="Utility Kit">
           <Typography lineHeight="md">
-            Includes more than 20 UI components, along with overlay components
-            such as Alert, Confirm, Toast, and Tooltip.
+            Offers modules essential for web development.
           </Typography>
         </FeatureCard>
-        <FeatureCard header="Utility Class Support">
+        <FeatureCard header="Boilerplate Reduction">
           <Typography lineHeight="md">
-            Provides a utility-class system that lets you build precise UI
-            layouts without writing additional CSS.
+            Provides HOC that help you reduce boilerplate code significantly.
           </Typography>
         </FeatureCard>
-        <FeatureCard header="Customizable Theme">
+        <FeatureCard header="Performance Optimization">
           <Typography lineHeight="md">
-            Customize the theme easily by adjusting just a few token values.
-            <br />A tool is also available to preview and tweak colors
-            effortlessly.
+            Apply rendering performance optimizations simply by wrapping your
+            components with an HOC.
           </Typography>
         </FeatureCard>
       </FeatureDescription>
       <FeatureContent>
         <img
-          src="/images/features_component.png"
+          src="/images/features_utils.png"
           alt="Component"
           style={{ width: '100%' }}
         />

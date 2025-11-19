@@ -1,5 +1,7 @@
 import { fontFace, globalStyle } from '@vanilla-extract/css';
 
+import './theme.css';
+
 const pretendard = fontFace({
   src: 'url("/fonts/PretendardVariable.woff2")',
 });

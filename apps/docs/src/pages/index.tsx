@@ -5,6 +5,7 @@ import {
   AnimationFeature,
   ComponentFeature,
   HeroSection,
+  UtilsFeature,
 } from '@/features/landing';
 import { Layout } from '@/shared/components';
 
@@ -18,6 +19,7 @@ const LandingPage: React.FC<PageProps> = () => {
           <Flex flexDirection="column" style={{ gap: '20vh' }}>
             <ComponentFeature />
             <AnimationFeature />
+            <UtilsFeature />
           </Flex>
         </section>
       </Box>

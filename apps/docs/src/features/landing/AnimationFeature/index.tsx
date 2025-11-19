@@ -7,7 +7,7 @@ import { FeatureDescription } from '../FeatureDescription';
 
 export const AnimationFeature = () => {
   return (
-    <FeatureBox header="Easy Animation" isReverse={true}>
+    <FeatureBox header="Easy Animations" isReverse={true}>
       <FeatureDescription>
         <FeatureCard header="Performance">
           <Typography lineHeight="md">

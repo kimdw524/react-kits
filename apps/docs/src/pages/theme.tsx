@@ -1,7 +1,13 @@
 import { useState } from 'react';
 
 import { Animated } from '@kimdw-rtk/animation';
-import { Box, Button, darkThemeVars, lightThemeVars } from '@kimdw-rtk/ui';
+import {
+  Box,
+  Button,
+  darkThemeVars,
+  lightThemeVars,
+  Typography,
+} from '@kimdw-rtk/ui';
 import { useOverlay } from '@kimdw-rtk/utils';
 import { type HeadFC, type PageProps } from 'gatsby';
 
@@ -66,6 +72,13 @@ const ThemePage: React.FC<PageProps> = () => {
           {/* Token Editor */}
           <TokenEditor vars={vars} onUpdate={handleVarsUpdate} />
           {/* Preview samples */}
+          <Typography
+            fontSize="lg"
+            fontWeight="semiBold"
+            sx={{ marginTop: 'lg' }}
+          >
+            Theme Preview
+          </Typography>
           <Preview theme={theme} vars={vars} />
         </Box>
       </Animated.Box>
@@ -77,6 +90,6 @@ export default ThemePage;
 
 export const Head: HeadFC = () => (
   <>
-    <title>Theme Page</title>
+    <title>react-kits : Customizing Theme</title>
   </>
 );
