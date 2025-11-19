@@ -12,7 +12,7 @@ globalStyle('.light', {
     [theme.color['muted']]: '234, 239, 245',
     [theme.color['muted-foreground']]: '120, 120, 120',
     [theme.color['accent']]: '224, 228, 233',
-    [theme.color['accent-foreground']]: '32, 32, 33',
+    [theme.color['accent-foreground']]: '73, 87, 111',
     [theme.color['border']]: '228, 228, 231',
     [theme.color['border.weak']]: '220, 229, 237',
     [theme.color['card']]: '248, 250, 252',

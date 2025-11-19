@@ -17,7 +17,7 @@ export const FeatureBox = ({
   return (
     <Box textAlign="center" paddingY="xl" width="100%">
       <Typography
-        color="slate-600"
+        color="accent-foreground"
         fontSize="4xl"
         fontWeight="bold"
         letterSpacing="1px"
