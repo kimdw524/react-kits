@@ -16,20 +16,20 @@ export const useIsScrolled = <
     }
 
     const handleScroll = () => {
-      if (current instanceof Window) {
-        setIsScrolled(current.scrollY !== 0);
+      if (current instanceof window.Window) {
+        setIsScrolled(current?.scrollY !== 0);
         return;
       }
 
-      setIsScrolled(current.scrollTop !== 0);
+      setIsScrolled(current?.scrollTop !== 0);
     };
 
     handleScroll();
 
-    current.addEventListener('scroll', handleScroll);
+    current?.addEventListener('scroll', handleScroll);
 
     return () => {
-      current.removeEventListener('scroll', handleScroll);
+      current?.removeEventListener('scroll', handleScroll);
     };
   }, [element]);
 
