@@ -22,8 +22,12 @@ describe('useDialog 테스트', () => {
       );
     };
 
+    const portalContainer = document.createElement('div');
+    portalContainer.id = 'portal-root';
+    document.body.appendChild(portalContainer);
+
     render(
-      <UIProvider overlayUnmountOn={'exit'}>
+      <UIProvider container={portalContainer} overlayUnmountOn={'exit'}>
         <TestComponent />
       </UIProvider>,
     );
