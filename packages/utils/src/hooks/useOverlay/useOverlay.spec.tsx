@@ -11,6 +11,12 @@ import { OverlayProvider } from './OverlayProvider';
 import { useOverlay } from './useOverlay';
 
 describe('useOverlay', () => {
+  let portalContainer: HTMLDivElement;
+  beforeAll(() => {
+    portalContainer = document.createElement('div');
+    portalContainer.id = 'portal-root';
+    document.body.appendChild(portalContainer);
+  });
   const OverlayComponent = () => {
     const { close } = useOverlay();
     const id = useContext(OverlayIdContext);
@@ -39,7 +45,11 @@ describe('useOverlay', () => {
 
   const TestComponent = () => {
     return (
-      <OverlayProvider closeOnBack={false} unmountOn={'exit'}>
+      <OverlayProvider
+        closeOnBack={false}
+        container={portalContainer}
+        unmountOn={'exit'}
+      >
         <ChildComponent />
       </OverlayProvider>
     );
@@ -95,7 +105,7 @@ describe('useOverlay', () => {
   it('뒤로가기를 눌러서 모달을 닫을 수 있다.', async () => {
     const user = userEvent.setup();
     render(
-      <OverlayProvider unmountOn={'exit'}>
+      <OverlayProvider container={portalContainer} unmountOn={'exit'}>
         <ChildComponent />
       </OverlayProvider>,
     );
@@ -113,8 +123,8 @@ describe('useOverlay', () => {
 
   it('closeOnBackdropClick=true 이면, backdrop을 클릭해서 모달을 닫을 수 있다.', async () => {
     const user = userEvent.setup();
-    const result = render(
-      <OverlayProvider closeOnBackdropClick={true}>
+    render(
+      <OverlayProvider closeOnBackdropClick={true} container={portalContainer}>
         <ChildComponent />
       </OverlayProvider>,
     );
@@ -124,7 +134,7 @@ describe('useOverlay', () => {
     await user.click(pushButton);
     expect(screen.queryByTestId('overlay')).toBeInTheDocument();
 
-    const root = result!.container.querySelectorAll('div')[0]!;
+    const root = portalContainer.querySelectorAll('div')[0]!;
     act(() => {
       root.dispatchEvent(new Event('click', { bubbles: true }));
     });
@@ -133,8 +143,8 @@ describe('useOverlay', () => {
 
   it('closeOnBackdropClick=false 이면, backdrop을 클릭해서 모달을 닫을 수 없다.', async () => {
     const user = userEvent.setup();
-    const result = render(
-      <OverlayProvider closeOnBackdropClick={false}>
+    render(
+      <OverlayProvider closeOnBackdropClick={false} container={portalContainer}>
         <ChildComponent />
       </OverlayProvider>,
     );
@@ -144,7 +154,7 @@ describe('useOverlay', () => {
     await user.click(pushButton);
     expect(screen.queryByTestId('overlay')).toBeInTheDocument();
 
-    const root = result!.container.querySelectorAll('div')[0]!;
+    const root = portalContainer.querySelectorAll('div')[0]!;
     act(() => {
       root.dispatchEvent(new Event('click', { bubbles: true }));
     });
@@ -168,7 +178,7 @@ describe('useOverlay', () => {
 
     act(() => {
       result = render(
-        <OverlayProvider>
+        <OverlayProvider container={portalContainer}>
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -192,7 +202,7 @@ describe('useOverlay', () => {
 
     act(() => {
       result = render(
-        <OverlayProvider>
+        <OverlayProvider container={portalContainer}>
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -222,7 +232,7 @@ describe('useOverlay', () => {
 
     act(() => {
       result = render(
-        <OverlayProvider>
+        <OverlayProvider container={portalContainer}>
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -246,7 +256,7 @@ describe('useOverlay', () => {
 
     act(() => {
       render(
-        <OverlayProvider>
+        <OverlayProvider container={portalContainer}>
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -270,7 +280,7 @@ describe('useOverlay', () => {
 
     act(() => {
       render(
-        <OverlayProvider>
+        <OverlayProvider container={portalContainer}>
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -309,7 +319,7 @@ describe('useOverlay', () => {
 
     expect(() =>
       render(
-        <OverlayProvider>
+        <OverlayProvider container={portalContainer}>
           <TestComponent />
         </OverlayProvider>,
       ),
@@ -327,7 +337,7 @@ describe('useOverlay', () => {
     };
 
     render(
-      <OverlayProvider>
+      <OverlayProvider container={portalContainer}>
         <TestComponent />
       </OverlayProvider>,
     );
