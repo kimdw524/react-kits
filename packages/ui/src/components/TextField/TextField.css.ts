@@ -2,7 +2,7 @@ import { createVar } from '@vanilla-extract/css';
 
 import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { semanticColor } from '#tokens';
+import { semanticColor, typography } from '#tokens';
 
 import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 
@@ -34,7 +34,9 @@ const scaleColors = SCALE_COLOR.reduce(
 
 export const textField = recipeWithLayer({
   base: {
-    padding: '0.75em 0.5em',
+    width: '100%',
+    height: '2.5em',
+    padding: '0 0.75em',
     border: `1px solid`,
     borderColor: ` rgb(${theme.color.border})`,
 
@@ -64,17 +66,17 @@ export const textField = recipeWithLayer({
       sm: {
         borderRadius: theme.borderRadius,
 
-        fontSize: '0.875em',
+        fontSize: typography.size.sm,
       },
       md: {
         borderRadius: theme.borderRadius,
 
-        fontSize: '1em',
+        fontSize: typography.size.md,
       },
       lg: {
         borderRadius: theme.borderRadius,
 
-        fontSize: '1.125em',
+        fontSize: typography.size.lg,
       },
     },
   },

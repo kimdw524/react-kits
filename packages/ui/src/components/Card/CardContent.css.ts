@@ -1,8 +1,9 @@
 import { styleWithLayer } from '#styleUtils';
-import { spacing } from '#tokens';
+
+import { paddingVar } from './Card.css';
 
 export const cardContent = styleWithLayer({
   flex: '1 1 auto',
 
-  padding: spacing.md,
+  padding: paddingVar,
 });

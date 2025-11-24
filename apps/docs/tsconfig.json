@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Projects */
@@ -105,6 +108,7 @@
     "./src/**/*",
     "./gatsby-node.ts",
     "./gatsby-config.ts",
-    "./plugins/**/*"
+    "./plugins/**/*",
+    "gatsby-browser.tsx"
   ]
 }

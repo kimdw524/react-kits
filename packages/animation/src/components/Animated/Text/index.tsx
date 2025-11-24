@@ -73,7 +73,7 @@ export const Text = ({
   }, [hasAppeared, delay, duration, easing]);
 
   return (
-    <span ref={containerRef} style={{ transform: 'translateZ(0)' }}>
+    <span ref={containerRef}>
       {children.split(unit === 'letter' ? '' : ' ').map((char, index) => (
         <span
           key={index}

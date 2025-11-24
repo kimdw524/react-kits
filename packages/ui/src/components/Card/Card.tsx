@@ -19,6 +19,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       height,
       color = 'card',
       variant = 'outlined',
+      size = 'md',
       className,
       style,
       sx: propSx,
@@ -29,7 +30,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     return (
       <div
         ref={ref}
-        className={clsx(s.card({ color, variant }), className, sx(propSx))}
+        className={clsx(
+          s.card({ color, size, variant }),
+          className,
+          sx(propSx),
+        )}
         style={{ width, height, ...style }}
         {...props}
       />

@@ -1,0 +1,62 @@
+import { useMemo } from 'react';
+
+import { Flex } from '@kimdw-rtk/ui';
+
+import { ThemeToken, ThemeVars } from '../../models';
+import { Confirm } from './Confirm';
+import { Payments } from './Payments';
+import { PictureCard } from './PictureCard';
+import { Profile } from './Profile';
+import { Search } from './Search';
+import { SignIn } from './SignIn';
+
+interface PreviewProps {
+  theme: 'light' | 'dark';
+  vars: ThemeVars;
+}
+
+export const Preview = ({ theme, vars }: PreviewProps) => {
+  const cssVars = useMemo(
+    () => ThemeToken.generateInlineStyle(vars[theme]),
+    [theme, vars],
+  );
+
+  return (
+    <Flex
+      gap="xl"
+      alignItems="flex-start"
+      justifyContent="center"
+      flexWrap="wrap"
+      backgroundColor="background"
+      style={cssVars}
+    >
+      <Flex
+        flexDirection="column"
+        flexShrink="0"
+        gap="xl"
+        style={{ flex: 3.5, flexBasis: '350px' }}
+      >
+        <SignIn />
+        <Profile />
+      </Flex>
+      <Flex
+        flexDirection="column"
+        flexShrink="0"
+        gap="xl"
+        style={{ flex: 4, flexBasis: '400px' }}
+      >
+        <Payments />
+        <Search />
+      </Flex>
+      <Flex
+        flexDirection="column"
+        flexShrink="0"
+        gap="xl"
+        style={{ flex: 3, flexBasis: '300px' }}
+      >
+        <PictureCard />
+        <Confirm />
+      </Flex>
+    </Flex>
+  );
+};

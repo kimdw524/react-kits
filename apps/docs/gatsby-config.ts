@@ -20,6 +20,21 @@ const config: GatsbyConfig = {
       },
       __key: 'pages',
     },
+    {
+      resolve: 'gatsby-plugin-portal',
+      options: {
+        key: 'container',
+        id: 'container',
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-alias-imports',
+      options: {
+        alias: {
+          '@/*': 'src/*',
+        },
+      },
+    },
   ],
   jsxRuntime: 'automatic',
 };

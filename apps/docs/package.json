@@ -16,23 +16,17 @@
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit"
   },
-  "imports": {
-    "#*": [
-      "./src/*",
-      "./src/*/index.ts",
-      "./src/*/index.tsx"
-    ]
-  },
   "dependencies": {
+    "@kimdw-rtk/animation": "workspace:^",
     "@kimdw-rtk/ui": "workspace:^",
     "@kimdw-rtk/utils": "workspace:^",
     "@mdx-js/react": "^3.1.1",
     "@vanilla-extract/css": "^1.17.4",
-    "@vanilla-extract/webpack-plugin": "^2.3.22",
     "gatsby": "^5.14.6",
     "gatsby-plugin-mdx": "^5.15.0",
     "gatsby-plugin-vanilla-extract": "^4.0.2",
     "gatsby-source-filesystem": "^5.15.0",
+    "lucide-react": "^0.503.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -41,6 +35,9 @@
     "@types/node": "^20.11.19",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
+    "@vanilla-extract/webpack-plugin": "^2.3.22",
+    "gatsby-plugin-alias-imports": "^1.0.5",
+    "gatsby-plugin-portal": "^1.0.7",
     "typescript": "^5.3.3"
   }
 }

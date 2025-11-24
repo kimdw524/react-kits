@@ -1,9 +1,13 @@
+import { createVar } from '@vanilla-extract/css';
+
 import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { semanticColor } from '#tokens';
+import { semanticColor, spacing } from '#tokens';
 
 import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 import { cardInteraction } from './CardInteraction.css';
+
+export const paddingVar = createVar();
 
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
@@ -29,7 +33,6 @@ export const card = recipeWithLayer({
   base: {
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
     position: 'relative',
 
     borderRadius: theme.borderRadius,
@@ -90,6 +93,38 @@ export const card = recipeWithLayer({
       ...scaleColors,
       transparent: {
         backgroundColor: 'transparent',
+      },
+    },
+
+    size: {
+      sm: {
+        vars: {
+          [paddingVar]: spacing.sm,
+        },
+      },
+
+      md: {
+        vars: {
+          [paddingVar]: spacing.md,
+        },
+      },
+
+      lg: {
+        vars: {
+          [paddingVar]: spacing.lg,
+        },
+      },
+
+      xl: {
+        vars: {
+          [paddingVar]: spacing.xl,
+        },
+      },
+
+      '2xl': {
+        vars: {
+          [paddingVar]: spacing['2xl'],
+        },
       },
     },
   },
