@@ -16,7 +16,7 @@ const config: GatsbyConfig = {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'pages',
-        path: './src/pages/',
+        path: './src/docs/',
       },
       __key: 'pages',
     },
@@ -35,6 +35,8 @@ const config: GatsbyConfig = {
         },
       },
     },
+    'ignore-mini-css-extract-warning',
+    'docs-generator',
   ],
   jsxRuntime: 'automatic',
 };
