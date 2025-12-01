@@ -5,7 +5,7 @@ import type { GatsbyNode, PluginOptions } from 'gatsby';
 import { Project } from 'ts-morph';
 
 import { DocsMeta } from './types';
-import { mapProps, parseObject } from './utils';
+import { getImportStatement, mapProps, parseObject } from './utils';
 
 const getOptions = (options: PluginOptions) => {
   const tsconfig = (options.tsconfig ?? 'tsconfig.json') as string;
@@ -101,6 +101,7 @@ export const createPages: GatsbyNode['createPages'] = async (
       component: template,
       context: {
         name: component.displayName,
+        importStatement: getImportStatement(project, file),
         props: mapProps(object, component),
       } satisfies DocsMeta,
     });

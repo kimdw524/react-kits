@@ -2,6 +2,7 @@ import { ComponentProps, ElementType } from 'react';
 
 export interface DocsMeta {
   name: string;
+  importStatement?: string;
   props: {
     name: string;
     isRequired: boolean;
