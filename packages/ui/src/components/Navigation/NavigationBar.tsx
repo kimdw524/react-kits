@@ -14,7 +14,9 @@ type NavigationBarProps = UIComponent<'nav', typeof s.navigationBar>;
 
 export const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
   ({ className, size = 'md', sx: propSx, ...props }, ref) => {
-    const isScrolled = useIsScrolled(window);
+    const isScrolled = useIsScrolled(
+      typeof window === 'undefined' ? undefined : window,
+    );
 
     return (
       <nav

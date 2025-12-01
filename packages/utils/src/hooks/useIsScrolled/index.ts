@@ -5,11 +5,15 @@ import { useEffect, useState, type RefObject } from 'react';
 export const useIsScrolled = <
   T extends RefObject<HTMLElement | null> | typeof window,
 >(
-  element: T,
+  element?: T,
 ) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
+    if (element === undefined) {
+      return;
+    }
+
     const current = element instanceof Window ? element : element.current;
     if (current === null) {
       return;

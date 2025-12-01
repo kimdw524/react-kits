@@ -111,14 +111,15 @@ export const OverlayProvider = ({
   return (
     <OverlayContext.Provider value={contextValue}>
       {children}
-      {createPortal(
-        overlays.map((overlay) => (
-          <OverlayIdContext.Provider key={overlay.id} value={overlay.id}>
-            <Overlay {...overlay}>{overlay.children}</Overlay>
-          </OverlayIdContext.Provider>
-        )),
-        container,
-      )}
+      {typeof window !== 'undefined' &&
+        createPortal(
+          overlays.map((overlay) => (
+            <OverlayIdContext.Provider key={overlay.id} value={overlay.id}>
+              <Overlay {...overlay}>{overlay.children}</Overlay>
+            </OverlayIdContext.Provider>
+          )),
+          container,
+        )}
     </OverlayContext.Provider>
   );
 };
