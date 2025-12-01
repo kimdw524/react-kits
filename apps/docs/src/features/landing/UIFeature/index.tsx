@@ -1,11 +1,12 @@
 import { Typography } from '@kimdw-rtk/ui';
+import { StaticImage } from 'gatsby-plugin-image';
 
 import { FeatureBox } from '../FeatureBox';
 import { FeatureCard } from '../FeatureCard';
 import { FeatureContent } from '../FeatureContent';
 import { FeatureDescription } from '../FeatureDescription';
 
-export const ComponentFeature = () => {
+export const UIFeature = () => {
   return (
     <FeatureBox header="Fast UI Development">
       <FeatureDescription>
@@ -30,10 +31,11 @@ export const ComponentFeature = () => {
         </FeatureCard>
       </FeatureDescription>
       <FeatureContent>
-        <img
-          src="/images/features_component.png"
-          alt="Component"
-          style={{ width: '100%' }}
+        <StaticImage
+          src="../../../assets/images/ui.png"
+          alt="UI Image"
+          placeholder="blurred"
+          layout="fullWidth"
         />
       </FeatureContent>
     </FeatureBox>

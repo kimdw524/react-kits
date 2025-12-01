@@ -16,16 +16,24 @@ import '@/styles/globalStyle.css.ts';
 interface LayoutProps {
   children: ReactNode;
   size?: ComponentProps<typeof Container>['size'];
+  stripContainer?: boolean;
 }
 
-export const Layout = ({ children, size = 'md' }: LayoutProps) => {
+export const Layout = ({
+  children,
+  size = 'md',
+  stripContainer = false,
+}: LayoutProps) => {
   return (
     <>
       <header>
         <NavigationBar size="sm">
           <NavigationContainer
-            size="lg"
-            sx={{ paddingX: { desktop: '2xl', mobile: 'xl' } }}
+            size={stripContainer ? undefined : size}
+            sx={{
+              paddingX: { desktop: '2xl', mobile: 'xl' },
+              width: stripContainer ? '100%' : undefined,
+            }}
           >
             <NavigationDrawer
               menu={
@@ -52,7 +60,11 @@ export const Layout = ({ children, size = 'md' }: LayoutProps) => {
         </NavigationBar>
       </header>
       <main>
-        <Container size={size}>{children}</Container>
+        {stripContainer ? (
+          children
+        ) : (
+          <Container size={size}>{children}</Container>
+        )}
       </main>
     </>
   );
