@@ -1,4 +1,5 @@
 import { Typography } from '@kimdw-rtk/ui';
+import { StaticImage } from 'gatsby-plugin-image';
 
 import { FeatureBox } from '../FeatureBox';
 import { FeatureCard } from '../FeatureCard';
@@ -27,10 +28,11 @@ export const UtilsFeature = () => {
         </FeatureCard>
       </FeatureDescription>
       <FeatureContent>
-        <img
-          src="/images/features_utils.png"
-          alt="Component"
-          style={{ width: '100%' }}
+        <StaticImage
+          src="../../../assets/images/utils.png"
+          alt="Utils Image"
+          placeholder="blurred"
+          layout="fullWidth"
         />
       </FeatureContent>
     </FeatureBox>

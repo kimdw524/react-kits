@@ -24,9 +24,12 @@
     "@mdx-js/react": "^3.1.1",
     "@vanilla-extract/css": "^1.17.4",
     "gatsby": "^5.14.6",
+    "gatsby-plugin-image": "^3.15.0",
     "gatsby-plugin-mdx": "^5.15.0",
+    "gatsby-plugin-sharp": "^5.15.0",
     "gatsby-plugin-vanilla-extract": "^4.0.2",
     "gatsby-source-filesystem": "^5.15.0",
+    "gatsby-transformer-sharp": "^5.15.0",
     "lucide-react": "^0.503.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

@@ -1,5 +1,5 @@
 export * from './AnimationFeature';
-export * from './ComponentFeature';
+export * from './UIFeature';
 export * from './FeatureBox';
 export * from './FeatureCard';
 export * from './FeatureContent';

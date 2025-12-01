@@ -5,7 +5,6 @@ import {
   CardContent,
   CardHeader,
   CardInteraction,
-  CardThumbnail,
   Typography,
 } from '@kimdw-rtk/ui';
 
@@ -13,7 +12,6 @@ export const PictureCard = (props: ComponentProps<typeof Card>) => {
   return (
     <Card size="xl" {...props}>
       <CardInteraction>
-        <CardThumbnail src="/images/sample.png" />
         <CardHeader>
           <Typography fontSize="lg" fontWeight="medium" isEllipsis>
             A Refreshing Morning Hike at Maple Ridge

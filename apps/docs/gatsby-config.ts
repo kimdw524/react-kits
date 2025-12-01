@@ -1,4 +1,5 @@
 import type { GatsbyConfig } from 'gatsby';
+import path from 'path';
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -12,14 +13,9 @@ const config: GatsbyConfig = {
   plugins: [
     'gatsby-plugin-vanilla-extract',
     'gatsby-plugin-mdx',
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'pages',
-        path: './src/docs/',
-      },
-      __key: 'pages',
-    },
+    'gatsby-plugin-image',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-plugin-portal',
       options: {
@@ -36,7 +32,12 @@ const config: GatsbyConfig = {
       },
     },
     'ignore-mini-css-extract-warning',
-    'docs-generator',
+    {
+      resolve: 'docs-generator',
+      options: {
+        template: path.resolve('./src/templates/DocumentTemplate.tsx'),
+      },
+    },
   ],
   jsxRuntime: 'automatic',
 };

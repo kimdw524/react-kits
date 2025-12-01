@@ -3,7 +3,7 @@ import { type HeadFC, type PageProps } from 'gatsby';
 
 import {
   AnimationFeature,
-  ComponentFeature,
+  UIFeature,
   HeroSection,
   UtilsFeature,
 } from '@/features/landing';
@@ -17,7 +17,7 @@ const LandingPage: React.FC<PageProps> = () => {
         {/* Feature */}
         <section>
           <Flex flexDirection="column" style={{ gap: '20vh' }}>
-            <ComponentFeature />
+            <UIFeature />
             <AnimationFeature />
             <UtilsFeature />
           </Flex>
