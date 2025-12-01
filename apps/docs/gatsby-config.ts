@@ -4,8 +4,9 @@ import path from 'path';
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `react-kits docs`,
-    siteUrl: `https://www.yourdomain.tld`,
+    siteUrl: `https://kimdw524.github.io/react-kits`,
   },
+  pathPrefix: '/react-kits',
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
