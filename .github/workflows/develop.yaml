@@ -16,6 +16,12 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        react-version: [18, 19]
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -35,6 +41,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install React ${{ matrix.react-version }} (and types)
+        run: |
+          echo "Installing react@${{ matrix.react-version }}"
+
+          pnpm add -w react@${{ matrix.react-version }} react-dom@${{ matrix.react-version }}
+          pnpm add -w -D @types/react@${{ matrix.react-version }} @types/react-dom@${{ matrix.react-version }}
+
       - name: Get changed packages
         id: changed
         run: |
@@ -45,7 +58,7 @@ jobs:
         if: ${{ steps.changed.outputs.changed_packages }}
         run: |
           for pkg in ${{ steps.changed.outputs.changed_packages }}; do
-            pnpm --filter $pkg install --frozen-lockfile
+            pnpm --filter $pkg install --no-frozen-lockfile
             pnpm --filter $pkg check-types
             pnpm --filter $pkg lint
             pnpm --filter $pkg test
