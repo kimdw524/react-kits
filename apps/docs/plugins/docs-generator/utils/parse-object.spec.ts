@@ -1,6 +1,6 @@
 import { Project, ScriptTarget } from 'ts-morph';
 
-import { parseObject } from './';
+import { parseObject } from './parse-object';
 
 const createTempFile = (
   project: Project,
