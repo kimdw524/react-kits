@@ -33,15 +33,15 @@ const config: GatsbyConfig = {
 | include  | `string` \| `string[]` | `'src/docs/**/*_.ts'` | 문서 생성에 필요한 정보를 포함하고 있는 TS 파일들의 glob 경로입니다.                                         |
 | tsconfig | `string`               | `'tsconfig.json'`     | 타입 추출에 사용될 프로젝트의 `tsconfig.json` 파일 경로입니다.                                               |
 
-### 문서 페이지 생성에 필요한 데이터 입력하기
+## 문서 페이지 생성하기
 
 glob이 탐색할 수 있는 경로(option.include)에 아래와 같은 형태의 ts파일을 생성하세요.
 
-- 파일 이름은 중요하지 않습니다.
 - Component를 반드시 export 해야 합니다.
 - props에 대한 설명은 반드시 식별자가 아닌, 객체 리터럴 자체를 default export 해야 합니다.
 - optional props는 description이 존재하는 경우에만 문서에 명시됩니다.
 - required props는 description이 없더라도 타입 정보가 문서에 명시됩니다.
+- 파일 이름은 중요하지 않습니다.
 
 ```typescript
 import { Button } from '@kimdw-rtk/ui';
@@ -57,25 +57,9 @@ export default {
 } satisfies DocsProps<typeof Button>;
 ```
 
-### template pageContext
-
-```typescript
-interface DocsMeta {
-  name: string; // component의 displayName
-  props: {
-    name: string;
-    isRequired: boolean;
-    type: string;
-    typeRaw?: string;
-    description?: string;
-  }[];
-}
-```
-
-### 문서 목록 가져오기
+## 문서 목록 가져오기
 
 문서의 목록은 static query를 통해 가져올 수 있습니다.
-문서의 내용은 제공되지 않고 template의 pageContext를 활용해야 합니다.
 
 ```typescript
 const data = useStaticQuery(graphql`
@@ -92,7 +76,9 @@ const data = useStaticQuery(graphql`
 `);
 ```
 
-## Template Sample
+## Gatsby Template 만들기
+
+### Template Sample
 
 ```typescript
 import React from 'react';
@@ -123,3 +109,24 @@ const DocumentTemplate: React.FC<PageProps> = ({ pageContext }) => {
 
 export default DocumentTemplate;
 ```
+
+### pageContext Interface
+
+```typescript
+interface DocsMeta {
+  name: string; // 컴포넌트의 displayName
+  importStatement?: string; // 컴포넌트 사용에 필요한 import문
+  props: {
+    name: string;
+    isRequired: boolean;
+    type: string;
+    defaultValue?: string;
+    typeRaw?: string;
+    description?: string;
+  }[];
+}
+```
+
+## 플러그인 기반으로 생성한 문서 페이지 예시
+
+<img src="./docs/sample.png" alt="구현 예시" />
