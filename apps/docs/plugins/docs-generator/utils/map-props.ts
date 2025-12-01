@@ -22,6 +22,7 @@ export const mapProps = (
       isRequired: component.props[prop].required,
       type: component.props[prop].type.name,
       typeRaw: component.props[prop].type.raw,
+      defaultValue: component.props[prop].defaultValue?.value,
       description:
         object[prop] === undefined ? undefined : String(object[prop]),
     });
