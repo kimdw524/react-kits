@@ -68,6 +68,10 @@
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
       "./theme": {
         "import": "./dist/themes/theme.css.js",
         "types": "./dist/themes/theme.css.d.ts"
