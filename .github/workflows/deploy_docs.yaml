@@ -32,7 +32,6 @@ jobs:
           git fetch
           git checkout react-kits || git checkout -b react-kits
 
-          # dist 폴더만 비움
           mkdir -p dist
           rm -rf dist/*
 
