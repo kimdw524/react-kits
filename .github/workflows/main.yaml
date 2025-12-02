@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
@@ -87,3 +84,14 @@ jobs:
             pnpm --filter $pkg build
             pnpm --filter $pkg publish --access public --no-git-checks
           done
+
+      - name: Sync develop with main
+        if: ${{ steps.changed.outputs.changed_packages }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin
+          git checkout develop
+          git merge origin/main --no-edit || true
+          git push origin develop
