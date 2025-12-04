@@ -6,4 +6,6 @@ export const spacing = {
   xl: '1em',
   '2xl': '1.5em',
   '3xl': '2em',
+  '4xl': '3em',
+  '5xl': '4em',
 } as const;

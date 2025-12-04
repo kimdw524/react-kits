@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import clsx from 'clsx';
 
 import { Box } from '#components';
@@ -6,20 +8,19 @@ import type { UIComponent } from '#types';
 
 type DialogFooterProps = Omit<UIComponent<'div'>, 'color'>;
 
-export const DialogFooter = ({
-  children,
-  className,
-  sx: propSx,
-  ...props
-}: DialogFooterProps) => {
-  return (
-    <Box
-      flex
-      justifyContent="flex-end"
-      className={clsx(className, sx(propSx))}
-      {...props}
-    >
-      {children}
-    </Box>
-  );
-};
+export const DialogFooter = forwardRef<HTMLDivElement, DialogFooterProps>(
+  ({ children, className, sx: propSx, ...props }, ref) => {
+    return (
+      <Box
+        ref={ref}
+        className={clsx(className, sx(propSx))}
+        justifyContent="flex-end"
+        flex
+        {...props}
+      >
+        {children}
+      </Box>
+    );
+  },
+);
+DialogFooter.displayName = 'DialogFooter';

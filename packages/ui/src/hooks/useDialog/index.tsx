@@ -35,8 +35,8 @@ export const useDialog = () => {
         push(
           <Confirm
             ref={dialogRef}
-            onConfirm={handleConfirm}
             onCancle={handleCancle}
+            onConfirm={handleConfirm}
           >
             {message}
           </Confirm>,

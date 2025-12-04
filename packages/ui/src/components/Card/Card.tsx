@@ -1,4 +1,4 @@
-import { type CSSProperties } from 'react';
+import { forwardRef, type CSSProperties } from 'react';
 
 import clsx from 'clsx';
 
@@ -12,23 +12,35 @@ interface CardProps extends UIComponent<'div', typeof s.card> {
   height?: CSSProperties['height'];
 }
 
-export const Card = ({
-  width,
-  height,
-  color = 'card',
-  variant = 'outlined',
-  className,
-  style,
-  sx: propSx,
-  ...props
-}: CardProps) => {
-  return (
-    <div
-      className={clsx(s.card({ color, variant }), className, sx(propSx))}
-      style={{ width, height, ...style }}
-      {...props}
-    />
-  );
-};
+export const Card = forwardRef<HTMLDivElement, CardProps>(
+  (
+    {
+      width,
+      height,
+      color = 'card',
+      variant = 'outlined',
+      size = 'md',
+      className,
+      style,
+      sx: propSx,
+      ...props
+    },
+    ref,
+  ) => {
+    return (
+      <div
+        ref={ref}
+        className={clsx(
+          s.card({ color, size, variant }),
+          className,
+          sx(propSx),
+        )}
+        style={{ width, height, ...style }}
+        {...props}
+      />
+    );
+  },
+);
+Card.displayName = 'Card';
 
 export { s as cardCss };

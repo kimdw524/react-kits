@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import clsx from 'clsx';
 
 import { Box } from '#components';
@@ -8,22 +10,21 @@ import * as s from './Dialog.css';
 
 type DialogProps = Omit<UIComponent<'div'>, 'color'>;
 
-export const Dialog = ({
-  children,
-  className,
-  sx: propSx,
-  ...props
-}: DialogProps) => {
-  return (
-    <Box
-      flex
-      flexDirection="row"
-      gap="lg"
-      boxShadow="border-sm"
-      className={clsx(s.container, className, sx(propSx))}
-      {...props}
-    >
-      {children}
-    </Box>
-  );
-};
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
+  ({ children, className, sx: propSx, ...props }, ref) => {
+    return (
+      <Box
+        ref={ref}
+        boxShadow="border-sm"
+        className={clsx(s.container, className, sx(propSx))}
+        flexDirection="row"
+        gap="lg"
+        flex
+        {...props}
+      >
+        {children}
+      </Box>
+    );
+  },
+);
+Dialog.displayName = 'Dialog';

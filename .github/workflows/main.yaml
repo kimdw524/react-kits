@@ -1,0 +1,100 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: 20
+  PNPM_VERSION: 9.0.0
+
+jobs:
+  bump-and-publish:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=8192
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Get changed packages
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only ${{ github.event.before }}..${{ github.sha }} \
+          | grep '^packages/' \
+          | cut -d/ -f2 \
+          | sort -u \
+          | tr '\n' ' ')
+          echo "changed_packages=$CHANGED" >> $GITHUB_OUTPUT
+
+      - name: Bump changed packages
+        id: bump
+        if: ${{ steps.changed.outputs.changed_packages }}
+        run: |
+          set -e
+          UPDATES=""
+          for pkg in ${{ steps.changed.outputs.changed_packages }}; do
+            COMMITS=$(git log ${{ github.event.before }}..${{ github.sha }} --pretty=%B -- packages/$pkg || true)
+            echo "github.event.before: ${{ github.event.before }}"
+            echo "github.sha: ${{ github.sha }}"
+            echo $pkg
+            if echo "$COMMITS" | grep -q '^feat'; then
+              NEW_VERSION=$(pnpm --filter $pkg exec pnpm version minor --no-git-tag-version)
+            else
+              NEW_VERSION=$(pnpm --filter $pkg exec pnpm version patch --no-git-tag-version)
+            fi
+            UPDATES="$UPDATES$pkg to $NEW_VERSION "
+          done
+          echo "version_updates=$UPDATES" >> $GITHUB_OUTPUT
+
+      - name: Commit
+        if: ${{ steps.changed.outputs.changed_packages }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add **/package.json
+          COMMIT_MSG="Bump ${{ steps.bump.outputs.version_updates }}"
+          git commit -m "$COMMIT_MSG"
+          git push
+
+      - name: Build and publish changed packages
+        if: ${{ steps.changed.outputs.changed_packages }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+          for pkg in ${{ steps.changed.outputs.changed_packages }}; do
+            pnpm --filter $pkg build
+            pnpm --filter $pkg publish --access public --no-git-checks
+          done
+
+      - name: Sync develop with main
+        if: ${{ steps.changed.outputs.changed_packages }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin
+          git checkout develop
+
+          LATEST_MAIN=$(git rev-parse origin/main)
+          git cherry-pick $LATEST_MAIN || true
+
+          git push origin develop

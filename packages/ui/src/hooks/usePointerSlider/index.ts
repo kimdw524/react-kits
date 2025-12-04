@@ -26,7 +26,7 @@ export const usePointerSlider = <T extends React.RefObject<HTMLElement | null>>(
       return;
     }
 
-    element.style.left = `${((value - min) / (max - min)) * 100}%`;
+    element.style.left = `${((defaultValue - min) / (max - min)) * 100}%`;
 
     const handlePointerDown = (e: PointerEvent) => {
       element.setPointerCapture(e.pointerId);
@@ -73,7 +73,7 @@ export const usePointerSlider = <T extends React.RefObject<HTMLElement | null>>(
       element.removeEventListener('pointermove', handlePointerMove);
       element.removeEventListener('pointerup', handlePointerUp);
     };
-  }, [ref, max, min]);
+  }, [ref, max, min, defaultValue]);
 
   return value;
 };

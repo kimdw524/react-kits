@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import { clsx } from 'clsx';
 
 import { sx } from '#styles';
@@ -9,21 +11,28 @@ interface TextFieldProps extends UIComponent<'input', typeof s.textField> {
   type?: React.HTMLInputTypeAttribute;
 }
 
-export const TextField = ({
-  className,
-  type = 'text',
-  size = 'md',
-  color = 'primary',
-  sx: propSx,
-  ...props
-}: TextFieldProps) => {
-  return (
-    <input
-      type={type}
-      className={clsx(className, s.textField({ size, color }), sx(propSx))}
-      {...props}
-    />
-  );
-};
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+  (
+    {
+      className,
+      type = 'text',
+      size = 'md',
+      color = 'primary',
+      sx: propSx,
+      ...props
+    },
+    ref,
+  ) => {
+    return (
+      <input
+        ref={ref}
+        className={clsx(className, s.textField({ size, color }), sx(propSx))}
+        type={type}
+        {...props}
+      />
+    );
+  },
+);
+TextField.displayName = 'TextField';
 
 export { s as textFieldCss };

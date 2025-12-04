@@ -1,8 +1,8 @@
 'use client';
 
 import {
+  forwardRef,
   useEffect,
-  useImperativeHandle,
   useReducer,
   useRef,
   type ComponentProps,
@@ -10,6 +10,7 @@ import {
   type RefObject,
 } from 'react';
 
+import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
 import { sx } from '#styles';
@@ -30,84 +31,81 @@ interface SelectProps
   onChange?: (value: string | undefined) => void;
 }
 
-export const Select = ({
-  children,
-  ref,
-  className,
-  style,
-  name,
-  defaultValue,
-  width = '100%',
-  size = 'md',
-  sx: propSx,
-  variant = 'outlined',
-  onChange,
-  ...props
-}: SelectProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const [state, dispatch] = useReducer(selectReducer, {
-    isActive: false,
-    containerRef,
-    defaultValue,
-    items: new Map(),
-  });
-
-  useImperativeHandle(
+export const Select = forwardRef<HTMLDivElement, SelectProps>(
+  (
+    {
+      children,
+      className,
+      style,
+      name,
+      defaultValue,
+      width = '100%',
+      size = 'md',
+      sx: propSx,
+      variant = 'outlined',
+      onChange,
+      ...props
+    },
     ref,
-    () => ({
-      value: state.selected,
-    }),
-    [state.selected],
-  );
+  ) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const targetRef = useCombinedRefs(ref, containerRef);
+    const [state, dispatch] = useReducer(selectReducer, {
+      isActive: false,
+      containerRef,
+      defaultValue,
+      items: new Map(),
+    });
 
-  useEffect(() => {
-    const container = containerRef.current;
+    useEffect(() => {
+      const container = containerRef.current;
 
-    if (!container) {
-      return;
-    }
-
-    const handleOutsideClick = (e: MouseEvent) => {
-      if (container.contains(e.target as Node) || !state.isActive) {
+      if (!container) {
         return;
       }
 
-      dispatch({ type: 'TOGGLE' });
-    };
+      const handleOutsideClick = (e: MouseEvent) => {
+        if (container.contains(e.target as Node) || !state.isActive) {
+          return;
+        }
 
-    window.addEventListener('mousedown', handleOutsideClick);
+        dispatch({ type: 'TOGGLE' });
+      };
 
-    return () => {
-      window.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [state.isActive, dispatch]);
+      window.addEventListener('mousedown', handleOutsideClick);
 
-  useEffect(() => {
-    if (!onChange || !state.items.size) {
-      return;
-    }
+      return () => {
+        window.removeEventListener('mousedown', handleOutsideClick);
+      };
+    }, [state.isActive, dispatch]);
 
-    onChange(state.selected);
-    //eslint-disable-next-line
-  }, [state.selected]);
+    useEffect(() => {
+      if (!onChange || !state.items.size) {
+        return;
+      }
 
-  return (
-    <SelectContext.Provider value={{ state, dispatch }}>
-      <div
-        ref={containerRef}
-        style={{ ...style, width }}
-        className={clsx(s.select({ size }), className, sx(propSx))}
-        {...props}
-      >
-        <SelectTrigger variant={variant}>
-          {state.selected !== null && state.items.get(state.selected || '')}
-        </SelectTrigger>
-        <SelectOptionList>{children}</SelectOptionList>
-        <input type="hidden" name={name} value={state.selected || ''} />
-      </div>
-    </SelectContext.Provider>
-  );
-};
+      onChange(state.selected);
+      //eslint-disable-next-line
+    }, [state.selected]);
+
+    return (
+      <SelectContext.Provider value={{ state, dispatch }}>
+        <div
+          ref={targetRef}
+          className={clsx(s.select({ size }), className, sx(propSx))}
+          style={{ ...style, width }}
+          {...props}
+        >
+          <SelectTrigger variant={variant}>
+            {state.selected !== null && state.items.get(state.selected || '')}
+          </SelectTrigger>
+          <SelectOptionList>{children}</SelectOptionList>
+          <input name={name} type="hidden" value={state.selected || ''} />
+        </div>
+      </SelectContext.Provider>
+    );
+  },
+);
+Select.displayName = 'Select';
 
 export { s as selectCss };

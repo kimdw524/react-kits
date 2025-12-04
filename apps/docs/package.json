@@ -1,0 +1,54 @@
+{
+  "name": "react-kits-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "react-kits-docs",
+  "author": "kimdw524",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build --prefix-paths",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "typecheck": "tsc --noEmit",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@kimdw-rtk/animation": "workspace:^",
+    "@kimdw-rtk/ui": "workspace:^",
+    "@kimdw-rtk/utils": "workspace:^",
+    "@mdx-js/react": "^3.1.1",
+    "@vanilla-extract/css": "^1.17.4",
+    "gatsby": "^5.14.6",
+    "gatsby-plugin-image": "^3.15.0",
+    "gatsby-plugin-mdx": "^5.15.0",
+    "gatsby-plugin-sharp": "^5.15.0",
+    "gatsby-plugin-vanilla-extract": "^4.0.2",
+    "gatsby-source-filesystem": "^5.15.0",
+    "gatsby-transformer-sharp": "^5.15.0",
+    "lucide-react": "^0.503.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.28.5",
+    "@repo/eslint-config": "workspace:^",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.11.19",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vanilla-extract/webpack-plugin": "^2.3.22",
+    "babel-jest": "^30.2.0",
+    "babel-preset-gatsby": "^3.15.0",
+    "gatsby-plugin-alias-imports": "^1.0.5",
+    "gatsby-plugin-portal": "^1.0.7",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.4",
+    "typescript": "^5.3.3"
+  }
+}

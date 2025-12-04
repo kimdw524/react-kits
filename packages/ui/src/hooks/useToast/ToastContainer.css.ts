@@ -9,4 +9,5 @@ export const container = style({
   right: '1rem',
   bottom: '1rem',
   left: '1rem',
+  zIndex: '110',
 });

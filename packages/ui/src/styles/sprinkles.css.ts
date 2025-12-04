@@ -1,3 +1,4 @@
+import { createVar } from '@vanilla-extract/css';
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
 import { sprinklesLayer } from '#styles';
@@ -28,12 +29,33 @@ const colors = Object.assign(
   ],
 ) as Record<keyof Color | keyof SemanticColor, string>;
 
+export const gradientFrom = createVar();
+export const gradientTo = createVar();
+
 export const colorProperties = defineProperties({
   '@layer': sprinklesLayer,
   properties: {
     color: colors,
     borderColor: colors,
     backgroundColor: colors,
+    gradientFrom: {
+      ...(Object.entries(colors).reduce(
+        (prev, [key, value]) => ({
+          ...prev,
+          [key]: { vars: { [gradientFrom]: value } },
+        }),
+        {},
+      ) as Record<keyof Color | keyof SemanticColor, string>),
+    },
+    gradientTo: {
+      ...(Object.entries(colors).reduce(
+        (prev, [key, value]) => ({
+          ...prev,
+          [key]: { vars: { [gradientTo]: value } },
+        }),
+        {},
+      ) as Record<keyof Color | keyof SemanticColor, string>),
+    },
   },
 });
 
@@ -117,14 +139,21 @@ export const typographyProperties = defineProperties({
   '@layer': sprinklesLayer,
   conditions: {
     mobile: {},
-    desktop: { '@media': `screen and (min-width: ${breakpoint.md}px)` },
+    desktop: { '@media': `screen and (min-width: ${breakpoint.md})` },
   },
   defaultCondition: 'mobile',
   properties: {
     lineHeight: typography.lineHeight,
     fontSize: typography.size,
     fontWeight: typography.weight,
+    letterSpacing: ['1px'],
     wordBreak: ['break-all', 'break-word', 'keep-all'],
+    textAlign: {
+      left: 'left',
+      right: 'right',
+      center: 'center',
+      inherit: 'inherit',
+    },
   },
 });
 

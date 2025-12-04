@@ -1,21 +1,26 @@
+import { forwardRef, type ComponentProps } from 'react';
+
 import clsx from 'clsx';
 
+import { Container } from '#components';
 import { sx } from '#styles';
-import type { UIComponent } from '#types';
 
 import * as s from './NavigationContainer.css';
 
-type NavigationContainerProps = UIComponent<'div'>;
+type NavigationContainerProps = ComponentProps<typeof Container>;
 
-export const NavigationContainer = ({
-  children,
-  className,
-  sx: propSx,
-  ...props
-}: NavigationContainerProps) => {
+export const NavigationContainer = forwardRef<
+  HTMLDivElement,
+  NavigationContainerProps
+>(({ children, className, sx: propSx, ...props }, ref) => {
   return (
-    <div className={clsx(className, s.container, sx(propSx))} {...props}>
+    <Container
+      ref={ref}
+      className={clsx(className, s.container, sx(propSx))}
+      {...props}
+    >
       {children}
-    </div>
+    </Container>
   );
-};
+});
+NavigationContainer.displayName = 'NavigationContainer';

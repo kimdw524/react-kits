@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import { clsx } from 'clsx';
 
 import { sx } from '#styles';
@@ -7,12 +9,15 @@ import * as s from './CardContent.css';
 
 type CardContentProps = UIComponent<'div'>;
 
-export const CardContent = ({
-  className,
-  sx: propSx,
-  ...props
-}: CardContentProps) => {
-  return (
-    <div className={clsx(s.cardContent, className, sx(propSx))} {...props} />
-  );
-};
+export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
+  ({ className, sx: propSx, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={clsx(s.cardContent, className, sx(propSx))}
+        {...props}
+      />
+    );
+  },
+);
+CardContent.displayName = 'CardContent';

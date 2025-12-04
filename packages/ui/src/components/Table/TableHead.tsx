@@ -22,8 +22,8 @@ export const TableHead = ({
 }: TableHeadProps) => {
   return (
     <th
-      style={{ ...style, width, textAlign }}
       className={clsx(s.tableHead, className, sx(propSx))}
+      style={{ ...style, width, textAlign }}
       {...props}
     />
   );

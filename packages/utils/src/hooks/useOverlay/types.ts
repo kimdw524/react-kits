@@ -41,4 +41,5 @@ export interface OverlayProps extends OverlayPushOption {
 
 export interface OverlayProviderProps extends OverlayOption {
   children: ReactNode;
+  container: HTMLElement;
 }

@@ -6,19 +6,19 @@ describe('useIsScrolled', () => {
   expect(Object.create(Window.prototype) instanceof Window).toBe(true);
 
   it('element가 세로 스크롤이 됐을 때만 true를 반환한다.', () => {
-    const div = document.createElement('div');
+    const div = { current: document.createElement('div') };
     const { result } = renderHook(() => useIsScrolled(div));
 
     act(() => {
-      div.scrollTop = 0;
-      div.dispatchEvent(new Event('scroll'));
+      div.current.scrollTop = 0;
+      div.current.dispatchEvent(new Event('scroll'));
     });
 
     expect(result.current).toBe(false);
 
     act(() => {
-      div.scrollTop = 10;
-      div.dispatchEvent(new Event('scroll'));
+      div.current.scrollTop = 10;
+      div.current.dispatchEvent(new Event('scroll'));
     });
 
     expect(result.current).toBe(true);

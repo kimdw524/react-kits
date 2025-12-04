@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import clsx from 'clsx';
 
 import { sprinkles, type SprinklesProps } from '#styles';
@@ -14,35 +16,63 @@ type TypographyProps<T extends TypographyElement = TypographyElement> = Omit<
     fontSize?: SprinklesProps['fontSize'];
     fontWeight?: SprinklesProps['fontWeight'];
     lineHeight?: SprinklesProps['lineHeight'];
+    textAlign?: SprinklesProps['textAlign'];
+    letterSpacing?: SprinklesProps['letterSpacing'];
+    wordBreak?: SprinklesProps['wordBreak'];
+    gradientFrom?: SprinklesProps['gradientFrom'];
+    gradientTo?: SprinklesProps['gradientTo'];
   },
   'ref'
 >;
 
-export const Typography = ({
-  children,
-  as: Component = 'p',
-  className,
-  color = 'foreground',
-  fontSize = 'md',
-  fontWeight = 'normal',
-  lineHeight,
-  isEllipsis = false,
-  sx,
-  ...props
-}: TypographyProps) => {
-  return (
-    <Component
-      className={clsx(
-        s.typography({ isEllipsis }),
-        sprinkles({ color, fontSize, fontWeight, lineHeight }),
-        sx && sprinkles(sx),
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </Component>
-  );
-};
+export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
+  (
+    {
+      children,
+      as: Component = 'p',
+      className,
+      color = 'foreground',
+      fontSize = 'md',
+      fontWeight = 'normal',
+      lineHeight,
+      textAlign,
+      letterSpacing,
+      wordBreak,
+      gradientFrom,
+      gradientTo,
+      isEllipsis = false,
+      isGradient = false,
+      sx,
+      ...props
+    },
+    ref,
+  ) => {
+    return (
+      <Component
+        ref={ref}
+        className={clsx(
+          s.typography({ isEllipsis, isGradient }),
+          sprinkles({
+            color,
+            fontSize,
+            fontWeight,
+            lineHeight,
+            textAlign,
+            letterSpacing,
+            wordBreak,
+            gradientFrom,
+            gradientTo,
+          }),
+          sx && sprinkles(sx),
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </Component>
+    );
+  },
+);
+Typography.displayName = 'Typography';
 
 export { s as typographyCss };

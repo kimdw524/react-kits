@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext } from 'react';
+import { forwardRef, useContext } from 'react';
 
 import clsx from 'clsx';
 
@@ -14,32 +14,30 @@ interface TabsTriggerProps extends UIComponent<'button'> {
   value: number | string;
 }
 
-export const TabsTrigger = ({
-  children,
-  value,
-  className,
-  sx: propSx,
-  ...props
-}: TabsTriggerProps) => {
-  const tabsContext = useContext(TabsContext);
+export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
+  ({ children, value, className, sx: propSx, ...props }, ref) => {
+    const tabsContext = useContext(TabsContext);
 
-  if (tabsContext === undefined) {
-    throw new Error('TabsTrigger must be used within a Tabs.');
-  }
+    if (tabsContext === undefined) {
+      throw new Error('TabsTrigger must be used within a Tabs.');
+    }
 
-  const isSelected = tabsContext.value === value;
+    const isSelected = tabsContext.value === value;
 
-  const handleClick = () => {
-    tabsContext.setValue(value);
-  };
+    const handleClick = () => {
+      tabsContext.setValue(value);
+    };
 
-  return (
-    <button
-      className={clsx(className, s.container({ isSelected }), sx(propSx))}
-      onClick={handleClick}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
+    return (
+      <button
+        ref={ref}
+        className={clsx(className, s.container({ isSelected }), sx(propSx))}
+        onClick={handleClick}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  },
+);
+TabsTrigger.displayName = 'TabsTrigger';

@@ -1,12 +1,17 @@
 {
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "rootDir": "./src",
     "outDir": "dist",
     "types": ["@testing-library/jest-dom"],
     "lib": ["ESNext", "DOM"],
-    "target": "ESNext"
+    "module": "ESNext",
+    "target": "ESNext",
+    "declaration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "**/*.spec.*"]
 }

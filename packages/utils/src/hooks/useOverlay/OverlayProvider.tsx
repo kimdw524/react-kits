@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { Overlay } from './Overlay';
 import { OverlayContext } from './OverlayContext';
@@ -9,6 +10,7 @@ import type { OverlayProps, OverlayProviderProps, OverlayPush } from './types';
 
 export const OverlayProvider = ({
   children,
+  container,
   className,
   closeOnBack = true,
   closeOnBackdropClick = true,
@@ -109,11 +111,15 @@ export const OverlayProvider = ({
   return (
     <OverlayContext.Provider value={contextValue}>
       {children}
-      {overlays.map((overlay) => (
-        <OverlayIdContext.Provider key={overlay.id} value={overlay.id}>
-          <Overlay {...overlay}>{overlay.children}</Overlay>
-        </OverlayIdContext.Provider>
-      ))}
+      {typeof window !== 'undefined' &&
+        createPortal(
+          overlays.map((overlay) => (
+            <OverlayIdContext.Provider key={overlay.id} value={overlay.id}>
+              <Overlay {...overlay}>{overlay.children}</Overlay>
+            </OverlayIdContext.Provider>
+          )),
+          container,
+        )}
     </OverlayContext.Provider>
   );
 };
