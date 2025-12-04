@@ -93,5 +93,8 @@ jobs:
 
           git fetch origin
           git checkout develop
-          git merge origin/main --no-edit || true
+
+          LATEST_MAIN=$(git rev-parse origin/main)
+          git cherry-pick $LATEST_MAIN || true
+
           git push origin develop
