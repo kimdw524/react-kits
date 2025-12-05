@@ -3,7 +3,6 @@
   "version": "0.1.1",
   "private": false,
   "type": "module",
-  "main": "./src/index.ts",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component",
@@ -65,15 +64,17 @@
   },
   "publishConfig": {
     "access": "public",
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
+    "imports": {
+      "#*": "./dist/*/index.js",
+      "#styleUtils": "./dist/utils/styleUtils.css.js"
+    },
     "exports": {
       ".": {
-        "import": "./dist/index.js",
+        "module": "./dist/index.js",
         "types": "./dist/index.d.ts"
       },
       "./theme": {
-        "import": "./dist/themes/theme.css.js",
+        "module": "./dist/themes/theme.css.js",
         "types": "./dist/themes/theme.css.d.ts"
       }
     }
