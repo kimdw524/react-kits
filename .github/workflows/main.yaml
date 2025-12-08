@@ -94,7 +94,8 @@ jobs:
           git fetch origin
           git checkout develop
 
-          LATEST_MAIN=$(git rev-parse origin/main)
-          git cherry-pick $LATEST_MAIN || true
+          MAIN_MSG=$(git log -1 --pretty=%B origin/main)
+
+          git merge origin/main -m "$MAIN_MSG" -X theirs || true
 
           git push origin develop
