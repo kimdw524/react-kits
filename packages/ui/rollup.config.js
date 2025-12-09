@@ -9,13 +9,15 @@ const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
 const peerDeps = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
 export default {
-  input: 'src/index.ts',
+  input: ['src/index.ts', 'src/tokens/index.ts'],
   output: {
     dir: 'dist',
     format: 'esm',
     preserveModules: true,
     preserveModulesRoot: './src',
-    entryFileNames: '[name].js',
+    entryFileNames({ name }) {
+      return `${name.replace(/\.css$/, '.css.vanilla')}.js`;
+    },
     assetFileNames({ name }) {
       return name?.replace(/^src\//, '') ?? '';
     },
