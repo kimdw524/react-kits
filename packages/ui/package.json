@@ -16,7 +16,8 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./theme": "./src/themes/theme.css.ts"
+    "./theme": "./src/themes/theme.css.ts",
+    "./token": "./src/tokens/index.ts"
   },
   "files": [
     "dist",
@@ -65,8 +66,7 @@
   "publishConfig": {
     "access": "public",
     "imports": {
-      "#*": "./dist/*/index.js",
-      "#styleUtils": "./dist/utils/styleUtils.css.js"
+      "#*": "./dist/*/index.js"
     },
     "exports": {
       ".": {
@@ -74,8 +74,12 @@
         "types": "./dist/index.d.ts"
       },
       "./theme": {
-        "module": "./dist/themes/theme.css.js",
+        "module": "./dist/themes/theme.css.vanilla.js",
         "types": "./dist/themes/theme.css.d.ts"
+      },
+      "./token": {
+        "module": "./dist/tokens/index.js",
+        "types": "./dist/tokens/index.d.ts"
       }
     }
   }
