@@ -9,7 +9,7 @@ const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
 const peerDeps = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
 export default {
-  input: 'src/index.ts',
+  input: ['src/index.ts', 'src/tokens/index.ts'],
   output: {
     dir: 'dist',
     format: 'esm',
