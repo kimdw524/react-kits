@@ -16,7 +16,8 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./theme": "./src/themes/theme.css.ts"
+    "./theme": "./src/themes/theme.css.ts",
+    "./token": "./src/tokens/index.ts"
   },
   "files": [
     "dist",
@@ -76,6 +77,10 @@
       "./theme": {
         "module": "./dist/themes/theme.css.js",
         "types": "./dist/themes/theme.css.d.ts"
+      },
+      "./token": {
+        "module": "./dist/tokens/index.js",
+        "types": "./dist/tokens/index.d.ts"
       }
     }
   }
