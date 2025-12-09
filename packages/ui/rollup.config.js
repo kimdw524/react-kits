@@ -15,7 +15,9 @@ export default {
     format: 'esm',
     preserveModules: true,
     preserveModulesRoot: './src',
-    entryFileNames: '[name].js',
+    entryFileNames({ name }) {
+      return `${name.replace(/\.css$/, '.css.vanilla')}.js`;
+    },
     assetFileNames({ name }) {
       return name?.replace(/^src\//, '') ?? '';
     },
