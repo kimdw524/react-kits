@@ -2,6 +2,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import fs from 'fs';
+import preserveDirectives from 'rollup-plugin-preserve-directives';
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
@@ -18,12 +19,11 @@ export default {
   external: [...peerDeps, 'react/jsx-runtime'],
   plugins: [
     resolve({ extensions: ['.js', '.ts', '.tsx'] }),
-
     commonjs({
       include: /node_modules/,
       defaultIsModuleExports: true,
     }),
-
+    preserveDirectives(),
     typescript({ tsconfig: './tsconfig.json' }),
   ],
 };
