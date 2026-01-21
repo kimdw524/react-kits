@@ -14,7 +14,7 @@ import { createPortal } from 'react-dom';
 import { CSSTransition, TransitionGroup } from '@kimdw-rtk/animation';
 
 import { Toast } from '#components';
-import { useContainer } from '#hooks/useContainer';
+import { useContainer } from '#hooks';
 
 import { ToastContainer } from './ToastContainer';
 
@@ -48,6 +48,7 @@ export const ToastProvider = ({
   defaultDuration = DEFAULT_TOAST_DURATION,
 }: ToastProviderProps) => {
   const container = useContainer();
+
   const [toasts, setToasts] = useState<ToastData[]>([]);
   const idRef = useRef<number>(0);
 
