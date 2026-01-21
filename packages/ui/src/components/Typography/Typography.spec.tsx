@@ -4,7 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 
 import { Typography } from '#components';
 
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 
 describe('Typogrphy 컴포넌트', () => {
   uiTest(Typography, 'Typography');

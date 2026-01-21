@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 import {
   Card,
   CardContent,
