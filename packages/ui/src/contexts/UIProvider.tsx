@@ -4,13 +4,14 @@ import type { ReactNode } from 'react';
 
 import { OverlayProvider, type OverlayOption } from '@kimdw-rtk/utils';
 
+import { Portal } from '#components';
 import { ContainerProvider, ToastProvider } from '#hooks';
 
 import * as overlayStyle from '../styles/overlay.css';
 
 interface UIProviderProps {
   children: ReactNode;
-  container: HTMLElement;
+  container?: HTMLElement;
   overlayUnmountOn?: OverlayOption['unmountOn'];
 }
 
@@ -24,7 +25,9 @@ export const UIProvider = ({
       <ToastProvider>
         <OverlayProvider
           className={{ ...overlayStyle }}
-          container={container}
+          renderOverlay={(overlayChildren) => (
+            <Portal>{overlayChildren}</Portal>
+          )}
           unmountOn={overlayUnmountOn}
         >
           {children}

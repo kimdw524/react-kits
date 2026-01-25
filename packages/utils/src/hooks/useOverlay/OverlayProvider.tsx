@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import { Overlay } from './Overlay';
 import { OverlayContext } from './OverlayContext';
@@ -10,11 +9,11 @@ import type { OverlayProps, OverlayProviderProps, OverlayPush } from './types';
 
 export const OverlayProvider = ({
   children,
-  container,
   className,
   closeOnBack = true,
   closeOnBackdropClick = true,
   unmountOn = 'exit',
+  renderOverlay,
 }: OverlayProviderProps) => {
   const [overlays, setOverlays] = useState<OverlayProps[]>([]);
   const countRef = useRef<number>(0);
@@ -108,18 +107,16 @@ export const OverlayProvider = ({
     };
   }, [pop]);
 
+  const overlayChildren = overlays.map((overlay) => (
+    <OverlayIdContext.Provider key={overlay.id} value={overlay.id}>
+      <Overlay {...overlay}>{overlay.children}</Overlay>
+    </OverlayIdContext.Provider>
+  ));
+
   return (
     <OverlayContext.Provider value={contextValue}>
       {children}
-      {typeof window !== 'undefined' &&
-        createPortal(
-          overlays.map((overlay) => (
-            <OverlayIdContext.Provider key={overlay.id} value={overlay.id}>
-              <Overlay {...overlay}>{overlay.children}</Overlay>
-            </OverlayIdContext.Provider>
-          )),
-          container,
-        )}
+      {renderOverlay ? renderOverlay(overlayChildren) : overlayChildren}
     </OverlayContext.Provider>
   );
 };

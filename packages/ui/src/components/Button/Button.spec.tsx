@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 import { Button } from './';
 
 describe('Button 컴포넌트', () => {

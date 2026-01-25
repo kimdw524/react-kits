@@ -1,6 +1,6 @@
 import { Table } from '#components';
 
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 
 describe('Table 컴포넌트', () => {
   uiTest(Table, 'Table');

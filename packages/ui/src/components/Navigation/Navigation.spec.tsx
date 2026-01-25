@@ -6,7 +6,7 @@ import {
   NavigationMenu,
 } from '#components';
 
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 import { NavigationContainer } from './NavigationContainer';
 
 describe('Navigation 컴포넌트', () => {

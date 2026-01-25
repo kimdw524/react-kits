@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from '#components';
 
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 
 describe('Dialog 컴포넌트', () => {
   uiTest(Dialog, 'Dialog');

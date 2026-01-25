@@ -5,19 +5,15 @@ import {
   useLayoutEffect,
   useRef,
   type CSSProperties,
-  type ReactElement,
-  type RefObject,
 } from 'react';
 
 import { useHasAppeared } from '@kimdw-rtk/utils';
 
-import type { AnimationStyle } from '#types';
+import type { AnimationElement, AnimationStyle } from '#types';
 import { setStyle } from '#utils';
 
 export interface SingleProps {
-  children: ReactElement<{
-    ref?: RefObject<HTMLElement>;
-  }>;
+  children: AnimationElement;
   initial: AnimationStyle;
   animate: AnimationStyle;
   duration: number;
@@ -74,5 +70,11 @@ export const Single = ({
     // eslint-disable-next-line
   }, [hasAppeared, delay, duration, easing]);
 
-  return cloneElement(children, { ref });
+  const isInitialClass = typeof initial === 'string';
+
+  return cloneElement(children, {
+    ref,
+    className: isInitialClass ? initial : undefined,
+    style: !isInitialClass ? initial : undefined,
+  });
 };
