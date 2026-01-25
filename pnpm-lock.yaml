@@ -244,6 +244,9 @@ importers:
       '@kimdw-rtk/utils':
         specifier: workspace:*
         version: link:../utils
+      '@testing-library/user-event':
+        specifier: ^14.6.1
+        version: 14.6.1(@testing-library/dom@10.4.0)
       '@vanilla-extract/css':
         specifier: ^1.17.0
         version: 1.17.4(babel-plugin-macros@3.1.0)
