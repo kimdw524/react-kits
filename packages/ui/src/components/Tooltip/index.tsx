@@ -7,9 +7,8 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react';
-import { createPortal } from 'react-dom';
 
-import { useContainer } from '#hooks';
+import { Portal } from '#components';
 import type { UIComponent } from '#types';
 
 import * as s from './Tooltip.css';
@@ -29,7 +28,6 @@ export const Tooltip = ({ children, content, size = 'sm' }: TooltipProps) => {
     x: 0,
     y: 0,
   });
-  const container = useContainer();
 
   const handlePointerOver = (e: React.PointerEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -50,16 +48,16 @@ export const Tooltip = ({ children, content, size = 'sm' }: TooltipProps) => {
         onPointerOver: handlePointerOver,
         onPointerOut: handlePointerOut,
       })}
-      {isVisible &&
-        createPortal(
+      {isVisible && (
+        <Portal>
           <div
             className={s.tooltip({ size })}
             style={{ top: position.y, left: position.x }}
           >
             {content}
-          </div>,
-          container,
-        )}
+          </div>
+        </Portal>
+      )}
     </>
   );
 };
