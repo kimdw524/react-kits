@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Select, SelectOption } from '.';
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 
 describe('Select 컴포넌트', () => {
   uiTest(Select, 'Select');

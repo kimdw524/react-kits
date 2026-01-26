@@ -1,19 +1,12 @@
-import {
-  Children,
-  type ComponentProps,
-  type ReactElement,
-  type RefObject,
-} from 'react';
+import { Children, type ComponentProps, type ReactElement } from 'react';
+
+import type { AnimationElement } from '#types';
 
 import { Single } from '../Single';
 
-type Element = ReactElement<{
-  ref?: RefObject<HTMLElement>;
-}>;
-
 export interface MultiProps
   extends Omit<ComponentProps<typeof Single>, 'children'> {
-  children: Element | Element[];
+  children: AnimationElement | AnimationElement[];
   delayGap?: number;
   durationGap?: number;
 }

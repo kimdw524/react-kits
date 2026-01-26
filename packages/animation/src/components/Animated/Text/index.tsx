@@ -84,6 +84,7 @@ export const Text = ({
               refs.current[index] = element;
             }
           }}
+          style={initial}
         >
           {unit === 'letter'
             ? char === ' '

@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { createPortal } from 'react-dom';
 
 import '@testing-library/jest-dom';
 import { act, render, screen } from '@testing-library/react';
@@ -47,7 +48,9 @@ describe('useOverlay', () => {
     return (
       <OverlayProvider
         closeOnBack={false}
-        container={portalContainer}
+        renderOverlay={(overlayChildren) =>
+          createPortal(overlayChildren, portalContainer)
+        }
         unmountOn={'exit'}
       >
         <ChildComponent />
@@ -105,7 +108,12 @@ describe('useOverlay', () => {
   it('뒤로가기를 눌러서 모달을 닫을 수 있다.', async () => {
     const user = userEvent.setup();
     render(
-      <OverlayProvider container={portalContainer} unmountOn={'exit'}>
+      <OverlayProvider
+        renderOverlay={(overlayChildren) =>
+          createPortal(overlayChildren, portalContainer)
+        }
+        unmountOn={'exit'}
+      >
         <ChildComponent />
       </OverlayProvider>,
     );
@@ -124,7 +132,12 @@ describe('useOverlay', () => {
   it('closeOnBackdropClick=true 이면, backdrop을 클릭해서 모달을 닫을 수 있다.', async () => {
     const user = userEvent.setup();
     render(
-      <OverlayProvider closeOnBackdropClick={true} container={portalContainer}>
+      <OverlayProvider
+        closeOnBackdropClick={true}
+        renderOverlay={(overlayChildren) =>
+          createPortal(overlayChildren, portalContainer)
+        }
+      >
         <ChildComponent />
       </OverlayProvider>,
     );
@@ -144,7 +157,12 @@ describe('useOverlay', () => {
   it('closeOnBackdropClick=false 이면, backdrop을 클릭해서 모달을 닫을 수 없다.', async () => {
     const user = userEvent.setup();
     render(
-      <OverlayProvider closeOnBackdropClick={false} container={portalContainer}>
+      <OverlayProvider
+        closeOnBackdropClick={false}
+        renderOverlay={(overlayChildren) =>
+          createPortal(overlayChildren, portalContainer)
+        }
+      >
         <ChildComponent />
       </OverlayProvider>,
     );
@@ -161,24 +179,16 @@ describe('useOverlay', () => {
     expect(screen.queryByTestId('overlay')).toBeInTheDocument();
   });
 
-  it('Overlay 컴포넌트는 반드시 OverlayContext 컴포넌트 내에 정의되어야 한다.', () => {
-    expect(() =>
-      render(
-        <div>
-          <Overlay id={1} isActive={false}>
-            Overlay
-          </Overlay>
-        </div>,
-      ),
-    ).toThrow();
-  });
-
   it('Overlay 컴포넌트는 현재 상태에 맞는 className을 가진다.', () => {
     let result: ReturnType<typeof render>;
 
     act(() => {
       result = render(
-        <OverlayProvider container={portalContainer}>
+        <OverlayProvider
+          renderOverlay={(overlayChildren) =>
+            createPortal(overlayChildren, portalContainer)
+          }
+        >
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -202,7 +212,11 @@ describe('useOverlay', () => {
 
     act(() => {
       result = render(
-        <OverlayProvider container={portalContainer}>
+        <OverlayProvider
+          renderOverlay={(overlayChildren) =>
+            createPortal(overlayChildren, portalContainer)
+          }
+        >
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -232,7 +246,11 @@ describe('useOverlay', () => {
 
     act(() => {
       result = render(
-        <OverlayProvider container={portalContainer}>
+        <OverlayProvider
+          renderOverlay={(overlayChildren) =>
+            createPortal(overlayChildren, portalContainer)
+          }
+        >
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -256,7 +274,11 @@ describe('useOverlay', () => {
 
     act(() => {
       render(
-        <OverlayProvider container={portalContainer}>
+        <OverlayProvider
+          renderOverlay={(overlayChildren) =>
+            createPortal(overlayChildren, portalContainer)
+          }
+        >
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -280,7 +302,11 @@ describe('useOverlay', () => {
 
     act(() => {
       render(
-        <OverlayProvider container={portalContainer}>
+        <OverlayProvider
+          renderOverlay={(overlayChildren) =>
+            createPortal(overlayChildren, portalContainer)
+          }
+        >
           <Overlay
             className={{ base: 'base', enter: 'enter', exit: 'exit' }}
             id={1}
@@ -300,16 +326,6 @@ describe('useOverlay', () => {
     expect(mock).toHaveBeenCalled();
   });
 
-  it('OverlayProvider 내에 useOverlay가 호출되지 않으면 오류가 발생한다.', () => {
-    const TestComponent = () => {
-      useOverlay();
-
-      return null;
-    };
-
-    expect(() => render(<TestComponent />)).toThrow();
-  });
-
   it('OverlayProvider 내에 useOverlay가 호출되어야 한다.', () => {
     const TestComponent = () => {
       useOverlay();
@@ -319,7 +335,11 @@ describe('useOverlay', () => {
 
     expect(() =>
       render(
-        <OverlayProvider container={portalContainer}>
+        <OverlayProvider
+          renderOverlay={(overlayChildren) =>
+            createPortal(overlayChildren, portalContainer)
+          }
+        >
           <TestComponent />
         </OverlayProvider>,
       ),
@@ -337,7 +357,11 @@ describe('useOverlay', () => {
     };
 
     render(
-      <OverlayProvider container={portalContainer}>
+      <OverlayProvider
+        renderOverlay={(overlayChildren) =>
+          createPortal(overlayChildren, portalContainer)
+        }
+      >
         <TestComponent />
       </OverlayProvider>,
     );

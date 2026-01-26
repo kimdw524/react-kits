@@ -8,7 +8,7 @@ export const ContainerContext = createContext<HTMLElement | undefined>(
 
 interface ContainerProviderProps {
   children: ReactNode;
-  container: HTMLElement;
+  container?: HTMLElement;
 }
 
 export const ContainerProvider = ({

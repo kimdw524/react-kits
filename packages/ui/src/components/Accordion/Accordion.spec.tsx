@@ -1,5 +1,5 @@
 import { Accordion } from '.';
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 
 describe('Accordion 컴포넌트', () => {
   uiTest(Accordion, 'Accordion');

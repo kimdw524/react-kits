@@ -9,6 +9,7 @@ export * from './Container';
 export * from './Dialog';
 export * from './Flex';
 export * from './Navigation';
+export * from './Portal';
 export * from './Range';
 export * from './ScrollArea';
 export * from './Select';

@@ -9,12 +9,10 @@ import {
   type ComponentProps,
   type ReactNode,
 } from 'react';
-import { createPortal } from 'react-dom';
 
 import { CSSTransition, TransitionGroup } from '@kimdw-rtk/animation';
 
-import { Toast } from '#components';
-import { useContainer } from '#hooks/useContainer';
+import { Portal, Toast } from '#components';
 
 import { ToastContainer } from './ToastContainer';
 
@@ -47,7 +45,6 @@ export const ToastProvider = ({
   children,
   defaultDuration = DEFAULT_TOAST_DURATION,
 }: ToastProviderProps) => {
-  const container = useContainer();
   const [toasts, setToasts] = useState<ToastData[]>([]);
   const idRef = useRef<number>(0);
 
@@ -98,41 +95,39 @@ export const ToastProvider = ({
       value={useMemo(() => ({ push, remove }), [push, remove])}
     >
       {children}
-      {typeof window !== 'undefined' &&
-        createPortal(
-          <ToastContainer>
-            <TransitionGroup>
-              {toasts.map((toast) => (
-                <CSSTransition
-                  key={toast.id}
-                  animate={{
-                    opacity: 1,
-                    transform: 'translateY(0)',
-                    height: '3.5rem',
-                  }}
-                  as="div"
-                  duration={500}
-                  exit={{ opacity: 0, height: '0' }}
-                  initial={{
-                    opacity: 0,
-                    transform: 'translateY(1rem)',
-                    height: '0',
-                  }}
-                  style={{ display: 'flex', flexDirection: 'column-reverse' }}
+      <Portal>
+        <ToastContainer>
+          <TransitionGroup>
+            {toasts.map((toast) => (
+              <CSSTransition
+                key={toast.id}
+                animate={{
+                  opacity: 1,
+                  transform: 'translateY(0)',
+                  height: '3.5rem',
+                }}
+                as="div"
+                duration={500}
+                exit={{ opacity: 0, height: '0' }}
+                initial={{
+                  opacity: 0,
+                  transform: 'translateY(1rem)',
+                  height: '0',
+                }}
+                style={{ display: 'flex', flexDirection: 'column-reverse' }}
+              >
+                <Toast
+                  color={toast.color}
+                  duration={toast.autoClose ? toast.duration : 0}
+                  onClick={() => handleToastClick(toast)}
                 >
-                  <Toast
-                    color={toast.color}
-                    duration={toast.autoClose ? toast.duration : 0}
-                    onClick={() => handleToastClick(toast)}
-                  >
-                    {toast.message}
-                  </Toast>
-                </CSSTransition>
-              ))}
-            </TransitionGroup>
-          </ToastContainer>,
-          container,
-        )}
+                  {toast.message}
+                </Toast>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        </ToastContainer>
+      </Portal>
     </ToastContext.Provider>
   );
 };

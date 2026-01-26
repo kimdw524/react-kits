@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '.';
-import { uiTest } from '../../tests/uiTest';
+import { uiTest } from '../../tests';
 
 describe('Tabs 컴포넌트', () => {
   uiTest(Tabs, 'Tabs');
