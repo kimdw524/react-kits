@@ -33,12 +33,12 @@ const config: GatsbyConfig = {
       },
     },
     'ignore-mini-css-extract-warning',
-    {
-      resolve: 'docs-generator',
-      options: {
-        template: path.resolve('./src/templates/DocumentTemplate.tsx'),
-      },
-    },
+    // {
+    //   resolve: 'docs-generator',
+    //   options: {
+    //     template: path.resolve('./src/templates/DocumentTemplate.tsx'),
+    //   },
+    // },
   ],
   jsxRuntime: 'automatic',
 };
