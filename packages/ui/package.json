@@ -71,15 +71,18 @@
     },
     "exports": {
       ".": {
-        "module": "./dist/index.js",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs",
         "types": "./dist/index.d.ts"
       },
       "./theme": {
-        "module": "./dist/themes/theme.css.vanilla.js",
+        "import": "./dist/themes/theme.css.vanilla.js",
+        "require": "./dist/themes/theme.css.vanilla.cjs",
         "types": "./dist/themes/theme.css.d.ts"
       },
       "./token": {
-        "module": "./dist/tokens/index.js",
+        "import": "./dist/tokens/index.js",
+        "require": "./dist/tokens/index.cjs",
         "types": "./dist/tokens/index.d.ts"
       }
     }

@@ -10,18 +10,33 @@ const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 const peerDeps = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
 export default {
   input: ['src/index.ts', 'src/tokens/index.ts'],
-  output: {
-    dir: 'dist',
-    format: 'esm',
-    preserveModules: true,
-    preserveModulesRoot: './src',
-    entryFileNames({ name }) {
-      return `${name.replace(/\.css$/, '.css.vanilla')}.js`;
+  output: [
+    {
+      dir: 'dist',
+      format: 'esm',
+      preserveModules: true,
+      preserveModulesRoot: './src',
+      entryFileNames({ name }) {
+        return `${name.replace(/\.css$/, '.css.vanilla')}.js`;
+      },
+      assetFileNames({ name }) {
+        return name?.replace(/^src\//, '') ?? '';
+      },
     },
-    assetFileNames({ name }) {
-      return name?.replace(/^src\//, '') ?? '';
+    {
+      dir: 'dist',
+      format: 'cjs',
+      preserveModules: true,
+      preserveModulesRoot: './src',
+      exports: 'named',
+      entryFileNames({ name }) {
+        return `${name.replace(/\.css$/, '.css.vanilla')}.cjs`;
+      },
+      assetFileNames({ name }) {
+        return name?.replace(/^src\//, '') ?? '';
+      },
     },
-  },
+  ],
   treeshake: {
     moduleSideEffects: (id) => /\.css$/.test(id),
   },
