@@ -9,13 +9,23 @@ const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 const peerDeps = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
 export default {
   input: 'src/index.ts',
-  output: {
-    dir: 'dist',
-    format: 'esm',
-    preserveModules: true,
-    preserveModulesRoot: './src',
-    entryFileNames: '[name].js',
-  },
+  output: [
+    {
+      dir: 'dist',
+      format: 'esm',
+      preserveModules: true,
+      preserveModulesRoot: './src',
+      entryFileNames: '[name].js',
+    },
+    {
+      dir: 'dist',
+      format: 'cjs',
+      preserveModules: true,
+      preserveModulesRoot: './src',
+      exports: 'named',
+      entryFileNames: '[name].cjs',
+    },
+  ],
   external: [...peerDeps, 'react/jsx-runtime'],
   plugins: [
     resolve({ extensions: ['.js', '.ts', '.tsx'] }),
