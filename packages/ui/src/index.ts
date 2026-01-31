@@ -3,7 +3,5 @@ export * from './contexts';
 export * from './hooks';
 export * from './styles';
 export * from './styles/globalStyle.css';
-export * from './themes';
-export * from './tokens';
 export * from './types';
 export * from './utils';
