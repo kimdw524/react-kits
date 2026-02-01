@@ -76,9 +76,9 @@
         "types": "./dist/index.d.ts"
       },
       "./theme": {
-        "import": "./dist/themes/theme.css.vanilla.js",
-        "require": "./dist/themes/theme.css.vanilla.cjs",
-        "types": "./dist/themes/theme.css.d.ts"
+        "import": "./dist/themes/index.js",
+        "require": "./dist/themes/index.cjs",
+        "types": "./dist/themes/index.d.ts"
       },
       "./token": {
         "import": "./dist/tokens/index.js",
