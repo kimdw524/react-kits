@@ -5,7 +5,7 @@ import { darkThemeVars, lightThemeVars, theme } from '#themes';
 globalStyle('*', {
   boxSizing: 'border-box',
 
-  overscrollBehavior: 'none',
+  overscrollBehavior: 'auto',
   WebkitTapHighlightColor: 'transparent',
 });
 
