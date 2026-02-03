@@ -9,9 +9,9 @@ import {
   DialogHeader,
   Flex,
   TextField,
-  theme,
   Typography,
 } from '@kimdw-rtk/ui';
+import { theme } from '@kimdw-rtk/ui/theme';
 import { useOverlay } from '@kimdw-rtk/utils';
 
 import { ColorPalette } from '../ColorPalette';

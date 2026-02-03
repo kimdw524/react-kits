@@ -1,12 +1,6 @@
-import {
-  Button,
-  darkColor,
-  Flex,
-  lightColor,
-  ScrollArea,
-  theme,
-  Typography,
-} from '@kimdw-rtk/ui';
+import { Button, Flex, ScrollArea, Typography } from '@kimdw-rtk/ui';
+import { theme } from '@kimdw-rtk/ui/theme';
+import { darkColor, lightColor } from '@kimdw-rtk/ui/token';
 
 import { ThemeVars } from '../../models';
 
