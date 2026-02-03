@@ -1,4 +1,5 @@
-import { Flex, lightColor, Tooltip, Typography } from '@kimdw-rtk/ui';
+import { Flex, Tooltip } from '@kimdw-rtk/ui';
+import { lightColor } from '@kimdw-rtk/ui/token';
 
 import { GridItem } from './GridItem';
 

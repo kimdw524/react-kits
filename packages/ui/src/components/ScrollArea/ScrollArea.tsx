@@ -28,6 +28,18 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
         return;
       }
 
+      const handleWheel = (e: WheelEvent) => {
+        if (
+          element.scrollLeft + e.deltaY <= 0 ||
+          Math.round(element.scrollLeft + e.deltaY + element.clientWidth) >=
+            element.scrollWidth
+        ) {
+          return;
+        }
+
+        e.preventDefault();
+      };
+
       const handleScroll = () => {
         setHasLeftSpace(element.scrollLeft !== 0);
         setHasRightSpace(
@@ -39,9 +51,11 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       handleScroll();
 
       element.addEventListener('scroll', handleScroll);
+      element.addEventListener('wheel', handleWheel);
 
       return () => {
         element.removeEventListener('scroll', handleScroll);
+        element.removeEventListener('wheel', handleWheel);
       };
     }, []);
 

@@ -3,8 +3,8 @@ import { type HeadFC, type PageProps } from 'gatsby';
 
 import {
   AnimationFeature,
-  UIFeature,
   HeroSection,
+  UIFeature,
   UtilsFeature,
 } from '@/features/landing';
 import { Layout } from '@/shared/components';
