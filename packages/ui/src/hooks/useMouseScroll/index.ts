@@ -12,14 +12,15 @@ export const useMouseScroll = <T extends React.RefObject<HTMLElement | null>>(
     const element = ref.current;
     let isDown = false,
       startX = 0,
-      startLeft = 0;
+      startLeft = 0,
+      currentLeft = element?.scrollLeft ?? 0;
 
     if (element === null) {
       return;
     }
 
     const handleMouseDown = (e: MouseEvent) => {
-      if (!element.contains(e.target as Node)) {
+      if (!element.contains(e.target as Node) || e.button === 1) {
         return;
       }
 
@@ -35,6 +36,7 @@ export const useMouseScroll = <T extends React.RefObject<HTMLElement | null>>(
       }
 
       element.scrollLeft = startLeft + startX - e.x;
+      currentLeft = element.scrollLeft;
     };
 
     const handleMouseUp = () => {
@@ -42,8 +44,12 @@ export const useMouseScroll = <T extends React.RefObject<HTMLElement | null>>(
     };
 
     const handleWheel = (e: WheelEvent) => {
+      currentLeft = Math.min(
+        Math.max(0, currentLeft + e.deltaY),
+        element.scrollWidth,
+      );
       element.scrollTo({
-        left: element.scrollLeft + e.deltaY,
+        left: currentLeft,
         behavior: 'smooth',
       });
     };

@@ -1,13 +1,7 @@
 import { useState } from 'react';
 
 import { Animated } from '@kimdw-rtk/animation';
-import {
-  Box,
-  Button,
-  darkThemeVars,
-  lightThemeVars,
-  Typography,
-} from '@kimdw-rtk/ui';
+import { Box, Button, Typography } from '@kimdw-rtk/ui';
 import { useOverlay } from '@kimdw-rtk/utils';
 import { type HeadFC, type PageProps } from 'gatsby';
 
@@ -18,6 +12,11 @@ import {
 } from '@/features/theme/components';
 import { ThemeToken, ThemeVars } from '@/features/theme/models';
 import { Layout, ThemeToggleButton } from '@/shared/components';
+
+import {
+  darkThemeVars,
+  lightThemeVars,
+} from '../../../../packages/ui/src/themes';
 
 const ThemePage: React.FC<PageProps> = () => {
   const { push } = useOverlay();

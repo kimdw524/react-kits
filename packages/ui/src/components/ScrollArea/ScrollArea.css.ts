@@ -8,6 +8,8 @@ export const scrollArea = styleWithLayer({
   width: '100%',
   overflowX: 'scroll',
 
+  userSelect: 'none',
+
   '::-webkit-scrollbar': {
     display: 'none',
   },

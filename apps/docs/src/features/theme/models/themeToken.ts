@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-import { theme } from '@kimdw-rtk/ui';
+import { theme } from '@kimdw-rtk/ui/theme';
 
 export const themeTokenKeys = [
   'background',
