@@ -19,6 +19,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
         className={clsx(s.container, className, sx(propSx))}
         flexDirection="row"
         gap="lg"
+        padding="xl"
         flex
         {...props}
       >
