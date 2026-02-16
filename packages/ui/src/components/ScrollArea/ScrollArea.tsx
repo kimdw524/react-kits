@@ -43,8 +43,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       const handleScroll = () => {
         setHasLeftSpace(element.scrollLeft !== 0);
         setHasRightSpace(
-          Math.round(element.scrollLeft + element.clientWidth) <
-            element.scrollWidth,
+          Math.ceil(element.scrollLeft + element.clientWidth) <
+            Math.floor(element.scrollWidth),
         );
       };
 

@@ -46,8 +46,9 @@ export const useMouseScroll = <T extends React.RefObject<HTMLElement | null>>(
     const handleWheel = (e: WheelEvent) => {
       currentLeft = Math.min(
         Math.max(0, currentLeft + e.deltaY),
-        element.scrollWidth,
+        element.scrollWidth - element.clientWidth,
       );
+
       element.scrollTo({
         left: currentLeft,
         behavior: 'smooth',

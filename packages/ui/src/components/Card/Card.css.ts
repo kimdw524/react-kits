@@ -34,6 +34,7 @@ export const card = recipeWithLayer({
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
+    overflow: 'clip',
 
     borderRadius: theme.borderRadius,
 
