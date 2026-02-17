@@ -71,10 +71,19 @@ export const Single = ({
   }, [hasAppeared, delay, duration, easing]);
 
   const isInitialClass = typeof initial === 'string';
+  const mergedClassName = isInitialClass
+    ? [children.props.className, initial].filter(Boolean).join(' ')
+    : children.props.className;
+  const mergedStyle = isInitialClass
+    ? children.props.style
+    : {
+        ...children.props.style,
+        ...(initial as CSSProperties),
+      };
 
   return cloneElement(children, {
     ref,
-    className: isInitialClass ? initial : undefined,
-    style: !isInitialClass ? initial : undefined,
+    className: mergedClassName,
+    style: mergedStyle,
   });
 };
