@@ -1,6 +1,6 @@
 export * from './hocs/withInViewport';
 export * from './hocs/withSuspense';
-export * from './hooks/useCombineRefs';
+export * from './hooks/useCombinedRefs';
 export * from './hooks/useHasAppeared';
 export * from './hooks/useIsInViewport';
 export * from './hooks/useIsScrolled';
