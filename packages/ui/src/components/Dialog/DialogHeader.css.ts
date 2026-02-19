@@ -4,7 +4,7 @@ import { theme } from '#themes';
 export const container = styleWithLayer({
   position: 'sticky',
   top: '0',
-  padding: '1.5rem',
+  padding: '0.25rem',
   zIndex: '10',
 
   backgroundColor: `rgb(${theme.color.background})`,
