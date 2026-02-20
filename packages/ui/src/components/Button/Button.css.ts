@@ -187,22 +187,6 @@ export const button = recipeWithLayer({
           cursor: 'default',
         },
       },
-
-      glass: {
-        boxShadow: `inset 0 0 0 1px rgba(255, 255, 255, 0.08)`,
-        backgroundColor: `rgba(${backgroundVar}, 0.75)`,
-        backdropFilter: 'blur(1rem)',
-
-        color: `rgb(${theme.color.foreground})`,
-
-        ':disabled': {
-          backgroundColor: `rgb(${theme.color.muted})`,
-
-          color: `rgb(${theme.color['muted-foreground']})`,
-
-          cursor: 'default',
-        },
-      },
     },
 
     pulse: {
