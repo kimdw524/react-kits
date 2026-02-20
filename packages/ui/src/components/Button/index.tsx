@@ -6,12 +6,13 @@ import { clsx } from 'clsx';
 
 import { useRipple } from '#hooks';
 import { sx } from '#styles';
-import type { UIComponent } from '#types';
+import type { RecipeVariantsProps, UIComponent } from '#types';
 
 import * as s from './Button.css';
 
 interface ButtonProps extends UIComponent<'button', typeof s.button> {
   icon?: ReactElement;
+  fontSize?: RecipeVariantsProps<typeof s.span>['size'];
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -20,6 +21,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       color = 'primary',
       size = 'md',
+      fontSize,
       variant = 'contained',
       pulse = false,
       className,
@@ -50,7 +52,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {icon !== undefined && <span className={s.icon}>{icon}</span>}
-        <span className={s.span({ size })}>{children}</span>
+        <span className={s.span({ size: fontSize ?? size })}>{children}</span>
         {ripple}
       </button>
     );

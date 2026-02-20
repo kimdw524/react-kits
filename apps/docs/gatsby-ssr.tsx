@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
 import { UIProvider } from '@kimdw-rtk/ui';
-import { OverlayProvider } from '@kimdw-rtk/utils';
 import type { GatsbySSR } from 'gatsby';
 
 export const wrapRootElement = ({ element }: { element: ReactNode }) => {
@@ -9,11 +8,7 @@ export const wrapRootElement = ({ element }: { element: ReactNode }) => {
     typeof document === 'undefined'
       ? ({} as HTMLElement)
       : document.getElementById('container')!;
-  return (
-    <OverlayProvider container={container}>
-      <UIProvider container={container}>{element}</UIProvider>
-    </OverlayProvider>
-  );
+  return <UIProvider container={container}>{element}</UIProvider>;
 };
 
 export const onRenderBody: GatsbySSR['onRenderBody'] = ({
