@@ -63,6 +63,10 @@ export const span = recipeWithLayer({
         fontSize: '1.125em',
       },
 
+      xl: {
+        fontSize: '1.25em',
+      },
+
       'icon-sm': {
         fontSize: '1em',
       },
@@ -73,6 +77,10 @@ export const span = recipeWithLayer({
 
       'icon-lg': {
         fontSize: '1.5em',
+      },
+
+      'icon-xl': {
+        fontSize: '1.75em',
       },
     },
   },
@@ -125,6 +133,11 @@ export const button = recipeWithLayer({
         padding: '0 1em',
       },
 
+      xl: {
+        height: '3em',
+        padding: '0 1.125em',
+      },
+
       'icon-sm': {
         width: '2em',
         height: '2em',
@@ -138,6 +151,11 @@ export const button = recipeWithLayer({
       'icon-lg': {
         width: '2.75em',
         height: '2.75em',
+      },
+
+      'icon-xl': {
+        width: '3em',
+        height: '3em',
       },
     },
 
@@ -182,22 +200,6 @@ export const button = recipeWithLayer({
         },
 
         ':disabled': {
-          color: `rgb(${theme.color['muted-foreground']})`,
-
-          cursor: 'default',
-        },
-      },
-
-      glass: {
-        boxShadow: `inset 0 0 0 1px rgba(255, 255, 255, 0.08)`,
-        backgroundColor: `rgba(${backgroundVar}, 0.75)`,
-        backdropFilter: 'blur(1rem)',
-
-        color: `rgb(${theme.color.foreground})`,
-
-        ':disabled': {
-          backgroundColor: `rgb(${theme.color.muted})`,
-
           color: `rgb(${theme.color['muted-foreground']})`,
 
           cursor: 'default',

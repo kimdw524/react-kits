@@ -60,33 +60,6 @@ export const card = recipeWithLayer({
         border: '1px solid',
         borderColor: `rgb(${theme.color.border})`,
       },
-
-      glass: {
-        border: `1px solid rgb(${theme.color['border.weak']})`,
-        borderRadius: '0.75rem',
-
-        background: `linear-gradient(rgba(${theme.color['card.gradient']}, 0.06) 0%, rgba(${theme.color['card.gradient']}, 0.02) 100%)`,
-        backdropFilter: 'blur(1rem)',
-
-        '::before': {
-          position: 'absolute',
-          inset: '0',
-
-          background:
-            'linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%)',
-
-          opacity: '0',
-          transition: 'opacity 0.3s ease',
-
-          content: '',
-        },
-
-        selectors: {
-          '&:hover::before': {
-            opacity: '1',
-          },
-        },
-      },
     },
 
     color: {
