@@ -10,10 +10,12 @@ export type ParamValue =
 
 export type SetParamsAction<T> = Partial<T> | ((params: T) => Partial<T>);
 
-export type ParamsDispatch<T> = (
-  value: T,
-  onValidationFailed?: (error: unknown) => void,
-) => void;
+export type SetParamsOptions = {
+  onValidationFailed?: (error: unknown) => void;
+  history?: 'pushState' | 'replaceState';
+};
+
+export type ParamsDispatch<T> = (value: T, options?: SetParamsOptions) => void;
 
 export interface Serializer {
   serialize: (value: ParamValue) => string[];

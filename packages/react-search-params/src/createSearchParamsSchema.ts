@@ -10,7 +10,10 @@ export const createSearchParamsSchema = <
 >(options: {
   /** Initial value for the schema. */
   initialValue: T;
-  /** Define this only when the schema's initial value differs from the default value. */
+  /**
+   * Define this only when the schema's initial value differs from the default value.
+   * Applied when validation for `initialValue` fails.
+   */
   defaultValue?: NoInfer<T>;
   /** Function that validates the schema value. It must throw on failure. */
   validate: (params: {

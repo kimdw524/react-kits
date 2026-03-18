@@ -123,7 +123,7 @@ describe('createSearchParamsStore', () => {
     const onValidationFailed = jest.fn();
 
     act(() => {
-      result.current[1](() => ({ page: -1 }), onValidationFailed);
+      result.current[1](() => ({ page: -1 }), { onValidationFailed });
     });
 
     expect(onValidationFailed).toHaveBeenCalledTimes(1);
@@ -135,7 +135,7 @@ describe('createSearchParamsStore', () => {
     });
   });
 
-  it('cleanup 이후에는 popstate 이벤트에 반응하지 않는다', () => {
+  it('cleanup 이후에는 popstate 이벤트에 반응하지 않는다.', () => {
     window.history.replaceState({}, '', '/?q=alpha&page=1');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     const { result } = renderHook(() => store.useAllParams(schema));

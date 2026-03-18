@@ -2,6 +2,7 @@ import type {
   NoDuplicates,
   ParamsDispatch,
   ParamValue,
+  SetParamsOptions,
   Serializer,
   SetParamsAction,
 } from '#types';
@@ -29,6 +30,7 @@ export const createSearchParamsStore = ({
 
   const setParam = <T extends Record<string, ParamValue>>(
     value: SetParamsAction<T>,
+    history: NonNullable<SetParamsOptions['history']> = 'pushState',
   ): void => {
     const nextValue =
       typeof value === 'function' ? value(store.getState() as T) : value;
@@ -53,7 +55,7 @@ export const createSearchParamsStore = ({
     const queryString = urlSearchParams.toString();
     const search = queryString ? `?${queryString}` : '';
 
-    window.history.pushState(
+    window.history[history](
       {},
       '',
       `${window.location.pathname}${search}${window.location.hash}`,
@@ -119,25 +121,32 @@ export const createSearchParamsStore = ({
      * Updates params.
      *
      * @param value Partial params or an updater function.
-     * @param onValidationFailed Called when schema validation throws.
+     * @param options Update options.
      */
     const setState = (
       value: SetParamsAction<T>,
-      onValidationFailed?: (error: unknown) => void,
+      { history, onValidationFailed }: SetParamsOptions = {
+        history: 'pushState',
+      },
     ) => {
       try {
         if (typeof value === 'function') {
           updateState();
-          setParam((prev) =>
-            schema.validate({
-              ...store.getState(),
-              ...(value(prev as T) as T),
-            }),
+          setParam(
+            (prev) =>
+              schema.validate({
+                ...store.getState(),
+                ...(value(prev as T) as T),
+              }),
+            history,
           );
           return;
         }
 
-        setParam(schema.validate({ ...store.getState(), ...value } as T));
+        setParam(
+          schema.validate({ ...store.getState(), ...value } as T),
+          history,
+        );
         isDirty = false;
       } catch (error) {
         onValidationFailed?.(error);
