@@ -9,12 +9,13 @@ export const delimiter = (delimiter: string): Serializer => {
     return [String(value)];
   };
 
-  const deserialize: Serializer['deserialize'] = (search: string) => {
-    const params = new URLSearchParams(search);
+  const deserialize: Serializer['deserialize'] = (
+    searchParams: URLSearchParams,
+  ) => {
     const result: Record<string, string | string[]> = {};
 
-    for (const key of params.keys()) {
-      const value = params.get(key);
+    for (const key of searchParams.keys()) {
+      const value = searchParams.get(key);
 
       if (value === null) {
         continue;

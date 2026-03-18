@@ -17,5 +17,7 @@ export type ParamsDispatch<T> = (
 
 export interface Serializer {
   serialize: (value: ParamValue) => string[];
-  deserialize: (search: string) => Record<string, string | string[]>;
+  deserialize: (
+    searchParams: URLSearchParams,
+  ) => Record<string, string | string[]>;
 }

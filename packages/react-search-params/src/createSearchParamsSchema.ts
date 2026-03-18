@@ -14,7 +14,7 @@ export const createSearchParamsSchema = <
   defaultValue?: NoInfer<T>;
   /** Function that validates the schema value. It must throw on failure. */
   validate: (params: {
-    [K in keyof T]: T[K] extends unknown[] ? T[K] | string[] : T[K] | string;
+    [K in keyof T]: T[K] | string | string[];
   }) => NoInfer<T>;
   /** Serializes a param value for URL usage. */
 }) => {

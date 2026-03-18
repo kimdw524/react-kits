@@ -1,4 +1,3 @@
-import type { SearchParamsSchema } from '#createSearchParamsSchema';
 import type {
   NoDuplicates,
   ParamsDispatch,
@@ -6,8 +5,10 @@ import type {
   Serializer,
   SetParamsAction,
 } from '#types';
-import { filterObject, shallowEqual } from '#utils';
+import { filterObject, objectToURLSearchParams, shallowEqual } from '#utils';
 
+import { useInitialSearchParams } from './SearchParamsProvider';
+import type { SearchParamsSchema } from './createSearchParamsSchema';
 import { createStore } from './store';
 
 /**
@@ -21,6 +22,7 @@ export const createSearchParamsStore = ({
   serializer: Serializer;
 }) => {
   const store = createStore<Record<string, ParamValue>>();
+  const isServer = typeof window === 'undefined';
 
   // Indicates the store may contain unvalidated params and must be validated before retrieving values.
   let isDirty = true;
@@ -77,16 +79,41 @@ export const createSearchParamsStore = ({
         return;
       }
 
-      store.mutateState(
-        schema.validate({ ...schema.defaultValue, ...store.getState() } as T),
-      );
+      try {
+        store.mutateState(
+          schema.validate({ ...schema.defaultValue, ...store.getState() } as T),
+        );
+      } catch {
+        store.mutateState(schema.defaultValue);
+      }
       isDirty = false;
     };
 
-    const state = store.useStoreWithSelector((state) => {
-      updateState();
-      return filterObject(state as T, keys);
-    }, shallowEqual);
+    const initialSearchParams = useInitialSearchParams();
+
+    const getServerState = (): T => {
+      if (initialSearchParams === null) {
+        return schema.initialValue;
+      }
+
+      try {
+        return schema.validate({
+          ...schema.initialValue,
+          ...serializer.deserialize(
+            new URLSearchParams(objectToURLSearchParams(initialSearchParams)),
+          ),
+        });
+      } catch {
+        return schema.defaultValue;
+      }
+    };
+
+    const state = isServer
+      ? filterObject(getServerState(), keys)
+      : store.useStoreWithSelector((state) => {
+          updateState();
+          return filterObject(state as T, keys);
+        }, shallowEqual);
 
     /**
      * Updates params.
@@ -144,7 +171,7 @@ export const createSearchParamsStore = ({
 
     const handlePopState = () => {
       const nextState = serializer.deserialize(
-        window.location.search.replace(/^\?/, ''),
+        new URLSearchParams(window.location.search.replace(/^\?/, '')),
       );
 
       isDirty = true;

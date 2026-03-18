@@ -1,3 +1,5 @@
+'use client';
+
 import { useSyncExternalStore, type SetStateAction } from 'react';
 
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
