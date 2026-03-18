@@ -81,7 +81,7 @@ export const createSearchParamsStore = ({
 
       try {
         store.mutateState(
-          schema.validate({ ...schema.defaultValue, ...store.getState() } as T),
+          schema.validate({ ...schema.initialValue, ...store.getState() } as T),
         );
       } catch {
         store.mutateState(schema.defaultValue);
