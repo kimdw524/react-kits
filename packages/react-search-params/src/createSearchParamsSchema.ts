@@ -16,7 +16,6 @@ export const createSearchParamsSchema = <
   validate: (params: {
     [K in keyof T]: T[K] | string | string[];
   }) => NoInfer<T>;
-  /** Serializes a param value for URL usage. */
 }) => {
   const { initialValue, defaultValue, validate } = options;
 
