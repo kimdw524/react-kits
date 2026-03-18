@@ -1,14 +1,12 @@
 import type { ParamValue, Serializer } from '#types';
 
 /**
- * Creates a serializer that encodes arrays as a single delimited query value.
- *
- * @param delimiter Delimiter used to join and split array values.
+ * Creates a serializer that encodes arrays as repeated query keys.
  */
-export const delimiter = (delimiter: string): Serializer => {
+export const repeated = (): Serializer => {
   const serialize: Serializer['serialize'] = (value: ParamValue) => {
     if (Array.isArray(value)) {
-      return [value.join(delimiter)];
+      return value.map(String);
     }
 
     return [String(value)];
@@ -20,14 +18,13 @@ export const delimiter = (delimiter: string): Serializer => {
     const result: Record<string, string | string[]> = {};
 
     for (const key of searchParams.keys()) {
-      const value = searchParams.get(key);
+      const values = searchParams.getAll(key);
 
-      if (value === null) {
+      if (values.length === 0) {
         continue;
       }
 
-      const splitted = value.split(delimiter);
-      result[key] = splitted.length > 1 ? splitted : splitted[0]!;
+      result[key] = values.length > 1 ? values : values[0]!;
     }
 
     return result;
