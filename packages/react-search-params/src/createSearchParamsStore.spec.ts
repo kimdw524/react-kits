@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react';
 
 import { createSearchParamsSchema } from './createSearchParamsSchema';
 import { createSearchParamsStore } from './createSearchParamsStore';
+import { Parser } from './parser';
 import { delimiter } from './serializers';
 
 type Params = {
@@ -28,7 +29,7 @@ const schema = createSearchParamsSchema<Params>({
     return {
       q: String(params.q),
       page,
-      tags: params.tags.map(Number),
+      tags: Parser.toArray(params.tags).map(Number),
       enabled:
         params.enabled === 'true'
           ? true
@@ -151,5 +152,15 @@ describe('createSearchParamsStore', () => {
       tags: [],
       enabled: false,
     });
+  });
+
+  it('초기 URL에서 검증을 실패할 경우 defaultValue로 state를 정의한다.', () => {
+    window.history.replaceState({}, '', '/?page=-1');
+    const store = createSearchParamsStore({ serializer: delimiter(',') });
+    cleanups.push(store.cleanup);
+
+    const { result } = renderHook(() => store.useAllParams(schema));
+
+    expect(result.current[0]).toEqual(schema.defaultValue);
   });
 });
