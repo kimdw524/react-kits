@@ -12,12 +12,16 @@ describe('delimiter serializer', () => {
   it('deserializes single and delimited values', () => {
     const serializer = delimiter(',');
 
-    expect(serializer.deserialize('q=hello&page=2')).toEqual({
+    expect(
+      serializer.deserialize(new URLSearchParams('q=hello&page=2')),
+    ).toEqual({
       q: 'hello',
       page: '2',
     });
 
-    expect(serializer.deserialize('tags=red,blue')).toEqual({
+    expect(
+      serializer.deserialize(new URLSearchParams('tags=red,blue')),
+    ).toEqual({
       tags: ['red', 'blue'],
     });
   });
