@@ -83,7 +83,7 @@ export const createSearchParamsStore = ({
 
       try {
         store.mutateState(
-          schema.validate({ ...schema.initialValue, ...store.getState() } as T),
+          schema.validate({ ...schema.defaultValue, ...store.getState() } as T),
         );
       } catch {
         store.mutateState(schema.defaultValue);
@@ -95,12 +95,12 @@ export const createSearchParamsStore = ({
 
     const getServerState = (): T => {
       if (initialSearchParams === null) {
-        return schema.initialValue;
+        return schema.defaultValue;
       }
 
       try {
         return schema.validate({
-          ...schema.initialValue,
+          ...schema.defaultValue,
           ...serializer.deserialize(
             new URLSearchParams(objectToURLSearchParams(initialSearchParams)),
           ),
@@ -167,7 +167,7 @@ export const createSearchParamsStore = ({
   ): [T, ParamsDispatch<SetParamsAction<T>>] => {
     const [state, setState] = useParams(
       schema,
-      Object.keys(schema.initialValue) as (keyof T)[],
+      Object.keys(schema.defaultValue) as (keyof T)[],
     );
 
     return [state, setState];

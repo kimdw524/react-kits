@@ -13,7 +13,7 @@ type Params = {
 };
 
 const schema = createSearchParamsSchema<Params>({
-  initialValue: {
+  defaultValue: {
     q: '',
     page: 1,
     tags: [],
