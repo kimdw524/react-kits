@@ -13,7 +13,7 @@ type Params = {
 };
 
 const schema = createSearchParamsSchema<Params>({
-  initialValue: {
+  defaultValue: {
     q: '',
     page: 1,
     tags: [],
@@ -162,5 +162,56 @@ describe('createSearchParamsStore', () => {
     const { result } = renderHook(() => store.useAllParams(schema));
 
     expect(result.current[0]).toEqual(schema.defaultValue);
+  });
+
+  it('schema의 skipValidation가 true일 경우 init, popstate 이벤트 발생 시만 validaiton을 한다.', () => {
+    window.history.replaceState({}, '', '/?page=2');
+    const store = createSearchParamsStore({ serializer: delimiter(',') });
+    cleanups.push(store.cleanup);
+
+    const validate = jest.fn(
+      (params: { page?: number | string | string[] }) => {
+        return {
+          page: Number(params.page ?? 1),
+        };
+      },
+    );
+
+    const simpleSchema = createSearchParamsSchema({
+      defaultValue: {
+        page: 1,
+      },
+      validate,
+      skipValidation: true,
+    });
+
+    const { result } = renderHook(() => store.useAllParams(simpleSchema));
+
+    expect(result.current[0]).toEqual({
+      page: 2,
+    });
+    expect(validate).toHaveBeenCalled();
+
+    act(() => {
+      window.history.pushState({}, '', '/?page=3');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+
+    expect(result.current[0]).toEqual({
+      page: 3,
+    });
+
+    const validationCallCount = validate.mock.calls.length;
+
+    act(() => {
+      result.current[1]({
+        page: 10,
+      });
+    });
+
+    expect(result.current[0]).toEqual({
+      page: 10,
+    });
+    expect(validate).toHaveBeenCalledTimes(validationCallCount);
   });
 });

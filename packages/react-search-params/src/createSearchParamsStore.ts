@@ -6,7 +6,12 @@ import type {
   Serializer,
   SetParamsAction,
 } from '#types';
-import { filterObject, objectToURLSearchParams, shallowEqual } from '#utils';
+import {
+  filterObject,
+  objectToURLSearchParams,
+  resolveLazy,
+  shallowEqual,
+} from '#utils';
 
 import { useInitialSearchParams } from './SearchParamsProvider';
 import type { SearchParamsSchema } from './createSearchParamsSchema';
@@ -74,8 +79,10 @@ export const createSearchParamsStore = ({
     const K extends (keyof T)[],
   >(
     schema: SearchParamsSchema<T>,
-    keys: NoDuplicates<K>,
+    keys: NoDuplicates<K> | (() => NoDuplicates<K>),
   ): [{ [P in K[number]]: T[P] }, ParamsDispatch<SetParamsAction<T>>] => {
+    const selectedKeys = resolveLazy(keys);
+
     const updateState = () => {
       if (!isDirty) {
         return;
@@ -83,7 +90,7 @@ export const createSearchParamsStore = ({
 
       try {
         store.mutateState(
-          schema.validate({ ...schema.initialValue, ...store.getState() } as T),
+          schema.validate({ ...schema.defaultValue, ...store.getState() } as T),
         );
       } catch {
         store.mutateState(schema.defaultValue);
@@ -95,12 +102,12 @@ export const createSearchParamsStore = ({
 
     const getServerState = (): T => {
       if (initialSearchParams === null) {
-        return schema.initialValue;
+        return schema.defaultValue;
       }
 
       try {
         return schema.validate({
-          ...schema.initialValue,
+          ...schema.defaultValue,
           ...serializer.deserialize(
             new URLSearchParams(objectToURLSearchParams(initialSearchParams)),
           ),
@@ -110,12 +117,15 @@ export const createSearchParamsStore = ({
       }
     };
 
-    const state = isServer
-      ? filterObject(getServerState(), keys)
-      : store.useStoreWithSelector((state) => {
-          updateState();
-          return filterObject(state as T, keys);
-        }, shallowEqual);
+    const state = resolveLazy(
+      isServer
+        ? () => filterObject(getServerState(), selectedKeys)
+        : () =>
+            store.useStoreWithSelector((state) => {
+              updateState();
+              return filterObject(state as T, selectedKeys);
+            }, shallowEqual),
+    );
 
     /**
      * Updates params.
@@ -132,19 +142,23 @@ export const createSearchParamsStore = ({
       try {
         if (typeof value === 'function') {
           updateState();
-          setParam(
-            (prev) =>
-              schema.validate({
-                ...store.getState(),
-                ...(value(prev as T) as T),
-              }),
-            history,
-          );
+
+          setParam((prev) => {
+            const nextState = {
+              ...store.getState(),
+              ...value(prev as T),
+            };
+
+            return schema.skipValidation
+              ? nextState
+              : schema.validate(nextState);
+          }, history);
           return;
         }
 
+        const nextState = { ...store.getState(), ...value };
         setParam(
-          schema.validate({ ...store.getState(), ...value } as T),
+          schema.skipValidation ? nextState : schema.validate(nextState),
           history,
         );
         isDirty = false;
@@ -167,7 +181,7 @@ export const createSearchParamsStore = ({
   ): [T, ParamsDispatch<SetParamsAction<T>>] => {
     const [state, setState] = useParams(
       schema,
-      Object.keys(schema.initialValue) as (keyof T)[],
+      () => Object.keys(schema.defaultValue) as (keyof T)[],
     );
 
     return [state, setState];
