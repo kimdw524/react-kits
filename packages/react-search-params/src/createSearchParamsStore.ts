@@ -132,19 +132,23 @@ export const createSearchParamsStore = ({
       try {
         if (typeof value === 'function') {
           updateState();
-          setParam(
-            (prev) =>
-              schema.validate({
-                ...store.getState(),
-                ...(value(prev as T) as T),
-              }),
-            history,
-          );
+
+          setParam((prev) => {
+            const nextState = {
+              ...store.getState(),
+              ...value(prev as T),
+            };
+
+            return schema.skipValidation
+              ? nextState
+              : schema.validate(nextState);
+          }, history);
           return;
         }
 
+        const nextState = { ...store.getState(), ...value };
         setParam(
-          schema.validate({ ...store.getState(), ...value } as T),
+          schema.skipValidation ? nextState : schema.validate(nextState),
           history,
         );
         isDirty = false;

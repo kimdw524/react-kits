@@ -14,10 +14,14 @@ export const createSearchParamsSchema = <
   validate: (params: {
     [K in keyof T]?: T[K] | string | string[];
   }) => NoInfer<T>;
+  /**
+   * Skips runtime validation for developer input because TypeScript compile-time type checking is sufficient.
+   */
+  skipValidation?: boolean;
 }) => {
-  const { defaultValue, validate } = options;
+  const { defaultValue, validate, skipValidation = false } = options;
 
-  return { defaultValue, validate };
+  return { defaultValue, validate, skipValidation };
 };
 
 export type SearchParamsSchema<T extends Record<string, ParamValue>> =
