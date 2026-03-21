@@ -1,4 +1,5 @@
 import type { ParamValue } from './types';
+import { objectToURLSearchParams } from './utils';
 
 /**
  * Creates a search params schema definition.
@@ -21,7 +22,22 @@ export const createSearchParamsSchema = <
 }) => {
   const { defaultValue, validate, skipValidation = false } = options;
 
-  return { defaultValue, validate, skipValidation };
+  /**
+   * Converts schema-typed params into a URL query string.
+   */
+  const toString = (params: T): string => {
+    const nextState = skipValidation
+      ? params
+      : validate(
+          params as {
+            [K in keyof T]?: T[K] | string | string[];
+          },
+        );
+
+    return objectToURLSearchParams(nextState).toString();
+  };
+
+  return { defaultValue, validate, skipValidation, toString };
 };
 
 export type SearchParamsSchema<T extends Record<string, ParamValue>> =
