@@ -2,7 +2,6 @@ import { act, renderHook } from '@testing-library/react';
 
 import { createSearchParamsSchema } from './createSearchParamsSchema';
 import { createSearchParamsStore } from './createSearchParamsStore';
-import { Parser } from './parser';
 import { delimiter } from './serializers';
 
 type Params = {
@@ -19,17 +18,18 @@ const schema = createSearchParamsSchema<Params>({
     tags: [],
     enabled: false,
   },
+  arrayParams: ['tags'],
   validate: (params) => {
     const page = Number(params.page);
 
     if (!Number.isInteger(page) || page < 0) {
-      throw new Error('페이지는 0 이상의 정수여야 합니다.');
+      throw new Error('page must be an integer greater than or equal to 0');
     }
 
     return {
       q: String(params.q),
       page,
-      tags: Parser.toArray(params.tags).map(Number),
+      tags: params.tags?.map(Number) ?? [],
       enabled:
         params.enabled === 'true'
           ? true
@@ -50,7 +50,7 @@ describe('createSearchParamsStore', () => {
     window.history.replaceState({}, '', '/');
   });
 
-  it('URL 쿼리로 초기 state를 동기화하고, 정의되지 않은 param은 기본값을 채운다.', () => {
+  it('syncs initial state from URL query and fills undefined params with defaults', () => {
     window.history.replaceState({}, '', '/?q=react&page=2#section');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     cleanups.push(store.cleanup);
@@ -65,7 +65,7 @@ describe('createSearchParamsStore', () => {
     });
   });
 
-  it('setState 호출 시 상태와 URL을 함께 갱신한다', () => {
+  it('updates both state and URL when setState is called', () => {
     window.history.replaceState({}, '', '/?q=old&page=1#tab');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     cleanups.push(store.cleanup);
@@ -94,7 +94,7 @@ describe('createSearchParamsStore', () => {
     );
   });
 
-  it('popstate 이벤트가 발생하면 스토어 상태를 갱신한다', () => {
+  it('updates store state when a popstate event occurs', () => {
     window.history.replaceState({}, '', '/?q=first&page=1');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     cleanups.push(store.cleanup);
@@ -114,7 +114,7 @@ describe('createSearchParamsStore', () => {
     });
   });
 
-  it('검증 실패 시 onValidationFailed를 호출하고 이전 상태를 유지한다', () => {
+  it('calls onValidationFailed and keeps previous state on validation failure', () => {
     window.history.replaceState({}, '', '/?q=safe&page=1');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     cleanups.push(store.cleanup);
@@ -135,7 +135,7 @@ describe('createSearchParamsStore', () => {
     });
   });
 
-  it('cleanup 이후에는 popstate 이벤트에 반응하지 않는다.', () => {
+  it('does not respond to popstate events after cleanup', () => {
     window.history.replaceState({}, '', '/?q=alpha&page=1');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     const { result } = renderHook(() => store.useAllParams(schema));
@@ -154,7 +154,7 @@ describe('createSearchParamsStore', () => {
     });
   });
 
-  it('초기 URL에서 검증을 실패할 경우 defaultValue로 state를 정의한다.', () => {
+  it('falls back to defaultValue when initial URL validation fails', () => {
     window.history.replaceState({}, '', '/?page=-1');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     cleanups.push(store.cleanup);
@@ -164,7 +164,7 @@ describe('createSearchParamsStore', () => {
     expect(result.current[0]).toEqual(schema.defaultValue);
   });
 
-  it('schema의 skipValidation가 true일 경우 init, popstate 이벤트 발생 시만 validaiton을 한다.', () => {
+  it('validates only on init and popstate when skipValidation is true', () => {
     window.history.replaceState({}, '', '/?page=2');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
     cleanups.push(store.cleanup);
@@ -213,5 +213,31 @@ describe('createSearchParamsStore', () => {
       page: 10,
     });
     expect(validate).toHaveBeenCalledTimes(validationCallCount);
+  });
+
+  it('passes single tag values to validate as an array', () => {
+    const validate = jest.fn((params: { tags?: number[] | string[] }) => {
+      return {
+        tags: params.tags?.map(Number) ?? [],
+      };
+    });
+
+    const tagsSchema = createSearchParamsSchema<{ tags: number[] }>({
+      defaultValue: {
+        tags: [],
+      },
+      arrayParams: ['tags'],
+      validate,
+    });
+
+    window.history.replaceState({}, '', '/?tags=1');
+    const store = createSearchParamsStore({ serializer: delimiter(',') });
+    cleanups.push(store.cleanup);
+
+    renderHook(() => store.useAllParams(tagsSchema));
+
+    expect(validate).toHaveBeenCalledWith({
+      tags: ['1'],
+    });
   });
 });

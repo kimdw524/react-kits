@@ -11,16 +11,25 @@ export const createSearchParamsSchema = <
 >(options: {
   /** Initial value for the schema. */
   defaultValue: T;
+  /** If a value type is an array, you must explicitly provide the keys of those params as an array. */
+  arrayParams?: {
+    [K in keyof T]: T[K] extends unknown[] ? K : never;
+  }[keyof T][];
   /** Function that validates the schema value. It must throw on failure. */
   validate: (params: {
-    [K in keyof T]?: T[K] | string | string[];
+    [K in keyof T]?: T[K] extends unknown[] ? T[K] | string[] : T[K] | string;
   }) => NoInfer<T>;
   /**
    * Skips runtime validation for developer input because TypeScript compile-time type checking is sufficient.
    */
   skipValidation?: boolean;
 }) => {
-  const { defaultValue, validate, skipValidation = false } = options;
+  const {
+    defaultValue,
+    skipValidation = false,
+    arrayParams = [],
+    validate,
+  } = options;
 
   /**
    * Converts schema-typed params into a URL query string.
@@ -30,14 +39,20 @@ export const createSearchParamsSchema = <
       ? params
       : validate(
           params as {
-            [K in keyof T]?: T[K] | string | string[];
+            [K in keyof T]?: T[K];
           },
         );
 
     return objectToURLSearchParams(nextState).toString();
   };
 
-  return { defaultValue, validate, skipValidation, toString };
+  return {
+    defaultValue,
+    skipValidation,
+    arrayParams: new Set(arrayParams as string[]),
+    validate,
+    toString,
+  };
 };
 
 export type SearchParamsSchema<T extends Record<string, ParamValue>> =
