@@ -2,13 +2,13 @@
 
 [![NPM](https://img.shields.io/npm/v/@kimdw-rtk/react-search-params)](https://www.npmjs.com/package/@kimdw-rtk/react-search-params)
 
-[한국어](./README.ko.md)
+[English](./README.md)
 
-Type-safe utilities for managing `URLSearchParams` in React.
+React에서 `URLSearchParams`를 type-safe하게 다루기 위한 라이브러리입니다.
 
-- Optimizes runtime performance by running only minimal validation.
-- Reduces re-renders by subscribing only to the keys you need.
-- SSR support.
+- 최소한의 검증만 수행해 런타임 성능을 최적화합니다.
+- 필요한 키만 구독해 리렌더링을 줄일 수 있습니다.
+- SSR을 지원합니다.
 
 ## Installation
 
@@ -39,8 +39,8 @@ export const searchParamsSchema = createSearchParamsSchema<{
     page: 1,
     tags: [],
   },
-  skipValidation: false, // Set this to `true` when param changes caused by developer code are sufficiently guaranteed by TypeScript checks, so calls to `validate` can be minimized.
-  arrayParams: ['tags'], // For array-type params, you must explicitly specify the keys in `arrayParams`.
+  skipValidation: false, // 개발 코드로 인한 params 변경이 TypeScript 검사만으로 충분하다면 `true`로 설정해 `validate` 호출을 최소화할 수 있습니다.
+  arrayParams: ['tags'], // 배열 타입의 params는 `arrayParams`에 해당 키를 명시해야 합니다.
   validate: (params) => {
     const page = Number(params.page);
 
@@ -57,7 +57,7 @@ export const searchParamsSchema = createSearchParamsSchema<{
 });
 ```
 
-You can define the `validate` function manually, but using `zod` is recommended.
+`validate` 함수는 직접 작성할 수 있지만, `zod`의 `parse` 함수 활용을 권장합니다.
 
 ### Create Store
 
@@ -67,11 +67,12 @@ export const store = createSearchParamsStore({
 });
 ```
 
-You usually do not need to create multiple store instances.
+store 인스턴스를 여러 개 만들 필요는 없습니다.
+실수로 여러 인스턴스를 생성하지 않도록 주의하세요.
 
 #### Serializer
 
-Choose a serializer based on how arrays are represented in the URL.
+배열을 URL에 어떤 형태로 표현할지에 따라 serializer를 선택하세요.
 
 `Serializer.delimiter(',')`
 
@@ -115,7 +116,7 @@ export function SearchPage() {
 const [{ page }, setParams] = store.useParams(searchParamsSchema, ['page']);
 ```
 
-You can subscribe to only a subset of keys defined in the schema.
+`schema`에 정의된 키 중 일부만 골라 구독할 수 있습니다.
 
 ### Use in SSR
 
@@ -133,9 +134,10 @@ export default async function Page({
 }
 ```
 
-Use `SearchParamsProvider` to provide initial `URLSearchParams` values in SSR.
+SSR에서는 `SearchParamsProvider`를 사용해 초기 `URLSearchParams` 값을 전달할 수 있습니다.
 
 ### Notes
 
-This library expects search param updates to flow through its own hooks (`useParams`, `useAllParams`) so the internal store stays in sync.
-Be careful when your router performs soft navigation or updates the URL outside `useParams`, because those changes may not be reflected automatically unless they trigger the expected synchronization flow.
+이 라이브러리는 URLSearchParams 변경이 `useParams`, `useAllParams`를 통해 이뤄진다고 가정하고 내부 store를 동기화합니다.
+
+soft navigation처럼 hook을 통하지 않고 URLSearchParams가 변경되는 경우에는 감지할 수 없습니다.

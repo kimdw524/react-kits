@@ -1,7 +1,7 @@
 import { createSearchParamsSchema } from './createSearchParamsSchema';
 
 describe('createSearchParamsSchema', () => {
-  it('스키마 타입 파라미터를 URLSearchParams 문자열로 변환한다', () => {
+  it('converts schema-typed params into a URLSearchParams string', () => {
     const schema = createSearchParamsSchema({
       defaultValue: {
         query: '',
@@ -30,7 +30,7 @@ describe('createSearchParamsSchema', () => {
     expect(searchParams).toBe('query=react&page=3&tags=ts&tags=jest');
   });
 
-  it('skipValidation이 false이면 변환 전에 validate를 사용한다', () => {
+  it('uses validate before conversion when skipValidation is false', () => {
     const schema = createSearchParamsSchema({
       defaultValue: {
         page: 1,
@@ -49,7 +49,7 @@ describe('createSearchParamsSchema', () => {
     expect(searchParams).toBe('page=7');
   });
 
-  it('skipValidation이 true이면 validate를 건너뛴다', () => {
+  it('skips validate when skipValidation is true', () => {
     const validate = jest.fn(
       (params: { page?: number | string | string[] }) => {
         return {
