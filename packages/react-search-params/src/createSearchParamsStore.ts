@@ -83,6 +83,23 @@ export const createSearchParamsStore = ({
   ): [{ [P in K[number]]: T[P] }, ParamsDispatch<SetParamsAction<T>>] => {
     const selectedKeys = resolveLazy(keys);
 
+    const parseArrayParams = (params: Record<keyof T, ParamValue>) => {
+      const result = { ...params } as T;
+
+      for (const key of schema.arrayParams as Set<keyof T>) {
+        const value = params[key];
+        if (value !== undefined && !Array.isArray(value)) {
+          result[key] = [value] as T[typeof key];
+        }
+      }
+
+      return result;
+    };
+
+    const parseParams = (params: Record<keyof T, ParamValue>): T => {
+      return schema.validate(parseArrayParams(params));
+    };
+
     const updateState = () => {
       if (!isDirty) {
         return;
@@ -90,7 +107,7 @@ export const createSearchParamsStore = ({
 
       try {
         store.mutateState(
-          schema.validate({ ...schema.defaultValue, ...store.getState() } as T),
+          parseParams({ ...schema.defaultValue, ...store.getState() }),
         );
       } catch {
         store.mutateState(schema.defaultValue);
@@ -106,7 +123,7 @@ export const createSearchParamsStore = ({
       }
 
       try {
-        return schema.validate({
+        return parseParams({
           ...schema.defaultValue,
           ...serializer.deserialize(
             new URLSearchParams(objectToURLSearchParams(initialSearchParams)),
@@ -149,16 +166,14 @@ export const createSearchParamsStore = ({
               ...value(prev as T),
             };
 
-            return schema.skipValidation
-              ? nextState
-              : schema.validate(nextState);
+            return schema.skipValidation ? nextState : parseParams(nextState);
           }, history);
           return;
         }
 
         const nextState = { ...store.getState(), ...value };
         setParam(
-          schema.skipValidation ? nextState : schema.validate(nextState),
+          schema.skipValidation ? nextState : parseParams(nextState),
           history,
         );
         isDirty = false;
