@@ -1,8 +1,8 @@
-import { style } from '@vanilla-extract/css';
+import { createVar, style } from '@vanilla-extract/css';
 
 import { styleWithLayer } from '#styleUtils';
 
-const MASK_SIZE = '3rem';
+export const paddingVar = createVar();
 
 export const scrollArea = styleWithLayer({
   width: '100%',
@@ -15,28 +15,15 @@ export const scrollArea = styleWithLayer({
   },
 });
 
-export const maskLeft = style({
-  maskImage: `linear-gradient(to left,
-  black 0%,
-  black calc(100% - ${MASK_SIZE}),
-  transparent 100%)`,
-});
-
-export const maskRight = style({
-  maskImage: `linear-gradient(to right,
-  black 0%,
-  black calc(100% - ${MASK_SIZE}),
-  transparent 100%)`,
-});
-
-export const maskBoth = style({
+export const mask = style({
   maskImage: `linear-gradient(to right,
   transparent 0%,
-  black ${MASK_SIZE},
-  black calc(100% - ${MASK_SIZE}),
+  black ${paddingVar},
+  black calc(100% - ${paddingVar}),
   transparent 100%)`,
 });
 
 export const wrapper = style({
   width: 'max-content',
+  paddingInline: paddingVar,
 });

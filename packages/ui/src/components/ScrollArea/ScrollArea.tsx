@@ -3,22 +3,27 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
 import { useCombinedRefs } from '@kimdw-rtk/utils';
+import { assignInlineVars } from '@vanilla-extract/dynamic';
 import clsx from 'clsx';
 
 import { useMouseScroll } from '#hooks/useMouseScroll';
 import { sx } from '#styles';
+import { spacing } from '#tokens';
 import type { UIComponent } from '#types';
 
 import * as s from './ScrollArea.css';
 
-type ScrollAreaProps = UIComponent<'div'>;
+interface ScrollAreaProps extends UIComponent<'div'> {
+  innerPadding?: keyof typeof spacing;
+}
 
 export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
-  ({ children, className, sx: propSx, ...props }, ref) => {
+  (
+    { children, className, innerPadding = 'lg', sx: propSx, style, ...props },
+    ref,
+  ) => {
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const targetRef = useCombinedRefs(ref, scrollAreaRef);
-    const [hasLeftSpace, setHasLeftSpace] = useState<boolean>(false);
-    const [hasRightSpace, setHasRightSpace] = useState<boolean>(true);
     useMouseScroll(scrollAreaRef);
 
     useEffect(() => {
@@ -40,21 +45,9 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
         e.preventDefault();
       };
 
-      const handleScroll = () => {
-        setHasLeftSpace(element.scrollLeft !== 0);
-        setHasRightSpace(
-          Math.ceil(element.scrollLeft + element.clientWidth) <
-            Math.floor(element.scrollWidth),
-        );
-      };
-
-      handleScroll();
-
-      element.addEventListener('scroll', handleScroll);
       element.addEventListener('wheel', handleWheel);
 
       return () => {
-        element.removeEventListener('scroll', handleScroll);
         element.removeEventListener('wheel', handleWheel);
       };
     }, []);
@@ -62,15 +55,12 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
     return (
       <div
         ref={targetRef}
-        className={clsx(
-          s.scrollArea,
-          className,
-          sx(propSx),
-          hasLeftSpace && hasRightSpace && s.maskBoth,
-          hasLeftSpace && s.maskLeft,
-          hasRightSpace && s.maskRight,
-        )}
+        className={clsx(s.scrollArea, className, sx(propSx), s.mask)}
         {...props}
+        style={{
+          ...style,
+          ...assignInlineVars({ [s.paddingVar]: spacing[innerPadding] }),
+        }}
       >
         <div className={s.wrapper}>{children}</div>
       </div>
