@@ -59,6 +59,20 @@ export const searchParamsSchema = createSearchParamsSchema<{
 
 `validate` 함수는 직접 작성할 수 있지만, `zod`의 `parse` 함수 활용을 권장합니다.
 
+#### Schema.toString(params)
+
+```tsx
+const result = searchParamsSchema.toString({
+  query: 'q',
+  page: 1,
+  tags: ['a', 'b'],
+});
+console.log(result); // query=q&page=1&tags=1,2
+```
+
+`schema`에 맞는 객체를 URL query string으로 변환하는 함수입니다.
+[해당 URL을 사용할 때 주의해야 할 사항을 확인하세요.](#notes)
+
 ### Create Store
 
 ```tsx
