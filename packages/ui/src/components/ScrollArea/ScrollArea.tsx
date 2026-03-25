@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import { assignInlineVars } from '@vanilla-extract/dynamic';
