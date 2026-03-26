@@ -40,6 +40,7 @@ export const range = recipeWithLayer({
     height: '2em',
 
     userSelect: 'none',
+    touchAction: 'none',
   },
 
   variants: {
@@ -80,6 +81,7 @@ export const thumb = styleWithLayer({
   transform: 'translate(-50%, -50%)',
 
   cursor: 'pointer',
+  touchAction: 'none',
 
   '::before': {
     position: 'absolute',
