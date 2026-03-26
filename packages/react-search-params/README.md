@@ -57,7 +57,21 @@ export const searchParamsSchema = createSearchParamsSchema<{
 });
 ```
 
-You can define the `validate` function manually, but using `zod` is recommended.
+You can define the `validate` function manually, but using `zod.parse` is recommended.
+
+#### Schema.toString(params)
+
+```tsx
+const result = searchParamsSchema.toString({
+  query: 'q',
+  page: 1,
+  tags: ['a', 'b'],
+});
+console.log(result); // query=q&page=1&tags=1,2
+```
+
+Converts an object that matches the schema into a URL query string.
+[See the notes below before using it in a URL.](#notes)
 
 ### Create Store
 
@@ -68,6 +82,7 @@ export const store = createSearchParamsStore({
 ```
 
 You usually do not need to create multiple store instances.
+Be careful not to create multiple store instances accidentally.
 
 #### Serializer
 
@@ -137,5 +152,6 @@ Use `SearchParamsProvider` to provide initial `URLSearchParams` values in SSR.
 
 ### Notes
 
-This library expects search param updates to flow through its own hooks (`useParams`, `useAllParams`) so the internal store stays in sync.
-Be careful when your router performs soft navigation or updates the URL outside `useParams`, because those changes may not be reflected automatically unless they trigger the expected synchronization flow.
+This library assumes `URLSearchParams` changes flow through `useParams` or `useAllParams`, and it keeps the internal store in sync based on that assumption.
+
+If `URLSearchParams` changes outside those hooks, such as through soft navigation, the change may not be detected automatically.
