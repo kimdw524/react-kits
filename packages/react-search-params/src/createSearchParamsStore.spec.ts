@@ -177,7 +177,7 @@ describe('createSearchParamsStore', () => {
       },
     );
 
-    const simpleSchema = createSearchParamsSchema({
+    const simpleSchema = createSearchParamsSchema<{ page: number }>({
       defaultValue: {
         page: 1,
       },

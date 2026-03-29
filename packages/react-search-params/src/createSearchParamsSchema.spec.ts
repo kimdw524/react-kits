@@ -2,11 +2,16 @@ import { createSearchParamsSchema } from './createSearchParamsSchema';
 
 describe('createSearchParamsSchema', () => {
   it('converts schema-typed params into a URLSearchParams string', () => {
-    const schema = createSearchParamsSchema({
+    const schema = createSearchParamsSchema<{
+      query: string;
+      page: number;
+      tags: string[];
+    }>({
+      partial: false,
       defaultValue: {
         query: '',
         page: 1,
-        tags: [] as string[],
+        tags: [],
       },
       validate: (params) => {
         return {
@@ -31,7 +36,7 @@ describe('createSearchParamsSchema', () => {
   });
 
   it('uses validate before conversion when skipValidation is false', () => {
-    const schema = createSearchParamsSchema({
+    const schema = createSearchParamsSchema<{ page: number }>({
       defaultValue: {
         page: 1,
       },
@@ -58,7 +63,7 @@ describe('createSearchParamsSchema', () => {
       },
     );
 
-    const schema = createSearchParamsSchema({
+    const schema = createSearchParamsSchema<{ page: number }>({
       defaultValue: {
         page: 1,
       },
@@ -72,5 +77,37 @@ describe('createSearchParamsSchema', () => {
 
     expect(searchParams).toBe('page=5');
     expect(validate).not.toHaveBeenCalled();
+  });
+
+  it('supports partial schemas when partial is true', () => {
+    const validate = jest.fn(
+      (params: { query?: string; page?: number | string | string[] }) => {
+        return {
+          ...(params.query !== undefined
+            ? { query: String(params.query) }
+            : {}),
+          ...(params.page !== undefined ? { page: Number(params.page) } : {}),
+        };
+      },
+    );
+
+    const schema = createSearchParamsSchema<{
+      query: string;
+      page: number;
+    }>({
+      partial: true,
+      defaultValue: {},
+      validate,
+    });
+
+    const searchParams = schema.toString({
+      page: 2,
+    });
+
+    expect(schema.partial).toBe(true);
+    expect(searchParams).toBe('page=2');
+    expect(validate).toHaveBeenCalledWith({
+      page: 2,
+    });
   });
 });
