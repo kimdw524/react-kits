@@ -39,6 +39,7 @@ export const searchParamsSchema = createSearchParamsSchema<{
     page: 1,
     tags: [],
   },
+  partial: false, // Set this to `true` if the schema should allow missing keys and return partial results.
   skipValidation: false, // Set this to `true` when param changes caused by developer code are sufficiently guaranteed by TypeScript checks, so calls to `validate` can be minimized.
   arrayParams: ['tags'], // For array-type params, you must explicitly specify the keys in `arrayParams`.
   validate: (params) => {
@@ -58,6 +59,28 @@ export const searchParamsSchema = createSearchParamsSchema<{
 ```
 
 You can define the `validate` function manually, but using `zod.parse` is recommended.
+
+#### Partial Schema
+
+Set `partial: true` when some query params are optional and missing keys should remain `undefined` instead of being filled from `defaultValue`.
+
+```tsx
+const partialSearchParamsSchema = createSearchParamsSchema<{
+  query: string;
+  page: number;
+}>({
+  partial: true,
+  defaultValue: {},
+  validate: (params) => {
+    return {
+      ...(params.query !== undefined ? { query: String(params.query) } : {}),
+      ...(params.page !== undefined ? { page: Number(params.page) } : {}),
+    };
+  },
+});
+```
+
+With a partial schema, missing values stay unset until they are actually present in the URL or explicitly provided through `setParams`.
 
 #### Schema.toString(params)
 

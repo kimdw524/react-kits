@@ -49,6 +49,11 @@ export const createSearchParamsStore = ({
     const urlSearchParams = new URLSearchParams(window.location.search);
 
     for (const key in nextValue) {
+      if (nextValue[key] === undefined) {
+        urlSearchParams.delete(key);
+        continue;
+      }
+
       const serializedValue = serializer.serialize(nextValue[key]!);
 
       urlSearchParams.delete(key);
