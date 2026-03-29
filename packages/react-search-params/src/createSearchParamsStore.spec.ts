@@ -177,7 +177,7 @@ describe('createSearchParamsStore', () => {
       },
     );
 
-    const simpleSchema = createSearchParamsSchema({
+    const simpleSchema = createSearchParamsSchema<{ page: number }>({
       defaultValue: {
         page: 1,
       },
@@ -239,5 +239,104 @@ describe('createSearchParamsStore', () => {
     expect(validate).toHaveBeenCalledWith({
       tags: ['1'],
     });
+  });
+
+  it('returns undefined for missing values when using a partial schema', () => {
+    window.history.replaceState({}, '', '/?q=react');
+    const store = createSearchParamsStore({ serializer: delimiter(',') });
+    cleanups.push(store.cleanup);
+
+    const partialSchema = createSearchParamsSchema<{
+      q: string;
+      page: number;
+    }>({
+      partial: true,
+      defaultValue: {},
+      validate: (params) => {
+        return {
+          q: params.q,
+          page: params.page !== undefined ? Number(params.page) : undefined,
+        };
+      },
+    });
+
+    const { result } = renderHook(() =>
+      store.useParams(partialSchema, ['q', 'page']),
+    );
+
+    expect(result.current[0]).toEqual({
+      q: 'react',
+      page: undefined,
+    });
+  });
+
+  it('allows setting undefined when using a partial schema', () => {
+    window.history.replaceState({}, '', '/?q=react&page=2');
+    const store = createSearchParamsStore({ serializer: delimiter(',') });
+    cleanups.push(store.cleanup);
+
+    const partialSchema = createSearchParamsSchema<{
+      q: string;
+      page: number;
+    }>({
+      partial: true,
+      defaultValue: {},
+      validate: (params) => {
+        return {
+          q: params.q,
+          page: params.page !== undefined ? Number(params.page) : undefined,
+        };
+      },
+    });
+
+    const { result } = renderHook(() =>
+      store.useParams(partialSchema, ['q', 'page']),
+    );
+
+    act(() => {
+      result.current[1]({
+        page: undefined,
+      });
+    });
+
+    expect(result.current[0]).toEqual({
+      q: 'react',
+      page: undefined,
+    });
+  });
+
+  it('removes the value from the URL when a partial schema sets it to undefined', () => {
+    window.history.replaceState({}, '', '/?q=react&page=2');
+    const store = createSearchParamsStore({ serializer: delimiter(',') });
+    cleanups.push(store.cleanup);
+
+    const partialSchemaWithDefaults = createSearchParamsSchema<{
+      q: string;
+      page: number;
+    }>({
+      partial: true,
+      defaultValue: {
+        q: '',
+        page: 1,
+      },
+      validate: (params) => {
+        return {
+          q: params.q,
+          page: params.page !== undefined ? Number(params.page) : undefined,
+        };
+      },
+    });
+
+    const { result } = renderHook(() =>
+      store.useAllParams(partialSchemaWithDefaults),
+    );
+
+    act(() => {
+      result.current[1]({
+        page: undefined,
+      });
+    });
+
+    expect(window.location.search).toBe('?q=react');
   });
 });

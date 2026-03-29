@@ -59,6 +59,28 @@ export const searchParamsSchema = createSearchParamsSchema<{
 
 `validate` 함수는 직접 작성할 수 있지만, `zod`의 `parse` 함수 활용을 권장합니다.
 
+#### Partial Schema
+
+params가 `optional`이고, 누락된 키를 defaultValue로 채우는 대신 `undefined` 상태로 유지하고 싶다면 `partial: true`를 설정하세요.
+
+```tsx
+const partialSearchParamsSchema = createSearchParamsSchema<{
+  query: string;
+  page: number;
+}>({
+  partial: true,
+  defaultValue: {},
+  validate: (params) => {
+    return {
+      ...(params.query !== undefined ? { query: String(params.query) } : {}),
+      ...(params.page !== undefined ? { page: Number(params.page) } : {}),
+    };
+  },
+});
+```
+
+`Partial Schema`를 사용하면, 누락된 값은 명시적으로 제공되기 전까지 설정되지 않은 상태로 유지됩니다.
+
 #### Schema.toString(params)
 
 ```tsx
