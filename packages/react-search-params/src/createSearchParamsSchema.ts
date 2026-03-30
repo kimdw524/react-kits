@@ -6,11 +6,13 @@ interface BaseOption<T> {
   defaultValue: T;
   /** If a value type is an array, you must explicitly provide the keys of those params as an array. */
   arrayParams?: {
-    [K in keyof T]: T[K] extends unknown[] ? K : never;
+    [K in keyof T]: NonNullable<T[K]> extends unknown[] ? K : never;
   }[keyof T][];
   /** Function that validates the schema value. It must throw on failure. */
   validate: (params: {
-    [K in keyof T]?: T[K] extends unknown[] ? T[K] | string[] : T[K] | string;
+    [K in keyof T]?: NonNullable<T[K]> extends unknown[]
+      ? T[K] | string[]
+      : T[K] | string;
   }) => T;
   /**
    * Skips runtime validation for developer input because TypeScript compile-time type checking is sufficient.

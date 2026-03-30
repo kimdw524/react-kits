@@ -339,4 +339,49 @@ describe('createSearchParamsStore', () => {
 
     expect(window.location.search).toBe('?q=react');
   });
+
+  it('returns the expected value when using arrayParams in a partial schema whether the param exists or not', () => {
+    window.history.replaceState({}, '', '/?tags=1');
+    const store = createSearchParamsStore({ serializer: delimiter(',') });
+    cleanups.push(store.cleanup);
+
+    const partialArraySchema = createSearchParamsSchema<{
+      tags: number[];
+    }>({
+      partial: true,
+      defaultValue: {},
+      arrayParams: ['tags'],
+      validate: (params) => {
+        return {
+          tags: params.tags?.map(Number),
+        };
+      },
+    });
+
+    const { result } = renderHook(() =>
+      store.useParams(partialArraySchema, ['tags']),
+    );
+
+    expect(result.current[0]).toEqual({
+      tags: [1],
+    });
+
+    act(() => {
+      window.history.pushState({}, '', '/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+
+    expect(result.current[0]).toEqual({
+      tags: undefined,
+    });
+
+    act(() => {
+      window.history.pushState({}, '', '/?tags=1,2');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    });
+
+    expect(result.current[0]).toEqual({
+      tags: [1, 2],
+    });
+  });
 });
