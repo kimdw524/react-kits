@@ -1,10 +1,13 @@
 'use client';
 
 import {
+  Children,
   forwardRef,
+  isValidElement,
   useEffect,
   useReducer,
   useRef,
+  type ReactNode,
   type ComponentProps,
   type CSSProperties,
   type RefObject,
@@ -31,6 +34,27 @@ interface SelectProps
   onChange?: (value: string | undefined) => void;
 }
 
+const getDefaultSelectedLabel = (
+  children: ReactNode,
+  value: string | undefined,
+) => {
+  if (!value) {
+    return undefined;
+  }
+
+  for (const child of Children.toArray(children)) {
+    if (!isValidElement<{ value?: string; children?: ReactNode }>(child)) {
+      continue;
+    }
+
+    if (child.props.value === value) {
+      return child.props.children;
+    }
+  }
+
+  return undefined;
+};
+
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
   (
     {
@@ -52,10 +76,15 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const targetRef = useCombinedRefs(ref, containerRef);
     const [state, dispatch] = useReducer(selectReducer, {
       isActive: false,
+      selected: defaultValue,
       containerRef,
       defaultValue,
       items: new Map(),
     });
+    const selected = state.selected ?? defaultValue;
+    const selectedLabel =
+      state.items.get(selected || '') ??
+      getDefaultSelectedLabel(children, selected);
 
     useEffect(() => {
       const container = containerRef.current;
@@ -96,11 +125,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           style={{ ...style, width }}
           {...props}
         >
-          <SelectTrigger variant={variant}>
-            {state.selected !== null && state.items.get(state.selected || '')}
-          </SelectTrigger>
+          <SelectTrigger variant={variant}>{selectedLabel}</SelectTrigger>
           <SelectOptionList>{children}</SelectOptionList>
-          <input name={name} type="hidden" value={state.selected || ''} />
+          <input name={name} type="hidden" value={selected || ''} />
         </div>
       </SelectContext.Provider>
     );
