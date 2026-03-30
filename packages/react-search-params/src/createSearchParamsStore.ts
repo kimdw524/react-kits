@@ -207,12 +207,33 @@ export const createSearchParamsStore = ({
     return [state, setState];
   };
 
+  const wrapHistoryMethods = (onChange: () => void) => {
+    const { history } = window;
+    const originalPushState = history.pushState;
+    const originalReplaceState = history.replaceState;
+
+    history.pushState = function (...args) {
+      originalPushState.apply(this, args);
+      onChange();
+    };
+
+    history.replaceState = function (...args) {
+      originalReplaceState.apply(this, args);
+      onChange();
+    };
+
+    return () => {
+      history.pushState = originalPushState;
+      history.replaceState = originalReplaceState;
+    };
+  };
+
   const init = () => {
     if (typeof window === 'undefined') {
       return () => {};
     }
 
-    const handlePopState = () => {
+    const handleSearchChange = () => {
       const nextState = serializer.deserialize(
         new URLSearchParams(window.location.search.replace(/^\?/, '')),
       );
@@ -221,12 +242,15 @@ export const createSearchParamsStore = ({
       store.setState(nextState);
     };
 
-    handlePopState();
+    handleSearchChange();
 
-    window.addEventListener('popstate', handlePopState);
+    const cleanupWrapHistoryMethods = wrapHistoryMethods(handleSearchChange);
+
+    window.addEventListener('popstate', handleSearchChange);
 
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      cleanupWrapHistoryMethods();
+      window.removeEventListener('popstate', handleSearchChange);
     };
   };
 
