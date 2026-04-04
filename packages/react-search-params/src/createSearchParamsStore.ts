@@ -71,14 +71,15 @@ export const createSearchParamsStore = ({
       }
     }
 
-    const search = urlSearchParams.toString();
-    status.search = search;
+    const searchParams = urlSearchParams.toString();
+    const search = searchParams === '' ? '' : `?${searchParams}`;
+    status.search = searchParams;
     status.isValidated = true;
 
     window.history[history](
       {},
       '',
-      `${window.location.pathname}?${search}${window.location.hash}`,
+      `${window.location.pathname}${search}${window.location.hash}`,
     );
   };
 
@@ -110,7 +111,7 @@ export const createSearchParamsStore = ({
           store.mutateState(
             serializer.deserialize(new URLSearchParams(searchParams)),
           );
-          status.isValidated = true;
+          status.isValidated = false;
           status.search = searchParams;
         } catch {
           //
@@ -235,38 +236,30 @@ export const createSearchParamsStore = ({
     return [state, setState];
   };
 
-  const init = () => {
+  // Updates the store state from the `window.location.search`.
+  const updateFromSearch = () => {
     if (isServer) {
-      return () => {};
+      return;
     }
 
-    const handleSearchChange = () => {
-      const nextState = serializer.deserialize(
-        new URLSearchParams(window.location.search.replace(/^\?/, '')),
-      );
+    const search = window.location.search.replace(/^\?/, '');
 
-      status.isValidated = false;
-      store.setState(nextState);
-    };
+    if (status.search === search) {
+      return;
+    }
 
-    handleSearchChange();
+    const nextState = serializer.deserialize(new URLSearchParams(search));
 
-    window.addEventListener('popstate', handleSearchChange);
-
-    return () => {
-      window.removeEventListener('popstate', handleSearchChange);
-    };
+    status.isValidated = false;
+    store.setState(nextState);
   };
 
-  /**
-   * Removes the registered `popstate` listener.
-   */
-  const cleanup = init();
-
   return {
-    cleanup,
     useAllParams,
     useParams,
     useParamValueWithSelector: store.useStore,
+    updateFromSearch,
   };
 };
+
+export type SearchParamsStore = ReturnType<typeof createSearchParamsStore>;
