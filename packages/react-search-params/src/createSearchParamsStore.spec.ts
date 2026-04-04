@@ -114,44 +114,6 @@ describe('createSearchParamsStore', () => {
     });
   });
 
-  it('updates store state when pushState is called', () => {
-    window.history.replaceState({}, '', '/?q=first&page=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
-
-    const { result } = renderHook(() => store.useAllParams(schema));
-
-    act(() => {
-      window.history.pushState({}, '', '/?q=second&page=4&enabled=true');
-    });
-
-    expect(result.current[0]).toEqual({
-      q: 'second',
-      page: 4,
-      tags: [],
-      enabled: true,
-    });
-  });
-
-  it('updates store state when replaceState is called', () => {
-    window.history.replaceState({}, '', '/?q=first&page=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
-
-    const { result } = renderHook(() => store.useAllParams(schema));
-
-    act(() => {
-      window.history.replaceState({}, '', '/?q=third&page=5&enabled=true');
-    });
-
-    expect(result.current[0]).toEqual({
-      q: 'third',
-      page: 5,
-      tags: [],
-      enabled: true,
-    });
-  });
-
   it('calls onValidationFailed and keeps previous state on validation failure', () => {
     window.history.replaceState({}, '', '/?q=safe&page=1');
     const store = createSearchParamsStore({ serializer: delimiter(',') });
@@ -230,19 +192,6 @@ describe('createSearchParamsStore', () => {
     });
     expect(validate).toHaveBeenCalled();
 
-    const initialValidationCallCount = validate.mock.calls.length;
-
-    act(() => {
-      window.history.pushState({}, '', '/?page=3');
-    });
-
-    expect(result.current[0]).toEqual({
-      page: 3,
-    });
-    expect(validate).toHaveBeenCalledTimes(initialValidationCallCount + 1);
-
-    const validationCallCount = validate.mock.calls.length;
-
     act(() => {
       result.current[1]({
         page: 10,
@@ -252,7 +201,7 @@ describe('createSearchParamsStore', () => {
     expect(result.current[0]).toEqual({
       page: 10,
     });
-    expect(validate).toHaveBeenCalledTimes(validationCallCount + 1);
+    expect(validate).toHaveBeenCalledTimes(1);
   });
 
   it('passes single tag values to validate as an array', () => {
@@ -407,8 +356,9 @@ describe('createSearchParamsStore', () => {
     });
 
     act(() => {
-      window.history.pushState({}, '', '/');
-      // window.dispatchEvent(new PopStateEvent('popstate'));
+      result.current[1]({
+        tags: undefined,
+      });
     });
 
     expect(result.current[0]).toEqual({
@@ -416,8 +366,9 @@ describe('createSearchParamsStore', () => {
     });
 
     act(() => {
-      window.history.pushState({}, '', '/?tags=1,2');
-      // window.dispatchEvent(new PopStateEvent('popstate'));
+      result.current[1]({
+        tags: [1, 2],
+      });
     });
 
     expect(result.current[0]).toEqual({

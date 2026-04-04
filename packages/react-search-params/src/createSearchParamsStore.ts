@@ -1,10 +1,14 @@
+'use client';
+
+import { useRef } from 'react';
+
 import type {
   NoDuplicates,
   ParamsDispatch,
   ParamValue,
-  SetParamsOptions,
   Serializer,
   SetParamsAction,
+  SetParamsOptions,
 } from '#types';
 import {
   filterObject,
@@ -13,7 +17,10 @@ import {
   shallowEqual,
 } from '#utils';
 
-import { useInitialSearchParams } from './SearchParamsProvider';
+import {
+  useInitialSearchParams,
+  useSearchParams,
+} from './SearchParamsProvider';
 import type { SearchParamsSchema } from './createSearchParamsSchema';
 import { createStore } from './store';
 
@@ -30,8 +37,10 @@ export const createSearchParamsStore = ({
   const store = createStore<Record<string, ParamValue>>();
   const isServer = typeof window === 'undefined';
 
-  // Indicates the store may contain unvalidated params and must be validated before retrieving values.
-  let isDirty = true;
+  const status = {
+    search: '',
+    isValidated: false,
+  };
 
   const setParam = <T extends Record<string, ParamValue>>(
     value: SetParamsAction<T>,
@@ -42,7 +51,7 @@ export const createSearchParamsStore = ({
 
     store.setState((prev) => ({ ...prev, ...nextValue }));
 
-    if (typeof window === 'undefined') {
+    if (isServer) {
       return;
     }
 
@@ -62,13 +71,14 @@ export const createSearchParamsStore = ({
       }
     }
 
-    const queryString = urlSearchParams.toString();
-    const search = queryString ? `?${queryString}` : '';
+    const search = urlSearchParams.toString();
+    status.search = search;
+    status.isValidated = true;
 
     window.history[history](
       {},
       '',
-      `${window.location.pathname}${search}${window.location.hash}`,
+      `${window.location.pathname}?${search}${window.location.hash}`,
     );
   };
 
@@ -88,6 +98,26 @@ export const createSearchParamsStore = ({
   ): [{ [P in K[number]]: T[P] }, ParamsDispatch<SetParamsAction<T>>] => {
     const selectedKeys = resolveLazy(keys);
 
+    const initialSearchParams = useInitialSearchParams();
+    const prevSearchParamsRef = useRef<string | null>(null);
+    const searchParams = useSearchParams();
+
+    if (searchParams !== null && prevSearchParamsRef.current !== searchParams) {
+      prevSearchParamsRef.current = searchParams;
+
+      if (status.search !== searchParams) {
+        try {
+          store.mutateState(
+            serializer.deserialize(new URLSearchParams(searchParams)),
+          );
+          status.isValidated = true;
+          status.search = searchParams;
+        } catch {
+          //
+        }
+      }
+    }
+
     const parseArrayParams = (params: Record<keyof T, ParamValue>) => {
       const result = { ...params } as T;
 
@@ -106,7 +136,7 @@ export const createSearchParamsStore = ({
     };
 
     const updateState = () => {
-      if (!isDirty) {
+      if (status.isValidated) {
         return;
       }
 
@@ -117,10 +147,8 @@ export const createSearchParamsStore = ({
       } catch {
         store.mutateState(schema.defaultValue);
       }
-      isDirty = false;
+      status.isValidated = true;
     };
-
-    const initialSearchParams = useInitialSearchParams();
 
     const getServerState = (): T => {
       if (initialSearchParams === null) {
@@ -181,7 +209,7 @@ export const createSearchParamsStore = ({
           schema.skipValidation ? nextState : parseParams(nextState),
           history,
         );
-        isDirty = false;
+        status.isValidated = true;
       } catch (error) {
         onValidationFailed?.(error);
       }
@@ -207,29 +235,8 @@ export const createSearchParamsStore = ({
     return [state, setState];
   };
 
-  const wrapHistoryMethods = (onChange: () => void) => {
-    const { history } = window;
-    const originalPushState = history.pushState;
-    const originalReplaceState = history.replaceState;
-
-    history.pushState = function (...args) {
-      originalPushState.apply(this, args);
-      onChange();
-    };
-
-    history.replaceState = function (...args) {
-      originalReplaceState.apply(this, args);
-      onChange();
-    };
-
-    return () => {
-      history.pushState = originalPushState;
-      history.replaceState = originalReplaceState;
-    };
-  };
-
   const init = () => {
-    if (typeof window === 'undefined') {
+    if (isServer) {
       return () => {};
     }
 
@@ -238,18 +245,15 @@ export const createSearchParamsStore = ({
         new URLSearchParams(window.location.search.replace(/^\?/, '')),
       );
 
-      isDirty = true;
+      status.isValidated = false;
       store.setState(nextState);
     };
 
     handleSearchChange();
 
-    const cleanupWrapHistoryMethods = wrapHistoryMethods(handleSearchChange);
-
     window.addEventListener('popstate', handleSearchChange);
 
     return () => {
-      cleanupWrapHistoryMethods();
       window.removeEventListener('popstate', handleSearchChange);
     };
   };
