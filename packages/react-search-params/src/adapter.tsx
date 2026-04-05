@@ -1,15 +1,11 @@
-import { useEffect, type ReactNode } from 'react';
+'use client';
 
-import { SearchParamsProvider } from '#SearchParamsProvider';
-import type { SearchParamsStore } from '#createSearchParamsStore';
+import { useEffect } from 'react';
 
-export const SearchParamsAdapter = ({
-  children,
-  store,
-}: {
-  children?: ReactNode;
-  store: SearchParamsStore;
-}) => {
+import { SearchParamsProvider } from './SearchParamsProvider';
+import type { AdapterProps } from './adapters/types';
+
+export const SearchParamsAdapter = ({ children, store }: AdapterProps) => {
   useEffect(() => {
     const wrapHistoryMethods = (onChange: () => void) => {
       const { history } = window;
