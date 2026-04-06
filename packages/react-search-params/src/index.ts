@@ -1,3 +1,4 @@
+export * from './adapter';
 export * from './createSearchParamsSchema';
 export * from './createSearchParamsStore';
 export * from './SearchParamsProvider';

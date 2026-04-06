@@ -1,10 +1,14 @@
+'use client';
+
+import { useRef } from 'react';
+
 import type {
   NoDuplicates,
   ParamsDispatch,
   ParamValue,
-  SetParamsOptions,
   Serializer,
   SetParamsAction,
+  SetParamsOptions,
 } from '#types';
 import {
   filterObject,
@@ -13,7 +17,10 @@ import {
   shallowEqual,
 } from '#utils';
 
-import { useInitialSearchParams } from './SearchParamsProvider';
+import {
+  useInitialSearchParams,
+  useSearchParams,
+} from './SearchParamsProvider';
 import type { SearchParamsSchema } from './createSearchParamsSchema';
 import { createStore } from './store';
 
@@ -30,8 +37,10 @@ export const createSearchParamsStore = ({
   const store = createStore<Record<string, ParamValue>>();
   const isServer = typeof window === 'undefined';
 
-  // Indicates the store may contain unvalidated params and must be validated before retrieving values.
-  let isDirty = true;
+  const status = {
+    search: '',
+    isValidated: false,
+  };
 
   const setParam = <T extends Record<string, ParamValue>>(
     value: SetParamsAction<T>,
@@ -42,7 +51,7 @@ export const createSearchParamsStore = ({
 
     store.setState((prev) => ({ ...prev, ...nextValue }));
 
-    if (typeof window === 'undefined') {
+    if (isServer) {
       return;
     }
 
@@ -62,8 +71,10 @@ export const createSearchParamsStore = ({
       }
     }
 
-    const queryString = urlSearchParams.toString();
-    const search = queryString ? `?${queryString}` : '';
+    const searchParams = urlSearchParams.toString();
+    const search = searchParams === '' ? '' : `?${searchParams}`;
+    status.search = searchParams;
+    status.isValidated = true;
 
     window.history[history](
       {},
@@ -88,6 +99,26 @@ export const createSearchParamsStore = ({
   ): [{ [P in K[number]]: T[P] }, ParamsDispatch<SetParamsAction<T>>] => {
     const selectedKeys = resolveLazy(keys);
 
+    const initialSearchParams = useInitialSearchParams();
+    const prevSearchParamsRef = useRef<string | null>(null);
+    const searchParams = useSearchParams();
+
+    if (searchParams !== null && prevSearchParamsRef.current !== searchParams) {
+      prevSearchParamsRef.current = searchParams;
+
+      if (status.search !== searchParams) {
+        try {
+          store.mutateState(
+            serializer.deserialize(new URLSearchParams(searchParams)),
+          );
+          status.isValidated = false;
+          status.search = searchParams;
+        } catch {
+          //
+        }
+      }
+    }
+
     const parseArrayParams = (params: Record<keyof T, ParamValue>) => {
       const result = { ...params } as T;
 
@@ -106,7 +137,7 @@ export const createSearchParamsStore = ({
     };
 
     const updateState = () => {
-      if (!isDirty) {
+      if (status.isValidated) {
         return;
       }
 
@@ -117,10 +148,8 @@ export const createSearchParamsStore = ({
       } catch {
         store.mutateState(schema.defaultValue);
       }
-      isDirty = false;
+      status.isValidated = true;
     };
-
-    const initialSearchParams = useInitialSearchParams();
 
     const getServerState = (): T => {
       if (initialSearchParams === null) {
@@ -181,7 +210,7 @@ export const createSearchParamsStore = ({
           schema.skipValidation ? nextState : parseParams(nextState),
           history,
         );
-        isDirty = false;
+        status.isValidated = true;
       } catch (error) {
         onValidationFailed?.(error);
       }
@@ -207,62 +236,59 @@ export const createSearchParamsStore = ({
     return [state, setState];
   };
 
-  const wrapHistoryMethods = (onChange: () => void) => {
-    const { history } = window;
-    const originalPushState = history.pushState;
-    const originalReplaceState = history.replaceState;
-
-    history.pushState = function (...args) {
-      originalPushState.apply(this, args);
-      onChange();
-    };
-
-    history.replaceState = function (...args) {
-      originalReplaceState.apply(this, args);
-      onChange();
-    };
-
-    return () => {
-      history.pushState = originalPushState;
-      history.replaceState = originalReplaceState;
-    };
-  };
-
-  const init = () => {
-    if (typeof window === 'undefined') {
-      return () => {};
+  // Updates the store state from the `window.location.search`.
+  const updateFromSearch = () => {
+    if (isServer) {
+      return;
     }
 
-    const handleSearchChange = () => {
-      const nextState = serializer.deserialize(
-        new URLSearchParams(window.location.search.replace(/^\?/, '')),
-      );
+    const search = window.location.search.replace(/^\?/, '');
 
-      isDirty = true;
-      store.setState(nextState);
-    };
+    if (status.search === search) {
+      return;
+    }
 
-    handleSearchChange();
+    const nextState = serializer.deserialize(new URLSearchParams(search));
 
-    const cleanupWrapHistoryMethods = wrapHistoryMethods(handleSearchChange);
-
-    window.addEventListener('popstate', handleSearchChange);
-
-    return () => {
-      cleanupWrapHistoryMethods();
-      window.removeEventListener('popstate', handleSearchChange);
-    };
+    status.isValidated = false;
+    store.setState(nextState);
   };
 
   /**
-   * Removes the registered `popstate` listener.
+   * Validates object-based search params on the server side.
    */
-  const cleanup = init();
+  const validateParams = <T>(
+    schema: SearchParamsSchema<T>,
+    searchParams: Record<string, string | string[] | undefined>,
+  ) => {
+    const normalizedSearchParams = Object.fromEntries(
+      Object.entries(searchParams).map(([key, value]) => [
+        key,
+        Array.isArray(value) ? value.join(',') : value,
+      ]),
+    );
+    const params = serializer.deserialize(
+      new URLSearchParams(objectToURLSearchParams(normalizedSearchParams)),
+    );
+    const result = { ...params } as Record<keyof T, string | string[]>;
+
+    for (const key of schema.arrayParams as Set<keyof T>) {
+      const value = params[key as string];
+      if (value !== undefined && !Array.isArray(value)) {
+        result[key] = [value];
+      }
+    }
+
+    return schema.validate(result);
+  };
 
   return {
-    cleanup,
     useAllParams,
     useParams,
     useParamValueWithSelector: store.useStore,
+    updateFromSearch,
+    validateParams,
   };
 };
+
+export type SearchParamsStore = ReturnType<typeof createSearchParamsStore>;
