@@ -3,12 +3,12 @@ import { theme } from '#themes';
 
 export const container = recipeWithLayer({
   base: {
+    position: 'relative',
     overflow: 'hidden',
 
     height: '100%',
     padding: '0 0.75em',
     border: '0',
-    borderBottom: `0.125rem solid`,
 
     backgroundColor: 'transparent',
 
@@ -24,13 +24,9 @@ export const container = recipeWithLayer({
   variants: {
     isSelected: {
       true: {
-        borderBottomColor: `rgb(${theme.color.foreground})`,
-
         color: `rgb(${theme.color.foreground})`,
       },
       false: {
-        borderBottomColor: 'transparent',
-
         color: `rgb(${theme.color['muted-foreground']})`,
       },
     },
