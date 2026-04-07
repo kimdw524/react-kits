@@ -1,12 +1,13 @@
 'use client';
 
-import { forwardRef, useContext } from 'react';
+import { forwardRef, useContext, type MouseEvent } from 'react';
 
 import clsx from 'clsx';
 
 import { sx } from '#styles';
 import type { UIComponent } from '#types';
 
+import { TabsIndicator } from './TabsIndicator';
 import { TabsContext } from './TabsProvider';
 import * as s from './TabsTrigger.css';
 
@@ -15,7 +16,7 @@ interface TabsTriggerProps extends UIComponent<'button'> {
 }
 
 export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
-  ({ children, value, className, sx: propSx, ...props }, ref) => {
+  ({ children, value, className, sx: propSx, onClick, ...props }, ref) => {
     const tabsContext = useContext(TabsContext);
 
     if (tabsContext === undefined) {
@@ -24,18 +25,20 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
 
     const isSelected = tabsContext.value === value;
 
-    const handleClick = () => {
-      tabsContext.setValue(value);
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      tabsContext.selectTab(value, event.currentTarget);
+      onClick?.(event);
     };
 
     return (
       <button
         ref={ref}
         className={clsx(className, s.container({ isSelected }), sx(propSx))}
-        onClick={handleClick}
         {...props}
+        onClick={handleClick}
       >
         {children}
+        {isSelected && <TabsIndicator />}
       </button>
     );
   },

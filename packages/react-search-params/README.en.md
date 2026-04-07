@@ -2,13 +2,13 @@
 
 [![NPM](https://img.shields.io/npm/v/@kimdw-rtk/react-search-params)](https://www.npmjs.com/package/@kimdw-rtk/react-search-params)
 
-[English](./README.en.md)
+[한국어](./README.md)
 
-React에서 `URLSearchParams`를 type-safe하게 다루기 위한 라이브러리입니다.
+A library for handling `URLSearchParams` in React with type safety.
 
-- ⚡ **최소한의 검증**만 수행해 런타임 성능을 최적화합니다.
-- 🎯 **필요한 키만 구독**해 리렌더링을 줄일 수 있습니다.
-- 🌐 SSR을 지원합니다.
+- ⚡ Optimizes runtime performance by performing only the minimum required validation.
+- 🎯 Reduces re-renders by subscribing only to the keys you need.
+- 🌐 Supports SSR.
 
 ## Installation
 
@@ -48,10 +48,10 @@ export const store = createSearchParamsStore({
 
 #### serializer: `Serializer`
 
-배열 타입의 params를 (역)직렬화할 함수를 정의합니다.
+Defines how array-type params are serialized and deserialized.
 
-- `Serializer.delimiter(',')`: 배열을 구분자로 표현하는 Serializer
-- `Serializer.repeated()`: 배열을 구분자로 표현하는 Serializer
+- `Serializer.delimiter(',')`: A serializer that represents arrays with a delimiter.
+- `Serializer.repeated()`: A serializer that represents arrays as repeated keys.
 
 ## `createSearchParamsSchema`
 
@@ -89,27 +89,27 @@ export const searchParamsSchema = createSearchParamsSchema<{
 
 #### defaultValue: `object` `(required)`
 
-URL 검증에 실패했을 경우 적용되는 기본값입니다.
+The fallback value applied when URL validation fails.
 
 #### partial: `boolean` = `false`
 
-일부 params가 `undefined`로 정의되는 걸 허용하면 `true`로 설정합니다.
+Set this to `true` if some params are allowed to remain `undefined`.
 
 #### skilValidation: `boolean` = `false`
 
-코드로 인한 params 변경이 TypeScript의 정적 검사만으로 충분하다면 `true`로 설정해 `validate` 호출을 최소화할 수 있습니다.
+Set this to `true` when param updates made by your code are already guaranteed by TypeScript checks, so calls to `validate` can be minimized.
 
 #### arrayParams: `string[]` = `[]`
 
-배열 타입의 params는 `arrayParams`에 해당 키를 명시해야 합니다.
+For array-type params, you must explicitly list the matching keys in `arrayParams`.
 
 #### validate: `function` `(required)`
 
-`URLSearchParams` 검증에 사용되는 함수입니다. [zod](https://github.com/colinhacks/zod)의 `parse`와 같은 동작을 기대합니다.
+The function used to validate `URLSearchParams`. It is expected to behave like `zod.parse`.
 
 ## `Store.useAllParams`
 
-Schema에 정의된 모든 params를 구독합니다.
+Subscribes to all params defined in the schema.
 
 ```tsx
 const [params, setParams] = store.useAllParams(searchParamsSchema);
@@ -132,8 +132,8 @@ setParams(
 
 ## `Store.useParams`
 
-`useParams` 2번 째 인자값에 정의된 key의 params만 구독합니다.
-`setParams` 메서드는 `useAllParams`와 동일합니다.
+Subscribes only to the params whose keys are defined in the second argument of `useParams`.
+The `setParams` method works the same way as in `useAllParams`.
 
 ```tsx
 const [params, setParams] = store.useParams(searchParamsSchema, ['page']);
@@ -149,11 +149,11 @@ console.log(params);
 
 ## Adapter
 
-URL 변경을 감지하기 위해 `SearchParamsAdapter` 컴포넌트를 최상위에 래핑해야 합니다.
-개발 환경에 맞는 `SearchParamsAdapter`를 `import` 해야 합니다.
+Wrap `SearchParamsAdapter` at the top level so the library can detect URL changes.
+Import the version that matches your environment.
 
-- `@kimdw-rtk/react-search-params`: Router 라이브러리를 사용하지 않는 환경
-- `@kimdw-rtk/react-search-params/next`: `Next.js`를 사용하는 환경
+- `@kimdw-rtk/react-search-params`: For environments that do not use a router library
+- `@kimdw-rtk/react-search-params/next`: For `Next.js`
 
 ```tsx
 import { SearchParamsAdapter } from '@kimdw-rtk/react-search-params';
@@ -191,9 +191,9 @@ export default async function Page({
 }
 ```
 
-SSR에서는 `InitialSearchParamsProvider`를 사용해 초기 search params 값을 전달할 수 있습니다.
+In SSR, you can pass the initial search params through `InitialSearchParamsProvider`.
 
 ## Caveats
 
-- [History API](https://developer.mozilla.org/docs/Web/API/History_API) / Router의 API를 통해 `URLSearchParams`를 변경하는 경우 `validation`이 항상 호출되어 런타임 성능 최적화 로직을 활용할 수 없습니다. 가능하면 `useParams` 훅을 사용하세요.
-- 하나의 페이지에서 여러 개의 `SearchParamsSchema`를 사용해도 되지만, key가 겹치면 안 됩니다.
+- If `URLSearchParams` is changed through the [History API](https://developer.mozilla.org/docs/Web/API/History_API) or a router API, `validation` will always run, so the runtime performance optimization path cannot be used. Use `useParams` when possible.
+- You can use multiple `SearchParamsSchema` instances on the same page, but their keys must not overlap.

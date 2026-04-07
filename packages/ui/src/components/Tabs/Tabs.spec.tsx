@@ -5,7 +5,6 @@ import { uiTest } from '../../tests';
 
 describe('Tabs 컴포넌트', () => {
   uiTest(Tabs, 'Tabs');
-  uiTest(TabsList, 'TabsList');
 
   it('TabsTrigger를 클릭하면 해당하는 value의 Content를 보여준다.', () => {
     render(

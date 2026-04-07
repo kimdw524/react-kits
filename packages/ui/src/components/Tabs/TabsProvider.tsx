@@ -1,17 +1,39 @@
 'use client';
 
-import { createContext, type Dispatch } from 'react';
+import { createContext } from 'react';
 
-interface TabsContext {
+export interface TabsState {
   value: number | string | undefined;
-  setValue: Dispatch<number | string>;
+  selectedElement: HTMLElement | undefined;
+}
+
+type TabsAction = {
+  type: 'SELECT_TAB';
+  value: TabsState['value'];
+  selectedElement: TabsState['selectedElement'];
+};
+
+interface TabsContext extends TabsState {
+  selectTab: (
+    value: TabsState['value'],
+    selectedElement: TabsState['selectedElement'],
+  ) => void;
 }
 
 export const TabsContext = createContext<TabsContext | undefined>(undefined);
 
 export const tabsReducer = (
-  _: TabsContext['value'],
-  value: TabsContext['value'],
-) => {
-  return value;
+  state: TabsState,
+  action: TabsAction,
+): TabsState => {
+  switch (action.type) {
+    case 'SELECT_TAB':
+      return {
+        ...state,
+        value: action.value,
+        selectedElement: action.selectedElement,
+      };
+    default:
+      return state;
+  }
 };

@@ -1,7 +1,13 @@
+import { createElement, type PropsWithChildren } from 'react';
+
 import { act, renderHook } from '@testing-library/react';
 
+import { SearchParamsAdapter } from './adapter';
 import { createSearchParamsSchema } from './createSearchParamsSchema';
-import { createSearchParamsStore } from './createSearchParamsStore';
+import {
+  createSearchParamsStore,
+  type SearchParamsStore,
+} from './createSearchParamsStore';
 import { delimiter } from './serializers';
 
 type Params = {
@@ -40,22 +46,66 @@ const schema = createSearchParamsSchema<Params>({
   },
 });
 
-describe('createSearchParamsStore', () => {
-  const cleanups: Array<() => void> = [];
+const createTestStore = () => {
+  return createSearchParamsStore({ serializer: delimiter(',') });
+};
 
+const createWrapper = (store: SearchParamsStore) => {
+  const Wrapper = ({ children }: PropsWithChildren) => {
+    return createElement(SearchParamsAdapter, { store }, children);
+  };
+
+  return Wrapper;
+};
+
+const renderStoreHook = <Result>(
+  store: SearchParamsStore,
+  callback: () => Result,
+) => {
+  return renderHook(callback, {
+    wrapper: createWrapper(store),
+  });
+};
+
+const syncCurrentUrl = (store: SearchParamsStore) => {
+  act(() => {
+    store.updateFromSearch();
+  });
+};
+
+const pushState = (url: string) => {
+  window.history.pushState(
+    {},
+    '',
+    url.startsWith('/')
+      ? url
+      : `${window.location.pathname}?${url}${window.location.hash}`,
+  );
+};
+
+const replaceState = (url: string) => {
+  window.history.replaceState(
+    {},
+    '',
+    url.startsWith('/')
+      ? url
+      : `${window.location.pathname}?${url}${window.location.hash}`,
+  );
+};
+
+describe('createSearchParamsStore', () => {
   afterEach(() => {
-    while (cleanups.length > 0) {
-      cleanups.pop()?.();
-    }
-    window.history.replaceState({}, '', '/');
+    jest.restoreAllMocks();
+    act(() => {
+      replaceState('/');
+    });
   });
 
-  it('syncs initial state from URL query and fills undefined params with defaults', () => {
-    window.history.replaceState({}, '', '/?q=react&page=2#section');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+  it('reads the initial URL from the adapter-provided search params context', () => {
+    replaceState('/?q=react&page=2#section');
+    const store = createTestStore();
 
-    const { result } = renderHook(() => store.useAllParams(schema));
+    const { result } = renderStoreHook(store, () => store.useAllParams(schema));
 
     expect(result.current[0]).toEqual({
       q: 'react',
@@ -66,11 +116,10 @@ describe('createSearchParamsStore', () => {
   });
 
   it('updates both state and URL when setState is called', () => {
-    window.history.replaceState({}, '', '/?q=old&page=1#tab');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+    replaceState('/?q=old&page=1#tab');
+    const store = createTestStore();
 
-    const { result } = renderHook(() => store.useAllParams(schema));
+    const { result } = renderStoreHook(store, () => store.useAllParams(schema));
 
     act(() => {
       result.current[1]({
@@ -94,71 +143,32 @@ describe('createSearchParamsStore', () => {
     );
   });
 
-  it('updates store state when a popstate event occurs', () => {
-    window.history.replaceState({}, '', '/?q=first&page=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+  it('updates store state when browser history changes through the adapter', () => {
+    replaceState('/');
+    const store = createTestStore();
 
-    const { result } = renderHook(() => store.useAllParams(schema));
+    const { result } = renderStoreHook(store, () => store.useAllParams(schema));
 
     act(() => {
-      window.history.pushState({}, '', '/?q=second&page=4&enabled=true');
-      window.dispatchEvent(new PopStateEvent('popstate'));
+      pushState('/?q=second&page=4&enabled=true');
     });
 
     expect(result.current[0]).toEqual({
       q: 'second',
       page: 4,
-      tags: [],
-      enabled: true,
-    });
-  });
-
-  it('updates store state when pushState is called', () => {
-    window.history.replaceState({}, '', '/?q=first&page=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
-
-    const { result } = renderHook(() => store.useAllParams(schema));
-
-    act(() => {
-      window.history.pushState({}, '', '/?q=second&page=4&enabled=true');
-    });
-
-    expect(result.current[0]).toEqual({
-      q: 'second',
-      page: 4,
-      tags: [],
-      enabled: true,
-    });
-  });
-
-  it('updates store state when replaceState is called', () => {
-    window.history.replaceState({}, '', '/?q=first&page=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
-
-    const { result } = renderHook(() => store.useAllParams(schema));
-
-    act(() => {
-      window.history.replaceState({}, '', '/?q=third&page=5&enabled=true');
-    });
-
-    expect(result.current[0]).toEqual({
-      q: 'third',
-      page: 5,
       tags: [],
       enabled: true,
     });
   });
 
   it('calls onValidationFailed and keeps previous state on validation failure', () => {
-    window.history.replaceState({}, '', '/?q=safe&page=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+    replaceState('/?q=safe&page=1');
+    const store = createTestStore();
 
-    const { result } = renderHook(() => store.useAllParams(schema));
+    const { result } = renderStoreHook(store, () => store.useAllParams(schema));
     const onValidationFailed = jest.fn();
+
+    syncCurrentUrl(store);
 
     act(() => {
       result.current[1](() => ({ page: -1 }), { onValidationFailed });
@@ -173,39 +183,52 @@ describe('createSearchParamsStore', () => {
     });
   });
 
-  it('does not respond to popstate events after cleanup', () => {
-    window.history.replaceState({}, '', '/?q=alpha&page=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    const { result } = renderHook(() => store.useAllParams(schema));
+  it('stops syncing browser events after the adapter unmounts', () => {
+    replaceState('/');
+    const store = createTestStore();
+    const updateFromSearch = jest.spyOn(store, 'updateFromSearch');
+
+    const { result, unmount } = renderStoreHook(store, () =>
+      store.useAllParams(schema),
+    );
 
     act(() => {
-      store.cleanup();
-      window.history.pushState({}, '', '/?q=beta&page=9');
-      window.dispatchEvent(new PopStateEvent('popstate'));
+      pushState('/?q=beta&page=9');
     });
 
     expect(result.current[0]).toEqual({
-      q: 'alpha',
-      page: 1,
+      q: 'beta',
+      page: 9,
       tags: [],
       enabled: false,
     });
+
+    const callCountBeforeUnmount = updateFromSearch.mock.calls.length;
+    expect(callCountBeforeUnmount).toBeGreaterThan(0);
+
+    unmount();
+
+    act(() => {
+      pushState('/?q=gamma&page=10');
+    });
+
+    expect(updateFromSearch).toHaveBeenCalledTimes(callCountBeforeUnmount);
   });
 
-  it('falls back to defaultValue when initial URL validation fails', () => {
-    window.history.replaceState({}, '', '/?page=-1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+  it('falls back to defaultValue when updateFromSearch validation fails', () => {
+    replaceState('/?page=-1');
+    const store = createTestStore();
 
-    const { result } = renderHook(() => store.useAllParams(schema));
+    const { result } = renderStoreHook(store, () => store.useAllParams(schema));
+
+    syncCurrentUrl(store);
 
     expect(result.current[0]).toEqual(schema.defaultValue);
   });
 
-  it('validates on init and history updates when skipValidation is true', () => {
-    window.history.replaceState({}, '', '/?page=2');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+  it('validates updateFromSearch values and revalidates after setState history sync when skipValidation is true', () => {
+    replaceState('/?page=2');
+    const store = createTestStore();
 
     const validate = jest.fn(
       (params: { page?: number | string | string[] }) => {
@@ -223,36 +246,45 @@ describe('createSearchParamsStore', () => {
       skipValidation: true,
     });
 
-    const { result } = renderHook(() => store.useAllParams(simpleSchema));
+    const { result } = renderStoreHook(store, () =>
+      store.useAllParams(simpleSchema),
+    );
 
     expect(result.current[0]).toEqual({
       page: 2,
     });
-    expect(validate).toHaveBeenCalled();
+    expect(validate).toHaveBeenCalledTimes(1);
 
-    const initialValidationCallCount = validate.mock.calls.length;
+    expect(result.current[0]).toEqual({
+      page: 2,
+    });
+    expect(validate).toHaveBeenCalledTimes(1);
 
     act(() => {
-      window.history.pushState({}, '', '/?page=3');
+      pushState('page=3');
     });
-
+    expect(validate).toHaveBeenCalledTimes(2);
     expect(result.current[0]).toEqual({
       page: 3,
     });
-    expect(validate).toHaveBeenCalledTimes(initialValidationCallCount + 1);
 
-    const validationCallCount = validate.mock.calls.length;
+    act(() => {
+      replaceState('page=4');
+    });
+    expect(validate).toHaveBeenCalledTimes(3);
+    expect(result.current[0]).toEqual({
+      page: 4,
+    });
 
     act(() => {
       result.current[1]({
         page: 10,
       });
     });
-
     expect(result.current[0]).toEqual({
       page: 10,
     });
-    expect(validate).toHaveBeenCalledTimes(validationCallCount + 1);
+    expect(validate).toHaveBeenCalledTimes(3);
   });
 
   it('passes single tag values to validate as an array', () => {
@@ -270,21 +302,26 @@ describe('createSearchParamsStore', () => {
       validate,
     });
 
-    window.history.replaceState({}, '', '/?tags=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+    replaceState('/?tags=1');
+    const store = createTestStore();
 
-    renderHook(() => store.useAllParams(tagsSchema));
+    const { result } = renderStoreHook(store, () =>
+      store.useAllParams(tagsSchema),
+    );
+
+    syncCurrentUrl(store);
 
     expect(validate).toHaveBeenCalledWith({
       tags: ['1'],
     });
+    expect(result.current[0]).toEqual({
+      tags: [1],
+    });
   });
 
   it('returns undefined for missing values when using a partial schema', () => {
-    window.history.replaceState({}, '', '/?q=react');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+    replaceState('/?q=react');
+    const store = createTestStore();
 
     const partialSchema = createSearchParamsSchema<{
       q: string;
@@ -300,7 +337,7 @@ describe('createSearchParamsStore', () => {
       },
     });
 
-    const { result } = renderHook(() =>
+    const { result } = renderStoreHook(store, () =>
       store.useParams(partialSchema, ['q', 'page']),
     );
 
@@ -311,9 +348,8 @@ describe('createSearchParamsStore', () => {
   });
 
   it('allows setting undefined when using a partial schema', () => {
-    window.history.replaceState({}, '', '/?q=react&page=2');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+    replaceState('/?q=react&page=2');
+    const store = createTestStore();
 
     const partialSchema = createSearchParamsSchema<{
       q: string;
@@ -329,7 +365,7 @@ describe('createSearchParamsStore', () => {
       },
     });
 
-    const { result } = renderHook(() =>
+    const { result } = renderStoreHook(store, () =>
       store.useParams(partialSchema, ['q', 'page']),
     );
 
@@ -346,9 +382,8 @@ describe('createSearchParamsStore', () => {
   });
 
   it('removes the value from the URL when a partial schema sets it to undefined', () => {
-    window.history.replaceState({}, '', '/?q=react&page=2');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+    replaceState('/?q=react&page=2');
+    const store = createTestStore();
 
     const partialSchemaWithDefaults = createSearchParamsSchema<{
       q: string;
@@ -367,7 +402,7 @@ describe('createSearchParamsStore', () => {
       },
     });
 
-    const { result } = renderHook(() =>
+    const { result } = renderStoreHook(store, () =>
       store.useAllParams(partialSchemaWithDefaults),
     );
 
@@ -380,10 +415,9 @@ describe('createSearchParamsStore', () => {
     expect(window.location.search).toBe('?q=react');
   });
 
-  it('returns the expected value when using arrayParams in a partial schema whether the param exists or not', () => {
-    window.history.replaceState({}, '', '/?tags=1');
-    const store = createSearchParamsStore({ serializer: delimiter(',') });
-    cleanups.push(store.cleanup);
+  it('returns the expected value when using arrayParams in a partial schema after sync and updates', () => {
+    replaceState('/?tags=1');
+    const store = createTestStore();
 
     const partialArraySchema = createSearchParamsSchema<{
       tags: number[];
@@ -398,17 +432,20 @@ describe('createSearchParamsStore', () => {
       },
     });
 
-    const { result } = renderHook(() =>
+    const { result } = renderStoreHook(store, () =>
       store.useParams(partialArraySchema, ['tags']),
     );
+
+    syncCurrentUrl(store);
 
     expect(result.current[0]).toEqual({
       tags: [1],
     });
 
     act(() => {
-      window.history.pushState({}, '', '/');
-      // window.dispatchEvent(new PopStateEvent('popstate'));
+      result.current[1]({
+        tags: undefined,
+      });
     });
 
     expect(result.current[0]).toEqual({
@@ -416,8 +453,9 @@ describe('createSearchParamsStore', () => {
     });
 
     act(() => {
-      window.history.pushState({}, '', '/?tags=1,2');
-      // window.dispatchEvent(new PopStateEvent('popstate'));
+      result.current[1]({
+        tags: [1, 2],
+      });
     });
 
     expect(result.current[0]).toEqual({
