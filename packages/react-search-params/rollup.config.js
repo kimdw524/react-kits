@@ -26,7 +26,7 @@ export default {
       entryFileNames: '[name].cjs',
     },
   ],
-  external: [...peerDeps, 'react/jsx-runtime'],
+  external: [...peerDeps, 'react/jsx-runtime', 'next/navigation'],
   plugins: [
     resolve({ extensions: ['.js', '.ts', '.tsx'] }),
     commonjs({
