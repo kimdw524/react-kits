@@ -7,17 +7,17 @@ import { SearchParamsProvider } from '../SearchParamsProvider';
 import type { AdapterProps } from './types';
 
 export const SearchParamsAdapter = ({ children, store }: AdapterProps) => {
-  const searchParams = useSearchParams().toString();
-  const cacheRef = useRef('');
+  const searchParams = useSearchParams()?.toString() ?? '';
+  const prevRef = useRef('');
 
-  const a = searchParams === '' ? searchParams : `?${searchParams}`,
-    b = typeof window !== 'undefined' ? window.location.search : '';
+  const next = searchParams === '' ? searchParams : `?${searchParams}`,
+    url = typeof window !== 'undefined' ? window.location.search : '';
 
   useEffect(() => {
-    if (a !== b) {
-      cacheRef.current = a;
+    if (next !== url) {
+      prevRef.current = next;
     }
-  }, [a, b]);
+  }, [next, url]);
 
   useEffect(() => {
     const handleSearchChange = () => {
@@ -32,7 +32,7 @@ export const SearchParamsAdapter = ({ children, store }: AdapterProps) => {
   }, [store]);
 
   return (
-    <SearchParamsProvider value={a === b ? cacheRef.current : a}>
+    <SearchParamsProvider value={next === url ? prevRef.current : next}>
       {children}
     </SearchParamsProvider>
   );
