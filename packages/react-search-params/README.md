@@ -193,6 +193,32 @@ export default async function Page({
 
 SSR에서는 `InitialSearchParamsProvider`를 사용해 초기 search params 값을 전달할 수 있습니다.
 
+## validateSearchParams
+
+서버에서 받은 객체 형태의 `searchParams`를 검증할 때 사용합니다.
+(SSR 초기값으로 전달할 `searchParams`를 서버에서 미리 검증하기 위해 구현되었습니다.)
+
+```tsx
+import {
+  Serializer,
+  validateSearchParams,
+} from '@kimdw-rtk/react-search-params';
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = validateSearchParams({
+    schema: searchParamsSchema,
+    serializer: Serializer.delimiter(','),
+    searchParams: await searchParams,
+  });
+
+  return <div>{params.page}</div>;
+}
+```
+
 ## Caveats
 
 - [History API](https://developer.mozilla.org/docs/Web/API/History_API) / Router의 API를 통해 `URLSearchParams`를 변경하는 경우 `validation`이 항상 호출되어 런타임 성능 최적화 로직을 활용할 수 없습니다. 가능하면 `useParams` 훅을 사용하세요.
