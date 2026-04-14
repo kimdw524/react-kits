@@ -193,6 +193,52 @@ export default async function Page({
 
 In SSR, you can pass the initial search params through `InitialSearchParamsProvider`.
 
+## `validateSearchParams`
+
+Use this helper to validate object-based `searchParams` on the server.
+(This helper was implemented to validate `searchParams` on the server before passing them as SSR initial values.)
+
+```tsx
+import {
+  Serializer,
+  validateSearchParams,
+} from '@kimdw-rtk/react-search-params';
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = validateSearchParams({
+    schema: searchParamsSchema,
+    serializer: Serializer.delimiter(','),
+    searchParams: await searchParams,
+  });
+
+  return <div>{params.page}</div>;
+}
+```
+
+### Options
+
+#### schema: `SearchParamsSchema<T>` `(required)`
+
+The schema used for validation. Internally, it calls `schema.validate`, and the return type follows the schema type.
+
+#### serializer: `Serializer` `(required)`
+
+The serializer used to interpret array params.
+It should match the `serializer` you use in `createSearchParamsStore` on the client.
+
+#### searchParams: `Record<string, string | string[] | undefined>` `(required)`
+
+The raw search params object received on the server.
+
+### Notes
+
+- Keys listed in `arrayParams` are normalized to arrays before they are passed to `validate`.
+- If `schema.validate` throws, `validateSearchParams` throws the same error.
+
 ## Caveats
 
 - If `URLSearchParams` is changed through the [History API](https://developer.mozilla.org/docs/Web/API/History_API) or a router API, `validation` will always run, so the runtime performance optimization path cannot be used. Use `useParams` when possible.
