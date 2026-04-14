@@ -8,10 +8,11 @@ import type { AdapterProps } from './types';
 
 export const SearchParamsAdapter = ({ children, store }: AdapterProps) => {
   const searchParams = useSearchParams()?.toString() ?? '';
-  const prevRef = useRef('');
 
   const next = searchParams === '' ? searchParams : `?${searchParams}`,
     url = typeof window !== 'undefined' ? window.location.search : '';
+
+  const prevRef = useRef(url);
 
   useEffect(() => {
     if (next !== url) {
