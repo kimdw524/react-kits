@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, useContext, useLayoutEffect, useRef } from 'react';
 
 import { useCombinedRefs } from '@kimdw-rtk/utils';
