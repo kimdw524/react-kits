@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
-export const container = style({
+export const container = styleWithComponents({
   boxSizing: 'border-box',
 
   maxWidth: 'calc(100vw - 2rem)',
@@ -15,7 +15,7 @@ export const container = style({
   userSelect: 'none',
 });
 
-export const message = style({
+export const message = styleWithComponents({
   marginBottom: '1rem',
 
   lineHeight: '150%',

@@ -1,5 +1,5 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
-export const flex = style({
+export const flex = styleWithComponents({
   display: 'flex',
 });

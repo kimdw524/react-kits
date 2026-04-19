@@ -1,6 +1,6 @@
-import { recipe } from '@vanilla-extract/recipes';
+import { recipeWithComponents } from '#utils';
 
-export const tabs = recipe({
+export const tabs = recipeWithComponents({
   base: {
     width: '100%',
   },

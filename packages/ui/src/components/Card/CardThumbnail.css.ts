@@ -1,5 +1,5 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
-export const thumbnail = style({
+export const thumbnail = styleWithComponents({
   width: '100%',
 });

@@ -1,8 +1,7 @@
-import { recipe } from '@vanilla-extract/recipes';
-
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
-export const box = recipe({
+export const box = recipeWithComponents({
   variants: {
     flex: {
       true: {

@@ -1,11 +1,10 @@
-import { recipe } from '@vanilla-extract/recipes';
-
 import { theme } from '#themes';
 import { spacing, typography } from '#tokens';
+import { recipeWithComponents } from '#utils';
 
 import { narrow } from './NavigationDrawer.css';
 
-export const container = recipe({
+export const container = recipeWithComponents({
   base: {
     position: 'relative',
 

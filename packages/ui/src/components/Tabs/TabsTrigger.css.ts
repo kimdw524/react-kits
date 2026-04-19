@@ -1,8 +1,7 @@
-import { recipe } from '@vanilla-extract/recipes';
-
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
-export const container = recipe({
+export const container = recipeWithComponents({
   base: {
     position: 'relative',
 

@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
-export const container = style({
+export const container = styleWithComponents({
   display: 'flex',
 
   alignItems: 'center',

@@ -1,7 +1,7 @@
 import { keyframes } from '@vanilla-extract/css';
-import { style } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
 const shimmer = keyframes({
   '0%': {
@@ -13,7 +13,7 @@ const shimmer = keyframes({
   },
 });
 
-export const skeleton = style({
+export const skeleton = styleWithComponents({
   display: 'block',
 
   maxWidth: '100%',

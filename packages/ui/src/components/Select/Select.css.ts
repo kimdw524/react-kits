@@ -1,8 +1,7 @@
-import { recipe } from '@vanilla-extract/recipes';
-
 import { typography } from '#tokens';
+import { recipeWithComponents } from '#utils';
 
-export const select = recipe({
+export const select = recipeWithComponents({
   base: {
     position: 'relative',
   },

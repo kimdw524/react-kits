@@ -1,8 +1,7 @@
-import { style } from '@vanilla-extract/css';
-
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
-export const container = style({
+export const container = styleWithComponents({
   boxSizing: 'border-box',
   display: 'flex',
   overflowY: 'auto',
@@ -19,7 +18,7 @@ export const container = style({
   backgroundColor: `rgb(${theme.color.background})`,
 });
 
-export const message = style({
+export const message = styleWithComponents({
   marginBottom: '1rem',
 
   lineHeight: '150%',

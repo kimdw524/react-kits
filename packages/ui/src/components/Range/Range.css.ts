@@ -1,8 +1,8 @@
-import { createVar, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { createVar } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 
@@ -11,7 +11,7 @@ const backgroundVar = createVar();
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: style({
+    [color]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[color],
       },
@@ -23,7 +23,7 @@ const semanticColors = semanticColor.reduce(
 const scaleColors = SCALE_COLOR.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: style({
+    [value]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[value][100],
       },
@@ -32,7 +32,7 @@ const scaleColors = SCALE_COLOR.reduce(
   {} as Record<ScaleColor, string>,
 );
 
-export const range = recipe({
+export const range = recipeWithComponents({
   base: {
     position: 'relative',
 
@@ -65,7 +65,7 @@ export const range = recipe({
   },
 });
 
-export const thumb = style({
+export const thumb = styleWithComponents({
   position: 'absolute',
   top: '50%',
 
@@ -112,7 +112,7 @@ export const thumb = style({
   },
 });
 
-export const fill = style({
+export const fill = styleWithComponents({
   position: 'absolute',
   top: '0',
 
@@ -121,7 +121,7 @@ export const fill = style({
   backgroundColor: `rgb(${backgroundVar})`,
 });
 
-export const bar = style({
+export const bar = styleWithComponents({
   position: 'absolute',
   top: '50%',
 

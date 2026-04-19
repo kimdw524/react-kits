@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
-export const wide = style({
+export const wide = styleWithComponents({
   display: 'flex',
 
   alignItems: 'center',

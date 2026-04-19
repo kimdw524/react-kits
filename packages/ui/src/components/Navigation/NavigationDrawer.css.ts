@@ -1,11 +1,9 @@
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-
 import { theme } from '#themes';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 import { navigationBarContainer } from './NavigationBar.css';
 
-export const narrow = style({
+export const narrow = styleWithComponents({
   display: 'none',
 
   '@container': {
@@ -15,7 +13,7 @@ export const narrow = style({
   },
 });
 
-export const wide = style({
+export const wide = styleWithComponents({
   display: 'flex',
 
   alignItems: 'center',
@@ -30,7 +28,7 @@ export const wide = style({
   },
 });
 
-export const popup = recipe({
+export const popup = recipeWithComponents({
   base: {
     left: '0',
     position: 'absolute',

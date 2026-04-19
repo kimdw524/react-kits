@@ -1,11 +1,11 @@
 import { createVar } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
 export const paddingVar = createVar();
 
-export const accordion = recipe({
+export const accordion = recipeWithComponents({
   base: {
     width: '100%',
 

@@ -1,8 +1,8 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
 import { paddingVar } from './Card.css';
 
-export const cardHeader = style({
+export const cardHeader = styleWithComponents({
   padding: paddingVar,
   paddingBottom: '0',
 });

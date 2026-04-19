@@ -1,11 +1,11 @@
-import { createVar, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { createVar } from '@vanilla-extract/css';
 
 import { spacing } from '#tokens';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 export const paddingVar = createVar();
 
-export const table = recipe({
+export const table = recipeWithComponents({
   base: {
     width: '100%',
 
@@ -42,4 +42,4 @@ export const table = recipe({
   },
 });
 
-export const striped = style({});
+export const striped = styleWithComponents({});

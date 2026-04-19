@@ -1,8 +1,8 @@
 import { keyframes } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 
 import { theme } from '#themes';
 import { spacing, typography } from '#tokens';
+import { recipeWithComponents } from '#utils';
 
 const fadeIn = keyframes({
   '0%': {
@@ -14,7 +14,7 @@ const fadeIn = keyframes({
   },
 });
 
-export const tooltip = recipe({
+export const tooltip = recipeWithComponents({
   base: {
     left: '0',
     position: 'fixed',

@@ -1,16 +1,14 @@
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-
 import { theme } from '#themes';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
-export const children = style({
+export const children = styleWithComponents({
   overflow: 'hidden',
 
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 });
 
-export const icon = recipe({
+export const icon = recipeWithComponents({
   base: {
     flexShrink: '0',
 
@@ -33,7 +31,7 @@ export const icon = recipe({
   },
 });
 
-export const selectTrigger = recipe({
+export const selectTrigger = recipeWithComponents({
   base: {
     display: 'flex',
 

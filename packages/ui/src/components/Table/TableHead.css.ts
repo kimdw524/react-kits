@@ -1,8 +1,7 @@
-import { style } from '@vanilla-extract/css';
-
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
-export const tableHead = style({
+export const tableHead = styleWithComponents({
   padding: '0.5em 0.625em',
 
   color: `rgb(${theme.color['accent-foreground']})`,

@@ -1,8 +1,7 @@
-import { style } from '@vanilla-extract/css';
-
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
-export const container = style({
+export const container = styleWithComponents({
   position: 'sticky',
   top: '0',
   zIndex: '10',
@@ -12,7 +11,7 @@ export const container = style({
   backgroundColor: `rgb(${theme.color.background})`,
 });
 
-export const close = style({
+export const close = styleWithComponents({
   height: '1.25rem',
   width: '1.25rem',
 

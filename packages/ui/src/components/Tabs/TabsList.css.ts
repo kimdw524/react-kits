@@ -1,10 +1,9 @@
-import { style } from '@vanilla-extract/css';
-
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
-export const isAnimated = style({});
+export const isAnimated = styleWithComponents({});
 
-export const container = style({
+export const container = styleWithComponents({
   position: 'relative',
 
   display: 'flex',

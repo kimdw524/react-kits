@@ -1,7 +1,7 @@
 import { keyframes } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
 
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
 const fadeIn = keyframes({
   '0%': {
@@ -17,7 +17,7 @@ const fadeIn = keyframes({
   },
 });
 
-export const container = recipe({
+export const container = recipeWithComponents({
   base: {
     position: 'absolute',
     zIndex: '10',

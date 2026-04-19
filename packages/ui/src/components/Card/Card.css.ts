@@ -1,8 +1,8 @@
-import { createVar, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { createVar } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
 import { semanticColor, spacing } from '#tokens';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 import { cardInteraction } from './CardInteraction.css';
@@ -12,7 +12,7 @@ export const paddingVar = createVar();
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: style({
+    [color]: styleWithComponents({
       backgroundColor: `rgb(${theme.color[color]})`,
     }),
   }),
@@ -22,14 +22,14 @@ const semanticColors = semanticColor.reduce(
 const scaleColors = SCALE_COLOR.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: style({
+    [value]: styleWithComponents({
       backgroundColor: `color-mix(in srgb, rgb(${theme.color[value][500]}) 20%, rgb(${theme.color.background}) 80%)`,
     }),
   }),
   {} as Record<ScaleColor, string>,
 );
 
-export const card = recipe({
+export const card = recipeWithComponents({
   base: {
     position: 'relative',
 

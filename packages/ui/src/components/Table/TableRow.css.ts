@@ -1,3 +1,3 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
-export const interactive = style({});
+export const interactive = styleWithComponents({});

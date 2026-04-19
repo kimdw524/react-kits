@@ -1,9 +1,8 @@
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 import { paddingVar } from './Accordion.css';
 
-export const container = recipe({
+export const container = recipeWithComponents({
   base: {
     overflow: 'hidden',
 
@@ -25,6 +24,6 @@ export const container = recipe({
   },
 });
 
-export const inner = style({
+export const inner = styleWithComponents({
   padding: paddingVar,
 });

@@ -1,8 +1,7 @@
-import { recipe } from '@vanilla-extract/recipes';
-
 import { gradientFrom, gradientTo } from '#styles';
+import { recipeWithComponents } from '#utils';
 
-export const typography = recipe({
+export const typography = recipeWithComponents({
   base: {
     margin: '0',
   },

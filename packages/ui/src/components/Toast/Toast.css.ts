@@ -1,8 +1,8 @@
-import { createVar, keyframes, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { createVar, keyframes } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 const colorVar = createVar();
 
@@ -12,7 +12,7 @@ const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
 
-    [color]: style({
+    [color]: styleWithComponents({
       vars: {
         [colorVar]: theme.color[color],
 
@@ -33,7 +33,7 @@ const fill = keyframes({
   },
 });
 
-export const progress = recipe({
+export const progress = recipeWithComponents({
   base: {
     inset: '0',
     position: 'absolute',
@@ -60,7 +60,7 @@ export const progress = recipe({
   },
 });
 
-export const toast = recipe({
+export const toast = recipeWithComponents({
   base: {
     position: 'relative',
 

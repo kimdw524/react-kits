@@ -1,5 +1,5 @@
-import { style } from '@vanilla-extract/css';
+import { styleWithComponents } from '#utils';
 
-export const navigationLogo = style({
+export const navigationLogo = styleWithComponents({
   marginRight: '0.5em',
 });

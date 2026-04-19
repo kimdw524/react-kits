@@ -1,8 +1,8 @@
-import { recipe } from '@vanilla-extract/recipes';
+import { recipeWithComponents } from '#utils';
 
 import { paddingVar } from './Accordion.css';
 
-export const triggerContainer = recipe({
+export const triggerContainer = recipeWithComponents({
   base: {
     display: 'flex',
 
@@ -31,7 +31,7 @@ export const triggerContainer = recipe({
   },
 });
 
-export const arrow = recipe({
+export const arrow = recipeWithComponents({
   base: {
     lineHeight: '0',
 

@@ -1,8 +1,8 @@
-import { createVar, style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
+import { createVar } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
 import { semanticColor, typography } from '#tokens';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 
@@ -11,7 +11,7 @@ const backgroundVar = createVar();
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: style({
+    [color]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[color],
       },
@@ -23,7 +23,7 @@ const semanticColors = semanticColor.reduce(
 const scaleColors = SCALE_COLOR.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: style({
+    [value]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[value][500],
       },
@@ -32,7 +32,7 @@ const scaleColors = SCALE_COLOR.reduce(
   {} as Record<ScaleColor, string>,
 );
 
-export const textField = recipe({
+export const textField = recipeWithComponents({
   base: {
     height: '2.5em',
     width: '100%',
