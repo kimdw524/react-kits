@@ -9,8 +9,8 @@ export const table = recipe({
   base: {
     width: '100%',
 
-    tableLayout: 'fixed',
     borderSpacing: '0',
+    tableLayout: 'fixed',
   },
 
   variants: {

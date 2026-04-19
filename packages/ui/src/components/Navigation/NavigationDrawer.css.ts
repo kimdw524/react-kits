@@ -19,12 +19,9 @@ export const wide = style({
   display: 'flex',
 
   alignItems: 'center',
-
-  justifyContent: 'space-between',
-
-  gap: '0.5em',
-
   flexGrow: '1',
+  gap: '0.5em',
+  justifyContent: 'space-between',
 
   '@container': {
     [`${navigationBarContainer} (max-width: 800px)`]: {
@@ -35,19 +32,14 @@ export const wide = style({
 
 export const popup = recipe({
   base: {
-    position: 'absolute',
-
-    top: '100%',
-
-    height: 'calc(100vh - 100%)',
-
     left: '0',
-
-    width: '100%',
-
+    position: 'absolute',
+    top: '100%',
     zIndex: '100',
 
+    height: 'calc(100vh - 100%)',
     maxHeight: '100vh',
+    width: '100%',
 
     padding: '0.75em',
 

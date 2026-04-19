@@ -34,26 +34,25 @@ const scaleColors = SCALE_COLOR.reduce(
 
 export const textField = recipe({
   base: {
-    width: '100%',
     height: '2.5em',
+    width: '100%',
+
     padding: '0 0.75em',
+
     border: `1px solid`,
     borderColor: ` rgb(${theme.color.border})`,
+    outline: 'none',
 
     backgroundColor: `rgb(${theme.color.background})`,
-
     color: `rgb(${theme.color.foreground})`,
 
     transition: 'border-color 0.15s ease, color 0.15s ease',
 
-    outline: 'none',
-
-    ':focus': {
-      borderColor: `rgb(${backgroundVar})`,
-    },
-
     ':disabled': {
       color: `rgb(${theme.color['muted-foreground']})`,
+    },
+    ':focus': {
+      borderColor: `rgb(${backgroundVar})`,
     },
   },
   variants: {

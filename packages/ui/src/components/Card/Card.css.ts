@@ -31,10 +31,12 @@ const scaleColors = SCALE_COLOR.reduce(
 
 export const card = recipe({
   base: {
-    display: 'flex',
-    flexDirection: 'column',
     position: 'relative',
+
+    display: 'flex',
     overflow: 'clip',
+
+    flexDirection: 'column',
 
     borderRadius: theme.borderRadius,
 

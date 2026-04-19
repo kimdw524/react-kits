@@ -5,10 +5,13 @@ import { theme } from '#themes';
 export const container = recipe({
   base: {
     position: 'relative',
+
     overflow: 'hidden',
 
     height: '100%',
+
     padding: '0 0.75em',
+
     border: '0',
 
     backgroundColor: 'transparent',
@@ -17,9 +20,9 @@ export const container = recipe({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
 
-    transition: 'border-bottom-color 0.15s ease, color 0.15s ease',
-
     cursor: 'pointer',
+
+    transition: 'border-bottom-color 0.15s ease, color 0.15s ease',
   },
 
   variants: {

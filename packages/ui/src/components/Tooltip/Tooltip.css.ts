@@ -16,21 +16,22 @@ const fadeIn = keyframes({
 
 export const tooltip = recipe({
   base: {
-    position: 'fixed',
-    zIndex: 100,
-    top: '50%',
     left: '0',
+    position: 'fixed',
+    top: '50%',
+    zIndex: 100,
 
     padding: spacing.md,
-    borderRadius: theme.borderRadius,
-    backgroundColor: `rgb(${theme.color.foreground})`,
 
+    borderRadius: theme.borderRadius,
+
+    backgroundColor: `rgb(${theme.color.foreground})`,
     color: `rgb(${theme.color.background})`,
 
-    transform: 'translateX(-50%)',
-    animation: `${fadeIn} 0.15s ease 1`,
-
     pointerEvents: 'none',
+
+    animation: `${fadeIn} 0.15s ease 1`,
+    transform: 'translateX(-50%)',
   },
 
   variants: {

@@ -5,12 +5,12 @@ import { theme } from '#themes';
 import { isAnimated } from './TabsList.css';
 
 export const indicator = style({
-  position: 'absolute',
-  left: '0',
   bottom: '0',
+  left: '0',
+  position: 'absolute',
 
-  width: '100%',
   height: 'calc((1em - 0.625rem) / 2)',
+  width: '100%',
 
   backgroundColor: `rgb(${theme.color.primary})`,
 

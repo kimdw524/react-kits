@@ -35,9 +35,8 @@ const fill = keyframes({
 
 export const progress = recipe({
   base: {
-    position: 'absolute',
-
     inset: '0',
+    position: 'absolute',
 
     width: '100%',
 
@@ -49,13 +48,10 @@ export const progress = recipe({
   variants: {
     animation: {
       true: {
-        animationName: fill,
-
-        animationTimingFunction: 'linear',
-
-        animationIterationCount: '1',
-
         animationFillMode: 'forwards',
+        animationIterationCount: '1',
+        animationName: fill,
+        animationTimingFunction: 'linear',
       },
       false: {
         display: 'none',
@@ -73,11 +69,9 @@ export const toast = recipe({
     padding: '0.875em',
 
     backgroundColor: `rgb(${colorVar})`,
-
     color: `rgb(${foregroundVar})`,
 
     whiteSpace: 'nowrap',
-
     wordBreak: 'break-all',
 
     cursor: 'pointer',

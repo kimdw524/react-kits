@@ -7,18 +7,21 @@ import { narrow } from './NavigationDrawer.css';
 
 export const navigationMenu = style({
   display: 'flex',
+
   alignItems: 'center',
   gap: '0.5em',
 
   selectors: {
     [`${narrow} &`]: {
-      flexDirection: 'column',
       alignItems: 'stretch',
+      flexDirection: 'column',
       gap: '0',
 
       width: '100%',
-      borderTop: `1px solid rgb(${theme.color['border.weak']})`,
+
       paddingTop: spacing['md'],
+
+      borderTop: `1px solid rgb(${theme.color['border.weak']})`,
     },
   },
 });

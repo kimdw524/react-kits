@@ -5,22 +5,25 @@ import { theme } from '#themes';
 export const container = style({
   position: 'sticky',
   top: '0',
-  padding: '0.25rem',
   zIndex: '10',
+
+  padding: '0.25rem',
 
   backgroundColor: `rgb(${theme.color.background})`,
 });
 
 export const close = style({
-  width: '1.25rem',
   height: '1.25rem',
+  width: '1.25rem',
+
   padding: '0',
+
   border: '0',
 
   backgroundColor: 'transparent',
+  color: `rgb(${theme.color['muted-foreground']})`,
 
   fontSize: '1em',
-  color: `rgb(${theme.color['muted-foreground']})`,
 
   cursor: 'pointer',
 

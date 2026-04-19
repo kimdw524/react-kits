@@ -15,8 +15,9 @@ const size = Object.entries(width).reduce(
 
 export const container = recipe({
   base: {
-    marginInline: 'auto',
     width: '100%',
+
+    marginInline: 'auto',
   },
 
   variants: {

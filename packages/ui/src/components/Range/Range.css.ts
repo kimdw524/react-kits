@@ -36,11 +36,11 @@ export const range = recipe({
   base: {
     position: 'relative',
 
-    width: '100%',
     height: '2em',
+    width: '100%',
 
-    userSelect: 'none',
     touchAction: 'none',
+    userSelect: 'none',
   },
 
   variants: {
@@ -66,40 +66,41 @@ export const range = recipe({
 });
 
 export const thumb = style({
-  display: 'inline-block',
   position: 'absolute',
   top: '50%',
 
-  width: '1.25em',
+  display: 'inline-block',
+
   height: '1.25em',
+  width: '1.25em',
 
   borderRadius: '50%',
 
-  boxShadow: `0 0 0.375em 0.125em rgba(${backgroundVar}, 0.33)`,
   backgroundColor: `rgb(${backgroundVar})`,
 
-  transform: 'translate(-50%, -50%)',
+  boxShadow: `0 0 0.375em 0.125em rgba(${backgroundVar}, 0.33)`,
 
   cursor: 'pointer',
   touchAction: 'none',
 
-  '::before': {
-    position: 'absolute',
-    inset: '-0.75em',
-
-    content: '',
-  },
+  transform: 'translate(-50%, -50%)',
 
   '::after': {
-    position: 'absolute',
     inset: '0',
+    position: 'absolute',
 
     borderRadius: '50%',
 
     boxShadow: `0 0 0.5em 0.125em rgba(${backgroundVar}, 0.5)`,
-
     opacity: '0',
+
     transition: 'opacity 0.2s ease',
+
+    content: '',
+  },
+  '::before': {
+    inset: '-0.75em',
+    position: 'absolute',
 
     content: '',
   },
@@ -124,8 +125,9 @@ export const bar = style({
   position: 'absolute',
   top: '50%',
 
-  width: '100%',
   height: '0.5em',
+  width: '100%',
+
   borderRadius: theme.borderRadius,
 
   backgroundColor: `rgb(${theme.color.muted})`,

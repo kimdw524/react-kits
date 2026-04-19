@@ -43,9 +43,6 @@ export const chip = recipe({
     display: 'inline-flex',
 
     alignItems: 'center',
-
-    lineHeight: '0',
-
     gap: '0.125em',
 
     height: '2em',
@@ -55,8 +52,9 @@ export const chip = recipe({
     borderRadius: theme.borderRadius,
 
     backgroundColor: `rgb(${backgroundVar})`,
-
     color: `rgb(${foregroundVar})`,
+
+    lineHeight: '0',
 
     userSelect: 'none',
   },

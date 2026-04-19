@@ -10,9 +10,9 @@ export const selectOption = style({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 
-  transition: 'background-color 0.2s ease',
-
   cursor: 'default',
+
+  transition: 'background-color 0.2s ease',
 
   ':hover': {
     backgroundColor: `rgb(${theme.color.accent})`,

@@ -11,15 +11,14 @@ export const typography = recipe({
       true: {
         overflow: 'hidden',
 
-        whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       },
     },
     isGradient: {
       true: {
         background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
         backgroundClip: 'text',
-
         color: 'transparent !important',
       },
     },

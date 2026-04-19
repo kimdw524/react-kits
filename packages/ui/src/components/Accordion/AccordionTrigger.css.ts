@@ -7,7 +7,6 @@ export const triggerContainer = recipe({
     display: 'flex',
 
     alignItems: 'center',
-
     gap: '0.25em',
 
     width: '100%',

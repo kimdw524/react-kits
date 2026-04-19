@@ -17,26 +17,26 @@ export const tableCell = style({
     },
 
     'tr > &:first-child': {
-      borderTopLeftRadius: theme.borderRadius,
-      borderBottomLeftRadius: theme.borderRadius,
       paddingLeft: paddingVar,
+
+      borderBottomLeftRadius: theme.borderRadius,
+      borderTopLeftRadius: theme.borderRadius,
     },
 
     'tr > &:last-child': {
-      borderTopRightRadius: theme.borderRadius,
-      borderBottomRightRadius: theme.borderRadius,
       paddingRight: paddingVar,
+
+      borderBottomRightRadius: theme.borderRadius,
+      borderTopRightRadius: theme.borderRadius,
     },
 
     'tbody > tr:hover > &': {
       backgroundColor: `rgb(${theme.color.accent})`,
-
       color: `rgb(${theme.color['accent-foreground']})`,
     },
 
     [`${striped} > tbody > tr:nth-of-type(odd) > &`]: {
       backgroundColor: `rgb(${theme.color.card})`,
-
       color: `rgb(${theme.color['accent-foreground']})`,
     },
 

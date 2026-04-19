@@ -3,9 +3,9 @@ import { createVar, style } from '@vanilla-extract/css';
 export const paddingVar = createVar();
 
 export const scrollArea = style({
-  width: '100%',
-
   overflowX: 'scroll',
+
+  width: '100%',
 
   userSelect: 'none',
 
