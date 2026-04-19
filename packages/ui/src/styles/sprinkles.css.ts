@@ -180,3 +180,11 @@ export type BoxProperties = Pick<
   SprinklesProps,
   keyof typeof boxProperties.styles
 >;
+export type TypographyProperties = Pick<
+  SprinklesProps,
+  keyof typeof typographyProperties.styles
+>;
+export type ColorProperties = Pick<
+  SprinklesProps,
+  keyof typeof colorProperties.styles
+>;
