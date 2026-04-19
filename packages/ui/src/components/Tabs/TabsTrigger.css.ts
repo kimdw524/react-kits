@@ -1,7 +1,8 @@
-import { recipeWithLayer } from '#styleUtils';
+import { recipe } from '@vanilla-extract/recipes';
+
 import { theme } from '#themes';
 
-export const container = recipeWithLayer({
+export const container = recipe({
   base: {
     position: 'relative',
     overflow: 'hidden',

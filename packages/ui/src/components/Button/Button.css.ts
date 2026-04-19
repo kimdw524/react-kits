@@ -1,6 +1,6 @@
 import { createVar, globalStyle, keyframes, style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
 
@@ -12,7 +12,7 @@ const foregroundVar = createVar();
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: styleWithLayer({
+    [color]: style({
       vars: {
         [backgroundVar]: theme.color[color],
         [foregroundVar]: theme.color[`${color}-foreground`],
@@ -25,7 +25,7 @@ const semanticColors = semanticColor.reduce(
 const scaleColors = SCALE_COLOR.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: styleWithLayer({
+    [value]: style({
       vars: {
         [backgroundVar]: theme.color[value][500],
         [foregroundVar]: theme.color.background,
@@ -45,7 +45,7 @@ const pulse = keyframes({
   },
 });
 
-export const span = recipeWithLayer({
+export const span = recipe({
   base: {
     lineHeight: '0',
   },
@@ -86,7 +86,7 @@ export const span = recipeWithLayer({
   },
 });
 
-export const button = recipeWithLayer({
+export const button = recipe({
   base: {
     display: 'inline-flex',
     alignItems: 'center',

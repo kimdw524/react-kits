@@ -1,5 +1,5 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
 
-export const flex = styleWithLayer({
+export const flex = style({
   display: 'flex',
 });

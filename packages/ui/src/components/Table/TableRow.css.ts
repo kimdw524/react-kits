@@ -1,3 +1,3 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
 
-export const interactive = styleWithLayer({});
+export const interactive = style({});

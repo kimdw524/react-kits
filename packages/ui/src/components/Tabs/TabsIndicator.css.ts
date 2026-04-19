@@ -1,9 +1,10 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 
 import { isAnimated } from './TabsList.css';
 
-export const indicator = styleWithLayer({
+export const indicator = style({
   position: 'absolute',
   left: '0',
   bottom: '0',

@@ -1,10 +1,11 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 import { spacing } from '#tokens';
 
 import { narrow } from './NavigationDrawer.css';
 
-export const navigationMenu = styleWithLayer({
+export const navigationMenu = style({
   display: 'flex',
   alignItems: 'center',
   gap: '0.5em',

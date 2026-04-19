@@ -1,6 +1,6 @@
-import { recipeWithLayer } from '#styleUtils';
+import { recipe } from '@vanilla-extract/recipes';
 
-export const tabs = recipeWithLayer({
+export const tabs = recipe({
   base: {
     width: '100%',
   },

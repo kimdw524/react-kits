@@ -176,3 +176,7 @@ export const sprinkles = createSprinkles(
 );
 
 export type SprinklesProps = Parameters<typeof sprinkles>[0];
+export type BoxProperties = Pick<
+  SprinklesProps,
+  keyof typeof boxProperties.styles
+>;

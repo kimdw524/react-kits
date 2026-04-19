@@ -1,7 +1,8 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 
-export const selectOption = styleWithLayer({
+export const selectOption = style({
   overflowX: 'hidden',
 
   padding: '0.75em 0.5em',

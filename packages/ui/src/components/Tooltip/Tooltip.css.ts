@@ -1,6 +1,6 @@
 import { keyframes } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { spacing, typography } from '#tokens';
 
@@ -14,15 +14,15 @@ const fadeIn = keyframes({
   },
 });
 
-export const tooltip = recipeWithLayer({
+export const tooltip = recipe({
   base: {
     position: 'fixed',
     zIndex: 100,
     top: '50%',
     left: '0',
+
     padding: spacing.md,
     borderRadius: theme.borderRadius,
-
     backgroundColor: `rgb(${theme.color.foreground})`,
 
     color: `rgb(${theme.color.background})`,
@@ -38,9 +38,11 @@ export const tooltip = recipeWithLayer({
       sm: {
         fontSize: typography.size.sm,
       },
+
       md: {
         fontSize: typography.size.md,
       },
+
       lg: {
         fontSize: typography.size.lg,
       },

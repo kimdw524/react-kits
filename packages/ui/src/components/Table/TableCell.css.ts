@@ -1,10 +1,11 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 
 import { paddingVar, striped } from './Table.css';
 import { interactive } from './TableRow.css';
 
-export const tableCell = styleWithLayer({
+export const tableCell = style({
   paddingBlock: paddingVar,
   paddingInline: `calc(${paddingVar} / 2)`,
 

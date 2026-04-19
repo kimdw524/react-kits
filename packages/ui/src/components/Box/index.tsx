@@ -2,24 +2,17 @@ import { forwardRef } from 'react';
 
 import { clsx } from 'clsx';
 
-import { sprinkles, sx, type SprinklesProps } from '#styles';
+import { sx, type BoxProperties } from '#styles';
 import type { UIComponent } from '#types';
 import { filterSprinkles, omitSprinkles } from '#utils';
 
 import * as s from './Box.css';
 
-type BoxProps = UIComponent<'div', typeof s.box> & SprinklesProps;
+type BoxProps = UIComponent<'div', typeof s.box> & BoxProperties;
 
 export const Box = forwardRef<HTMLDivElement, BoxProps>(
   (
-    {
-      children,
-      flex = false,
-      rounded = false,
-      className,
-      sx: propSx,
-      ...props
-    },
+    { children, flex = false, rounded = false, className, sx: propSx, ...rest },
     ref,
   ) => {
     return (
@@ -28,10 +21,10 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>(
         className={clsx(
           className,
           s.box({ flex, rounded }),
+          sx(filterSprinkles(rest)),
           sx(propSx),
-          sprinkles(filterSprinkles(props)),
         )}
-        {...omitSprinkles(props)}
+        {...omitSprinkles(rest)}
       >
         {children}
       </div>

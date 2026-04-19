@@ -2,26 +2,26 @@ import { forwardRef } from 'react';
 
 import { clsx } from 'clsx';
 
-import { sprinkles, sx, type SprinklesProps } from '#styles';
+import { sx, type BoxProperties } from '#styles';
 import type { UIComponent } from '#types';
 import { filterSprinkles, omitSprinkles } from '#utils';
 
 import * as s from './Flex.css';
 
-type FlexProps = UIComponent<'div'> & SprinklesProps;
+type FlexProps = UIComponent<'div'> & BoxProperties;
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>(
-  ({ children, className, sx: propSx, ...props }, ref) => {
+  ({ children, className, sx: propSx, ...rest }, ref) => {
     return (
       <div
         ref={ref}
         className={clsx(
           className,
           s.flex,
+          sx(filterSprinkles(rest)),
           sx(propSx),
-          sprinkles(filterSprinkles(props)),
         )}
-        {...omitSprinkles(props)}
+        {...omitSprinkles(rest)}
       >
         {children}
       </div>

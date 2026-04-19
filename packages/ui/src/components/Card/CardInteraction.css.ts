@@ -1,6 +1,6 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
 
-export const cardInteraction = styleWithLayer({
+export const cardInteraction = style({
   position: 'relative',
 
   height: '100%',

@@ -1,9 +1,10 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 
 import * as header from './DialogHeader.css';
 
-export const container = styleWithLayer({
+export const container = style({
   wordBreak: 'break-all',
 
   selectors: {

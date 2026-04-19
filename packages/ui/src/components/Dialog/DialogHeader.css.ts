@@ -1,7 +1,8 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 
-export const container = styleWithLayer({
+export const container = style({
   position: 'sticky',
   top: '0',
   padding: '0.25rem',
@@ -10,7 +11,7 @@ export const container = styleWithLayer({
   backgroundColor: `rgb(${theme.color.background})`,
 });
 
-export const close = styleWithLayer({
+export const close = style({
   width: '1.25rem',
   height: '1.25rem',
   padding: '0',

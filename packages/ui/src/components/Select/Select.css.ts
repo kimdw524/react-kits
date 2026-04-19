@@ -1,7 +1,8 @@
-import { recipeWithLayer } from '#styleUtils';
+import { recipe } from '@vanilla-extract/recipes';
+
 import { typography } from '#tokens';
 
-export const select = recipeWithLayer({
+export const select = recipe({
   base: {
     position: 'relative',
   },

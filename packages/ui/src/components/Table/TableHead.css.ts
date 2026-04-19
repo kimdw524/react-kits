@@ -1,7 +1,8 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 
-export const tableHead = styleWithLayer({
+export const tableHead = style({
   padding: '0.5em 0.625em',
 
   color: `rgb(${theme.color['accent-foreground']})`,

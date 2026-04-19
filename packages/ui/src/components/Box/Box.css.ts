@@ -1,7 +1,8 @@
-import { recipeWithLayer } from '#styleUtils';
+import { recipe } from '@vanilla-extract/recipes';
+
 import { theme } from '#themes';
 
-export const box = recipeWithLayer({
+export const box = recipe({
   variants: {
     flex: {
       true: {

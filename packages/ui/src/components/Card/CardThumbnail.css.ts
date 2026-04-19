@@ -1,5 +1,5 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
 
-export const thumbnail = styleWithLayer({
+export const thumbnail = style({
   width: '100%',
 });

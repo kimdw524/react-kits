@@ -1,11 +1,11 @@
 import { createContainer } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 
 export const navigationBarContainer = createContainer();
 
-export const navigationBar = recipeWithLayer({
+export const navigationBar = recipe({
   base: {
     zIndex: '20',
     position: 'sticky',

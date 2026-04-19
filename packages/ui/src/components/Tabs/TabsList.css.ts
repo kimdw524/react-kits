@@ -1,11 +1,10 @@
 import { style } from '@vanilla-extract/css';
 
-import { styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 
 export const isAnimated = style({});
 
-export const container = styleWithLayer({
+export const container = style({
   display: 'flex',
 
   position: 'relative',

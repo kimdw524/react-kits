@@ -1,6 +1,6 @@
-import { createVar } from '@vanilla-extract/css';
+import { createVar, style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { semanticColor, typography } from '#tokens';
 
@@ -11,7 +11,7 @@ const backgroundVar = createVar();
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: styleWithLayer({
+    [color]: style({
       vars: {
         [backgroundVar]: theme.color[color],
       },
@@ -23,7 +23,7 @@ const semanticColors = semanticColor.reduce(
 const scaleColors = SCALE_COLOR.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: styleWithLayer({
+    [value]: style({
       vars: {
         [backgroundVar]: theme.color[value][500],
       },
@@ -32,7 +32,7 @@ const scaleColors = SCALE_COLOR.reduce(
   {} as Record<ScaleColor, string>,
 );
 
-export const textField = recipeWithLayer({
+export const textField = recipe({
   base: {
     width: '100%',
     height: '2.5em',

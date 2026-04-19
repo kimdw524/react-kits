@@ -1,6 +1,6 @@
-import { styleWithLayer } from '#styleUtils';
+import { style } from '@vanilla-extract/css';
 
-export const wide = styleWithLayer({
+export const wide = style({
   display: 'flex',
   alignItems: 'center',
   gap: '0.5em',

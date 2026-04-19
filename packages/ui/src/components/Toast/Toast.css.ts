@@ -1,18 +1,21 @@
-import { createVar, keyframes } from '@vanilla-extract/css';
+import { createVar, keyframes, style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
 
 const colorVar = createVar();
+
 const foregroundVar = createVar();
 
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: styleWithLayer({
+
+    [color]: style({
       vars: {
         [colorVar]: theme.color[color],
+
         [foregroundVar]: theme.color[`${color}-foreground`],
       },
     }),
@@ -24,14 +27,16 @@ const fill = keyframes({
   '0%': {
     transform: 'scaleX(0)',
   },
+
   '100%': {
     transform: 'scaleX(1)',
   },
 });
 
-export const progress = recipeWithLayer({
+export const progress = recipe({
   base: {
     position: 'absolute',
+
     inset: '0',
 
     width: '100%',
@@ -45,8 +50,11 @@ export const progress = recipeWithLayer({
     animation: {
       true: {
         animationName: fill,
+
         animationTimingFunction: 'linear',
+
         animationIterationCount: '1',
+
         animationFillMode: 'forwards',
       },
       false: {
@@ -56,9 +64,10 @@ export const progress = recipeWithLayer({
   },
 });
 
-export const toast = recipeWithLayer({
+export const toast = recipe({
   base: {
     position: 'relative',
+
     overflow: 'hidden',
 
     padding: '0.875em',
@@ -66,7 +75,9 @@ export const toast = recipeWithLayer({
     backgroundColor: `rgb(${colorVar})`,
 
     color: `rgb(${foregroundVar})`,
+
     whiteSpace: 'nowrap',
+
     wordBreak: 'break-all',
 
     cursor: 'pointer',

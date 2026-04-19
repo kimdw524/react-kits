@@ -1,6 +1,6 @@
 import { keyframes } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 
 const fadeIn = keyframes({
@@ -15,7 +15,7 @@ const fadeIn = keyframes({
   },
 });
 
-export const container = recipeWithLayer({
+export const container = recipe({
   base: {
     overflowY: 'auto',
     position: 'absolute',
