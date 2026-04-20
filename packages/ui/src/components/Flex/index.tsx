@@ -1,39 +1,15 @@
-import { forwardRef } from 'react';
+import { forwardRef, type ComponentProps } from 'react';
 
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
-import {
-  sx,
-  type BoxProperties,
-  type ColorProperties,
-  type TypographyProperties,
-} from '#styles';
-import type { UIComponent } from '#types';
-import { filterSprinkles, omitSprinkles } from '#utils';
-
+import { Box } from '../Box';
 import * as s from './Flex.css';
 
-type FlexProps = UIComponent<'div'> &
-  BoxProperties &
-  ColorProperties &
-  TypographyProperties;
+type FlexProps = ComponentProps<typeof Box>;
 
 export const Flex = forwardRef<HTMLDivElement, FlexProps>(
-  ({ children, className, sx: propSx, ...rest }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={clsx(
-          className,
-          s.flex,
-          sx(filterSprinkles(rest)),
-          sx(propSx),
-        )}
-        {...omitSprinkles(rest)}
-      >
-        {children}
-      </div>
-    );
+  ({ className, ...rest }, ref) => {
+    return <Box className={clsx(s.flex, className)} {...rest} ref={ref} />;
   },
 );
 Flex.displayName = 'Flex';

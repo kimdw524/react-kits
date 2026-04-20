@@ -19,16 +19,13 @@ type BoxProps = UIComponent<'div', typeof s.box> &
   TypographyProperties;
 
 export const Box = forwardRef<HTMLDivElement, BoxProps>(
-  (
-    { children, flex = false, rounded = false, className, sx: propSx, ...rest },
-    ref,
-  ) => {
+  ({ children, isRounded = false, className, sx: propSx, ...rest }, ref) => {
     return (
       <div
         ref={ref}
         className={clsx(
           className,
-          s.box({ flex, rounded }),
+          s.box({ isRounded }),
           sx(filterSprinkles(rest)),
           sx(propSx),
         )}
