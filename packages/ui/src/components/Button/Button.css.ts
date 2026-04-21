@@ -4,7 +4,7 @@ import { theme } from '#themes';
 import { semanticColor, typography } from '#tokens';
 import { recipeWithComponents, styleWithComponents } from '#utils';
 
-import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
+import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
 const backgroundVar = createVar();
 const foregroundVar = createVar();
@@ -22,7 +22,7 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = SCALE_COLOR.reduce(
+const scaleColors = scaleColor.reduce(
   (prev, value) => ({
     ...prev,
     [value]: styleWithComponents({

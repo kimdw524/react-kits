@@ -1,4 +1,4 @@
-export const SCALE_COLOR = [
+export const scaleColor = [
   'red',
   'orange',
   'amber',
@@ -23,7 +23,7 @@ export const SCALE_COLOR = [
   'stone',
 ] as const;
 
-export type ScaleColor = (typeof SCALE_COLOR)[number];
+export type ScaleColor = (typeof scaleColor)[number];
 
 export const darkColor = {
   red: {
