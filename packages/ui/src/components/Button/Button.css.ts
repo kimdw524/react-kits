@@ -46,9 +46,6 @@ const pulse = keyframes({
 });
 
 export const span = recipeWithComponents({
-  base: {
-    lineHeight: '0',
-  },
   variants: {
     size: {
       sm: {
@@ -110,7 +107,7 @@ export const button = recipeWithComponents({
   variants: {
     hasIcon: {
       true: {
-        gap: '0.5em',
+        gap: '0.375em',
       },
     },
 
@@ -221,6 +218,9 @@ export const icon = recipeWithComponents({
       true: {
         fontSize: '1.25em',
       },
+      false: {
+        fontSize: '1em',
+      },
     },
   },
 });
@@ -229,4 +229,9 @@ globalStyle(`${icon} > *`, {
   lineHeight: '0',
 
   pointerEvents: 'none',
+});
+
+globalStyle(`${button.classNames.base} svg`, {
+  height: '1em',
+  width: '1em',
 });
