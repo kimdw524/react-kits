@@ -15,7 +15,10 @@ interface ButtonProps extends UIComponent<'button', typeof s.button> {
   fontSize?: RecipeVariantsProps<typeof s.span>['size'];
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<
+  HTMLButtonElement,
+  Omit<ButtonProps, 'isIcon'>
+>(
   (
     {
       children,
@@ -35,6 +38,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const elementRef = ref || localRef;
     const { ripple } = useRipple<HTMLButtonElement>(elementRef);
 
+    const hasIcon = icon !== undefined;
+    const isIcon = icon !== undefined && children === undefined;
+
     return (
       <button
         ref={elementRef}
@@ -45,14 +51,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             size,
             variant,
             pulse,
-            hasIcon: icon !== undefined,
+            hasIcon,
+            isIcon,
           }),
           sx(propSx),
         )}
         {...props}
       >
-        {icon !== undefined && <span className={s.icon}>{icon}</span>}
-        <span className={s.span({ size: fontSize ?? size })}>{children}</span>
+        {hasIcon && (
+          <span className={s.icon({ isIconOnly: isIcon })}>{icon}</span>
+        )}
+        {!isIcon && (
+          <span className={s.span({ size: fontSize ?? size })}>{children}</span>
+        )}
         {ripple}
       </button>
     );

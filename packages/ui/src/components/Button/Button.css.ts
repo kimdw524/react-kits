@@ -1,8 +1,8 @@
 import { createVar, globalStyle, keyframes } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
-import { semanticColor } from '#tokens';
-import { styleWithComponents, recipeWithComponents } from '#utils';
+import { semanticColor, typography } from '#tokens';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
 import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
 
@@ -96,10 +96,10 @@ export const button = recipeWithComponents({
     alignItems: 'center',
     justifyContent: 'center',
 
+    height: '2.5em',
+
     border: '0',
     borderRadius: theme.borderRadius,
-
-    fontSize: '1em',
 
     cursor: 'pointer',
     userSelect: 'none',
@@ -114,6 +114,17 @@ export const button = recipeWithComponents({
       },
     },
 
+    isIcon: {
+      true: {
+        aspectRatio: '1 / 1',
+
+        padding: '0',
+      },
+      false: {
+        padding: '0 0.875em',
+      },
+    },
+
     color: {
       ...semanticColors,
       ...scaleColors,
@@ -121,47 +132,19 @@ export const button = recipeWithComponents({
 
     size: {
       sm: {
-        height: '2.25em',
-
-        padding: '0 0.75em',
+        fontSize: typography.size.sm,
       },
 
       md: {
-        height: '2.5em',
-
-        padding: '0 0.875em',
+        fontSize: typography.size.md,
       },
 
       lg: {
-        height: '2.75em',
-
-        padding: '0 1em',
+        fontSize: typography.size.lg,
       },
 
       xl: {
-        height: '3em',
-
-        padding: '0 1.125em',
-      },
-
-      'icon-sm': {
-        height: '2em',
-        width: '2em',
-      },
-
-      'icon-md': {
-        height: '2.5em',
-        width: '2.5em',
-      },
-
-      'icon-lg': {
-        height: '2.75em',
-        width: '2.75em',
-      },
-
-      'icon-xl': {
-        height: '3em',
-        width: '3em',
+        fontSize: typography.size.xl,
       },
     },
 
@@ -229,20 +212,21 @@ export const button = recipeWithComponents({
   },
 });
 
-export const icon = styleWithComponents({
-  lineHeight: '0',
+export const icon = recipeWithComponents({
+  base: {
+    lineHeight: '0',
+  },
+  variants: {
+    isIconOnly: {
+      true: {
+        fontSize: '1.25em',
+      },
+    },
+  },
 });
 
 globalStyle(`${icon} > *`, {
-  height: '1em',
-  width: '1em',
-
   lineHeight: '0',
 
   pointerEvents: 'none',
-});
-
-globalStyle(`${button.classNames.base} svg`, {
-  height: '1em',
-  width: '1em',
 });
