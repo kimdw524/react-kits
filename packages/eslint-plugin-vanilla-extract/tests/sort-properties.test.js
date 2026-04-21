@@ -73,6 +73,37 @@ ruleTester.run('sort-properties', sortPropertiesRule, {
     },
     {
       code: `
+        import { styleFactory } from './style-factory';
+
+        export const box = styleFactory({
+          position: 'relative',
+
+          display: 'flex',
+
+          padding: '1rem',
+
+          backgroundColor: 'white',
+          color: 'black',
+        });
+      `,
+    },
+    {
+      code: `
+        import { recipeFactory } from './recipe-factory';
+
+        export const button = recipeFactory({
+          base: {
+            position: 'relative',
+
+            display: 'inline-flex',
+
+            color: 'black',
+          },
+        });
+      `,
+    },
+    {
+      code: `
         import { style } from '@vanilla-extract/css';
 
         export const overlay = style({
@@ -225,6 +256,66 @@ ruleTester.run('sort-properties', sortPropertiesRule, {
 
             color: 'black',
           },
+          variants: {
+            tone: {
+              primary: {
+                padding: '1rem',
+
+                backgroundColor: 'blue',
+                color: 'white',
+              },
+            },
+          },
+        });
+      `,
+    },
+    {
+      code: `
+        import { styleFactory } from './style-factory';
+
+        export const box = styleFactory({
+          color: 'black',
+          display: 'flex',
+          padding: '1rem',
+          position: 'relative',
+        });
+      `,
+      errors: [{ messageId: 'expectedOrder' }],
+      output: `
+        import { styleFactory } from './style-factory';
+
+        export const box = styleFactory({
+          position: 'relative',
+
+          display: 'flex',
+
+          padding: '1rem',
+
+          color: 'black',
+        });
+      `,
+    },
+    {
+      code: `
+        import { recipeFactory } from './recipe-factory';
+
+        export const button = recipeFactory({
+          variants: {
+            tone: {
+              primary: {
+                color: 'white',
+                padding: '1rem',
+                backgroundColor: 'blue',
+              },
+            },
+          },
+        });
+      `,
+      errors: [{ messageId: 'expectedOrder' }],
+      output: `
+        import { recipeFactory } from './recipe-factory';
+
+        export const button = recipeFactory({
           variants: {
             tone: {
               primary: {

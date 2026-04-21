@@ -336,6 +336,10 @@ function getCalleeName(callee) {
   return null;
 }
 
+function isNamedLike(calleeName, prefix) {
+  return calleeName === prefix || calleeName?.startsWith(prefix);
+}
+
 function getPropertyName(property, sourceCode) {
   if (property.type !== 'Property') {
     return null;
@@ -589,7 +593,9 @@ export default {
         const calleeName = getCalleeName(node.callee);
 
         if (
-          calleeName === 'style' &&
+          isNamedLike(calleeName, 'style') &&
+          calleeName !== 'styleVariants' &&
+          calleeName !== 'globalStyle' &&
           node.arguments[0]?.type === 'ObjectExpression'
         ) {
           markStyleObject(node.arguments[0]);
@@ -613,7 +619,7 @@ export default {
         }
 
         if (
-          calleeName === 'recipe' &&
+          isNamedLike(calleeName, 'recipe') &&
           node.arguments[0]?.type === 'ObjectExpression'
         ) {
           processRecipeConfig(node.arguments[0]);

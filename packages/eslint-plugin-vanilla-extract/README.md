@@ -1,11 +1,13 @@
 # @repo/eslint-plugin-vanilla-extract
 
 An ESLint plugin that groups and sorts CSS properties inside `vanilla-extract`
-style objects.
+style objects, including wrappers whose names start with `style` or `recipe`.
 
 ## Rule
 
 - `vanilla-extract/sort-properties`
+  Sorts properties in `style(...)`, `recipe(...)`, and prefix-based wrappers
+  such as `styleFactory(...)` and `recipeFactory(...)`.
 
 ## Default grouping
 
