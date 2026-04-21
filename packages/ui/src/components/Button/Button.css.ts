@@ -102,6 +102,11 @@ export const button = recipeWithComponents({
     userSelect: 'none',
 
     transition: 'background-color 0.2s ease, color 0.2s ease',
+
+    ':focus-visible': {
+      outline: `0.125rem solid rgb(${theme.color.primary})`,
+      outlineOffset: '0.125rem',
+    },
   },
 
   variants: {
