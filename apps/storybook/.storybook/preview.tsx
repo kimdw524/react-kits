@@ -5,7 +5,9 @@ import type { Preview } from '@storybook/react-vite';
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <UIProvider>
+      <UIProvider
+        container={typeof document === 'undefined' ? undefined : document.body}
+      >
         <Story />
       </UIProvider>
     ),
