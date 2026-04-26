@@ -1,8 +1,8 @@
 import { createVar } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
-import { semanticColor, spacing } from '#tokens';
-import { styleWithComponents, recipeWithComponents } from '#utils';
+import { semanticColor } from '#tokens';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
 import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 import { cardInteraction } from './CardInteraction.css';
@@ -69,38 +69,6 @@ export const card = recipeWithComponents({
       ...scaleColors,
       transparent: {
         backgroundColor: 'transparent',
-      },
-    },
-
-    size: {
-      sm: {
-        vars: {
-          [paddingVar]: spacing.sm,
-        },
-      },
-
-      md: {
-        vars: {
-          [paddingVar]: spacing.md,
-        },
-      },
-
-      lg: {
-        vars: {
-          [paddingVar]: spacing.lg,
-        },
-      },
-
-      xl: {
-        vars: {
-          [paddingVar]: spacing.xl,
-        },
-      },
-
-      '2xl': {
-        vars: {
-          [paddingVar]: spacing['2xl'],
-        },
       },
     },
   },

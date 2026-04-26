@@ -1,7 +1,7 @@
 import { createVar, globalStyle, keyframes } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
-import { semanticColor, typography } from '#tokens';
+import { semanticColor } from '#tokens';
 import { recipeWithComponents, styleWithComponents } from '#utils';
 
 import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
@@ -42,44 +42,6 @@ const pulse = keyframes({
 
   '100%': {
     backgroundPosition: '300% 0',
-  },
-});
-
-export const span = recipeWithComponents({
-  variants: {
-    size: {
-      sm: {
-        fontSize: '0.875em',
-      },
-
-      md: {
-        fontSize: '1em',
-      },
-
-      lg: {
-        fontSize: '1.125em',
-      },
-
-      xl: {
-        fontSize: '1.25em',
-      },
-
-      'icon-sm': {
-        fontSize: '1em',
-      },
-
-      'icon-md': {
-        fontSize: '1.25em',
-      },
-
-      'icon-lg': {
-        fontSize: '1.5em',
-      },
-
-      'icon-xl': {
-        fontSize: '1.75em',
-      },
-    },
   },
 });
 
@@ -130,24 +92,6 @@ export const button = recipeWithComponents({
     color: {
       ...semanticColors,
       ...scaleColors,
-    },
-
-    size: {
-      sm: {
-        fontSize: typography.size.sm,
-      },
-
-      md: {
-        fontSize: typography.size.md,
-      },
-
-      lg: {
-        fontSize: typography.size.lg,
-      },
-
-      xl: {
-        fontSize: typography.size.xl,
-      },
     },
 
     variant: {

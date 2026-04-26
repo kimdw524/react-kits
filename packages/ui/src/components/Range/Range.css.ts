@@ -48,20 +48,6 @@ export const range = recipeWithComponents({
       ...semanticColors,
       ...scaleColors,
     },
-
-    size: {
-      sm: {
-        fontSize: '0.75em',
-      },
-
-      md: {
-        fontSize: '1em',
-      },
-
-      lg: {
-        fontSize: '1.25em',
-      },
-    },
   },
 });
 

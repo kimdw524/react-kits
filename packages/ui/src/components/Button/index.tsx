@@ -5,14 +5,15 @@ import { forwardRef, useRef, type ReactElement } from 'react';
 import { clsx } from 'clsx';
 
 import { useRipple } from '#hooks';
-import { sx } from '#styles';
-import type { RecipeVariantsProps, UIComponent } from '#types';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
+import type { UIComponent } from '#types';
 
 import * as s from './Button.css';
 
 interface ButtonProps extends UIComponent<'button', typeof s.button> {
   icon?: ReactElement;
-  fontSize?: RecipeVariantsProps<typeof s.span>['size'];
+  size?: keyof typeof typography.size;
 }
 
 export const Button = forwardRef<
@@ -24,7 +25,6 @@ export const Button = forwardRef<
       children,
       color = 'primary',
       size = 'md',
-      fontSize,
       variant = 'contained',
       pulse = false,
       className,
@@ -48,12 +48,12 @@ export const Button = forwardRef<
           className,
           s.button({
             color,
-            size,
             variant,
             pulse,
             hasIcon,
             isIcon,
           }),
+          sprinkles({ fontSize: size }),
           sx(propSx),
         )}
         {...props}
@@ -61,9 +61,7 @@ export const Button = forwardRef<
         {hasIcon && (
           <span className={s.icon({ isIconOnly: isIcon })}>{icon}</span>
         )}
-        {!isIcon && (
-          <span className={s.span({ size: fontSize ?? size })}>{children}</span>
-        )}
+        {!isIcon && <span>{children}</span>}
         {ripple}
       </button>
     );

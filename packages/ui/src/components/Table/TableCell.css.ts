@@ -34,7 +34,7 @@ export const tableCell = styleWithComponents({
       color: `rgb(${theme.color['accent-foreground']})`,
     },
 
-    [`${striped} > tbody > tr:nth-of-type(odd) > &`]: {
+    [`${striped} tbody > tr:nth-of-type(odd) > &`]: {
       backgroundColor: `rgb(${theme.color.card})`,
       color: `rgb(${theme.color['accent-foreground']})`,
     },

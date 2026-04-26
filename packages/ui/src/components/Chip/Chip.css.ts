@@ -2,7 +2,7 @@ import { createVar } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
-import { styleWithComponents, recipeWithComponents } from '#utils';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
 import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
@@ -64,20 +64,6 @@ export const chip = recipeWithComponents({
       ...semanticColors,
 
       ...scaleColors,
-    },
-
-    size: {
-      sm: {
-        fontSize: '0.75em',
-      },
-
-      md: {
-        fontSize: '0.875em',
-      },
-
-      lg: {
-        fontSize: '1em',
-      },
     },
   },
 });

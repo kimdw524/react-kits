@@ -1,8 +1,10 @@
 import { theme } from '#themes';
 import { styleWithComponents } from '#utils';
 
+import { paddingVar } from './Table.css';
+
 export const tableHead = styleWithComponents({
-  padding: '0.5em 0.625em',
+  padding: paddingVar,
 
   color: `rgb(${theme.color['accent-foreground']})`,
 

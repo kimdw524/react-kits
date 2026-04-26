@@ -4,7 +4,8 @@ import { forwardRef, useEffect, useRef } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '#styles';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
 import { usePointerSlider } from '../../hooks/usePointerSlider';
@@ -12,6 +13,7 @@ import * as s from './Range.css';
 
 interface RangeProps
   extends Omit<UIComponent<'div', typeof s.range>, 'children' | 'onChange'> {
+  size?: keyof typeof typography.size;
   min: number;
   max: number;
   defaultMinValue: number;
@@ -66,7 +68,12 @@ export const Range = forwardRef<HTMLDivElement, RangeProps>(
     return (
       <div
         ref={ref}
-        className={clsx(s.range({ color, size }), className, sx(propSx))}
+        className={clsx(
+          s.range({ color }),
+          sprinkles({ fontSize: size }),
+          className,
+          sx(propSx),
+        )}
         {...props}
       >
         <div className={s.bar}>

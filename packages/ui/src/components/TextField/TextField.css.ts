@@ -1,8 +1,8 @@
 import { createVar } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
-import { semanticColor, typography } from '#tokens';
-import { styleWithComponents, recipeWithComponents } from '#utils';
+import { semanticColor } from '#tokens';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
 import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
@@ -41,6 +41,7 @@ export const textField = recipeWithComponents({
 
     border: `1px solid`,
     borderColor: ` rgb(${theme.color.border})`,
+    borderRadius: theme.borderRadius,
     outline: 'none',
 
     backgroundColor: `rgb(${theme.color.background})`,
@@ -59,24 +60,6 @@ export const textField = recipeWithComponents({
     color: {
       ...semanticColors,
       ...scaleColors,
-    },
-
-    size: {
-      sm: {
-        borderRadius: theme.borderRadius,
-
-        fontSize: typography.size.sm,
-      },
-      md: {
-        borderRadius: theme.borderRadius,
-
-        fontSize: typography.size.md,
-      },
-      lg: {
-        borderRadius: theme.borderRadius,
-
-        fontSize: typography.size.lg,
-      },
     },
   },
 });

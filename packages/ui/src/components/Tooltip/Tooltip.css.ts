@@ -1,8 +1,8 @@
 import { keyframes } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
-import { spacing, typography } from '#tokens';
-import { recipeWithComponents } from '#utils';
+import { spacing } from '#tokens';
+import { styleWithComponents } from '#utils';
 
 const fadeIn = keyframes({
   '0%': {
@@ -14,39 +14,21 @@ const fadeIn = keyframes({
   },
 });
 
-export const tooltip = recipeWithComponents({
-  base: {
-    left: '0',
-    position: 'fixed',
-    top: '50%',
-    zIndex: 100,
+export const tooltip = styleWithComponents({
+  left: '0',
+  position: 'fixed',
+  top: '50%',
+  zIndex: 100,
 
-    padding: spacing.md,
+  padding: spacing.md,
 
-    borderRadius: theme.borderRadius,
+  borderRadius: theme.borderRadius,
 
-    backgroundColor: `rgb(${theme.color.foreground})`,
-    color: `rgb(${theme.color.background})`,
+  backgroundColor: `rgb(${theme.color.foreground})`,
+  color: `rgb(${theme.color.background})`,
 
-    pointerEvents: 'none',
+  pointerEvents: 'none',
 
-    animation: `${fadeIn} 0.15s ease 1`,
-    transform: 'translateX(-50%)',
-  },
-
-  variants: {
-    size: {
-      sm: {
-        fontSize: typography.size.sm,
-      },
-
-      md: {
-        fontSize: typography.size.md,
-      },
-
-      lg: {
-        fontSize: typography.size.lg,
-      },
-    },
-  },
+  animation: `${fadeIn} 0.15s ease 1`,
+  transform: 'translateX(-50%)',
 });

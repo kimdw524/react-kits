@@ -8,7 +8,7 @@ export const indicator = styleWithComponents({
   left: '0',
   position: 'absolute',
 
-  height: 'calc((1em - 0.625rem) / 2)',
+  height: 'calc((1em - 0.625em) / 2)',
   width: '100%',
 
   backgroundColor: `rgb(${theme.color.primary})`,
