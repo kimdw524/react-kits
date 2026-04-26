@@ -23,7 +23,7 @@ globalStyle('body', {
   backgroundColor: `rgb(${theme.color.background})`,
   color: `rgb(${theme.color.foreground})`,
 
-  lineHeight: '1',
+  lineHeight: '1.5',
 });
 
 globalStyle('a', {
