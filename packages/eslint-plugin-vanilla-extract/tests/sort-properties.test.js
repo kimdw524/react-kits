@@ -122,6 +122,31 @@ ruleTester.run('sort-properties', sortPropertiesRule, {
         });
       `,
     },
+    {
+      code: [
+        "import { style } from '@vanilla-extract/css';",
+        '',
+        'export const button = style({',
+        "  position: 'relative',",
+        '',
+        "  display: 'inline-flex',",
+        '',
+        "  alignItems: 'center',",
+        "  justifyContent: 'center',",
+        '',
+        "  padding: '0 1rem',",
+        '',
+        "  backgroundColor: 'black',",
+        "  color: 'white',",
+        '',
+        "  cursor: 'pointer',",
+        '',
+        "  ':hover': {",
+        '    opacity: 0.8,',
+        '  },',
+        '});',
+      ].join('\r\n'),
+    },
   ],
   invalid: [
     {

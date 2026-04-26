@@ -407,6 +407,10 @@ function getLineIndent(text, rangeStart) {
   return indentMatch ? indentMatch[0] : '';
 }
 
+function getLinebreak(text) {
+  return text.includes('\r\n') ? '\r\n' : '\n';
+}
+
 function compareEntries(left, right) {
   if (left.groupIndex !== right.groupIndex) {
     return left.groupIndex - right.groupIndex;
@@ -432,6 +436,7 @@ function hasAttachedComments(sourceCode, property) {
 
 function buildFixedText(node, sortedEntries, sourceCode) {
   const originalText = sourceCode.getText(node);
+  const linebreak = getLinebreak(originalText);
 
   if (!originalText.includes('\n')) {
     return `{ ${sortedEntries.map((entry) => entry.text).join(', ')} }`;
@@ -443,22 +448,22 @@ function buildFixedText(node, sortedEntries, sourceCode) {
   );
   const closingIndent = getLineIndent(sourceCode.text, node.range[0]);
 
-  let nextText = '{\n';
+  let nextText = `{${linebreak}`;
 
   sortedEntries.forEach((entry, index) => {
     if (index > 0) {
       const previousEntry = sortedEntries[index - 1];
-      nextText += ',\n';
+      nextText += `,${linebreak}`;
 
       if (previousEntry.groupIndex !== entry.groupIndex) {
-        nextText += '\n';
+        nextText += linebreak;
       }
     }
 
     nextText += `${propertyIndent}${entry.text}`;
   });
 
-  nextText += `,\n${closingIndent}}`;
+  nextText += `,${linebreak}${closingIndent}}`;
 
   return nextText;
 }
