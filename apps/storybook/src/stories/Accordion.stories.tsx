@@ -4,8 +4,10 @@ import {
   AccordionTrigger,
   Typography,
 } from '@kimdw-rtk/ui';
+import { typography } from '@kimdw-rtk/ui/token';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
+const sizeOptions = Object.keys(typography.size);
 const meta = {
   title: 'Components/Accordion',
   component: Accordion,
@@ -16,6 +18,10 @@ const meta = {
   argTypes: {
     children: {
       control: false,
+    },
+    size: {
+      control: 'select',
+      options: sizeOptions,
     },
   },
   args: {
