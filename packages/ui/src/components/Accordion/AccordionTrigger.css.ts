@@ -13,6 +13,13 @@ export const triggerContainer = recipeWithComponents({
 
     padding: paddingVar,
 
+    border: '0',
+
+    backgroundColor: 'transparent',
+
+    fontFamily: 'inherit',
+    fontSize: 'inherit',
+
     cursor: 'pointer',
 
     ':hover': {

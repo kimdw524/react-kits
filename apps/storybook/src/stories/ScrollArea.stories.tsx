@@ -33,7 +33,7 @@ export const Playground: Story = {
     <ScrollArea {...args} style={{ width: 640 }}>
       <Flex gap="lg">
         {['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon'].map((name) => (
-          <Card key={name} width={220}>
+          <Card key={name} width={220} tabIndex={0}>
             <CardContent>
               <Typography as="h3" fontWeight="semiBold">
                 {name}

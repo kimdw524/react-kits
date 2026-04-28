@@ -16,7 +16,6 @@ export const navigationBar = recipeWithComponents({
     borderBottom: '1px solid',
 
     backgroundColor: `rgba(${theme.color.background}, 0.75)`,
-    color: `rgb(${theme.color.border})`,
 
     backdropFilter: 'blur(2rem) saturate(150%)',
 

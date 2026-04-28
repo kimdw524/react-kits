@@ -9,14 +9,14 @@ import type { UIComponent } from '#types';
 
 import * as s from './NavigationAside.css';
 
-type NavigationAsideProps = UIComponent<'aside'>;
+type NavigationAsideProps = UIComponent<'div'>;
 
-export const NavigationAside = forwardRef<HTMLElement, NavigationAsideProps>(
+export const NavigationAside = forwardRef<HTMLDivElement, NavigationAsideProps>(
   ({ children, className, sx: propSx, ...props }, ref) => {
     return (
-      <aside ref={ref} className={clsx(className, sx(propSx))} {...props}>
+      <div ref={ref} className={clsx(className, sx(propSx))} {...props}>
         <div className={s.wide}>{children}</div>
-      </aside>
+      </div>
     );
   },
 );
