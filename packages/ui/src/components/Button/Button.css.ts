@@ -174,7 +174,7 @@ export const icon = recipeWithComponents({
   },
 });
 
-globalStyle(`${icon} > *`, {
+globalStyle(`${icon.classNames.base} > *`, {
   lineHeight: '0',
 
   pointerEvents: 'none',
