@@ -20,7 +20,7 @@ const meta = {
   args: {
     children: 'Changes saved successfully.',
     color: 'success',
-    duration: 4000,
+    duration: 0,
   },
 } satisfies Meta<typeof Toast>;
 
