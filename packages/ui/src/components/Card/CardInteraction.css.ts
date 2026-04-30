@@ -1,6 +1,6 @@
-import { styleWithLayer } from '#styleUtils';
+import { styleWithComponents } from '#utils';
 
-export const cardInteraction = styleWithLayer({
+export const cardInteraction = styleWithComponents({
   position: 'relative',
 
   height: '100%',

@@ -1,17 +1,17 @@
 import { createVar } from '@vanilla-extract/css';
 
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { semanticColor, typography } from '#tokens';
+import { semanticColor } from '#tokens';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
-import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
+import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
 const backgroundVar = createVar();
 
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: styleWithLayer({
+    [color]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[color],
       },
@@ -20,10 +20,10 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = SCALE_COLOR.reduce(
+const scaleColors = scaleColor.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: styleWithLayer({
+    [value]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[value][500],
       },
@@ -32,52 +32,34 @@ const scaleColors = SCALE_COLOR.reduce(
   {} as Record<ScaleColor, string>,
 );
 
-export const textField = recipeWithLayer({
+export const textField = recipeWithComponents({
   base: {
-    width: '100%',
     height: '2.5em',
+    width: '100%',
+
     padding: '0 0.75em',
+
     border: `1px solid`,
     borderColor: ` rgb(${theme.color.border})`,
+    borderRadius: theme.borderRadius,
+    outline: 'none',
 
     backgroundColor: `rgb(${theme.color.background})`,
-
     color: `rgb(${theme.color.foreground})`,
 
     transition: 'border-color 0.15s ease, color 0.15s ease',
 
-    outline: 'none',
-
-    ':focus': {
-      borderColor: `rgb(${backgroundVar})`,
-    },
-
     ':disabled': {
       color: `rgb(${theme.color['muted-foreground']})`,
+    },
+    ':focus': {
+      borderColor: `rgb(${backgroundVar})`,
     },
   },
   variants: {
     color: {
       ...semanticColors,
       ...scaleColors,
-    },
-
-    size: {
-      sm: {
-        borderRadius: theme.borderRadius,
-
-        fontSize: typography.size.sm,
-      },
-      md: {
-        borderRadius: theme.borderRadius,
-
-        fontSize: typography.size.md,
-      },
-      lg: {
-        borderRadius: theme.borderRadius,
-
-        fontSize: typography.size.lg,
-      },
     },
   },
 });

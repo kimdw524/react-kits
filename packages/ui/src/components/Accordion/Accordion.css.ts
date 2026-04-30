@@ -1,13 +1,14 @@
 import { createVar } from '@vanilla-extract/css';
 
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
 export const paddingVar = createVar();
 
-export const accordion = recipeWithLayer({
+export const accordion = recipeWithComponents({
   base: {
     width: '100%',
+
     borderBottom: `1px solid rgb(${theme.color.border})`,
   },
 

@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { Box } from '#components';
+import { Flex } from '#components';
 import { sx } from '#styles';
 import type { UIComponent } from '#types';
 
@@ -13,18 +13,15 @@ type DialogProps = Omit<UIComponent<'div'>, 'color'>;
 export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
   ({ children, className, sx: propSx, ...props }, ref) => {
     return (
-      <Box
+      <Flex
         ref={ref}
         boxShadow="border-sm"
         className={clsx(s.container, className, sx(propSx))}
-        flexDirection="row"
-        gap="lg"
         padding="xl"
-        flex
         {...props}
       >
         {children}
-      </Box>
+      </Flex>
     );
   },
 );

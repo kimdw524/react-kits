@@ -27,9 +27,9 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
     return (
       <Box
         ref={ref}
-        boxShadow="accent-sm"
+        // boxShadow="accent-sm"
         className={clsx(s.toast({ color }), className, sx(propSx))}
-        rounded
+        isRounded={true}
         {...props}
       >
         <div

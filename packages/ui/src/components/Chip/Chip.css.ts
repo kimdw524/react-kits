@@ -1,20 +1,22 @@
 import { createVar } from '@vanilla-extract/css';
 
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
-import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
+import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
 const backgroundVar = createVar();
+
 const foregroundVar = createVar();
 
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: styleWithLayer({
+    [color]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[color],
+
         [foregroundVar]: theme.color[`${color}-foreground`],
       },
     }),
@@ -22,12 +24,13 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = SCALE_COLOR.reduce(
+const scaleColors = scaleColor.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: styleWithLayer({
+    [value]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[value][500],
+
         [foregroundVar]: theme.color[value][50],
       },
     }),
@@ -35,19 +38,23 @@ const scaleColors = SCALE_COLOR.reduce(
   {} as Record<ScaleColor, string>,
 );
 
-export const chip = recipeWithLayer({
+export const chip = recipeWithComponents({
   base: {
     display: 'inline-flex',
+
     alignItems: 'center',
-    lineHeight: '0',
     gap: '0.125em',
 
     height: '2em',
+
     padding: '0 0.75em',
+
     borderRadius: theme.borderRadius,
 
     backgroundColor: `rgb(${backgroundVar})`,
     color: `rgb(${foregroundVar})`,
+
+    lineHeight: '0',
 
     userSelect: 'none',
   },
@@ -55,21 +62,8 @@ export const chip = recipeWithLayer({
   variants: {
     color: {
       ...semanticColors,
+
       ...scaleColors,
-    },
-
-    size: {
-      sm: {
-        fontSize: '0.75em',
-      },
-
-      md: {
-        fontSize: '0.875em',
-      },
-
-      lg: {
-        fontSize: '1em',
-      },
     },
   },
 });

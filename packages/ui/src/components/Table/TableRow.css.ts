@@ -1,3 +1,3 @@
-import { styleWithLayer } from '#styleUtils';
+import { styleWithComponents } from '#utils';
 
-export const interactive = styleWithLayer({});
+export const interactive = styleWithComponents({});

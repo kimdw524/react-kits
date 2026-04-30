@@ -1,3 +1,3 @@
-export * from './darkTheme.css';
-export * from './lightTheme.css';
+export * from './darkTheme';
+export * from './lightTheme';
 export { theme } from './theme.css';

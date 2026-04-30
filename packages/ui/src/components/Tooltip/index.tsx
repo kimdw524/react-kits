@@ -8,21 +8,32 @@ import {
   type ReactNode,
 } from 'react';
 
+import clsx from 'clsx';
+
 import { Portal } from '#components';
+import { sprinkles } from '#styles';
+import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
 import * as s from './Tooltip.css';
 
-interface TooltipProps
-  extends Omit<UIComponent<'div', typeof s.tooltip>, 'content'> {
+interface TooltipProps extends Omit<UIComponent<'div'>, 'content'> {
   children: ReactElement<{
     onPointerOver?: PointerEventHandler;
     onPointerOut?: PointerEventHandler;
   }>;
   content: ReactNode;
+  size?: keyof typeof typography.size;
 }
 
-export const Tooltip = ({ children, content, size = 'sm' }: TooltipProps) => {
+export const Tooltip = ({
+  children,
+  content,
+  size = 'sm',
+  className,
+  style,
+  ...rest
+}: TooltipProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [position, setPosition] = useState<{ x: number; y: number }>({
     x: 0,
@@ -51,8 +62,13 @@ export const Tooltip = ({ children, content, size = 'sm' }: TooltipProps) => {
       {isVisible && (
         <Portal>
           <div
-            className={s.tooltip({ size })}
-            style={{ top: position.y, left: position.x }}
+            className={clsx(
+              s.tooltip,
+              sprinkles({ fontSize: size }),
+              className,
+            )}
+            style={{ top: position.y, left: position.x, ...style }}
+            {...rest}
           >
             {content}
           </div>

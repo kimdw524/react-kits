@@ -1,10 +1,10 @@
-import { styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
 import { paddingVar, striped } from './Table.css';
 import { interactive } from './TableRow.css';
 
-export const tableCell = styleWithLayer({
+export const tableCell = styleWithComponents({
   paddingBlock: paddingVar,
   paddingInline: `calc(${paddingVar} / 2)`,
 
@@ -16,26 +16,26 @@ export const tableCell = styleWithLayer({
     },
 
     'tr > &:first-child': {
-      borderTopLeftRadius: theme.borderRadius,
-      borderBottomLeftRadius: theme.borderRadius,
       paddingLeft: paddingVar,
+
+      borderBottomLeftRadius: theme.borderRadius,
+      borderTopLeftRadius: theme.borderRadius,
     },
 
     'tr > &:last-child': {
-      borderTopRightRadius: theme.borderRadius,
-      borderBottomRightRadius: theme.borderRadius,
       paddingRight: paddingVar,
+
+      borderBottomRightRadius: theme.borderRadius,
+      borderTopRightRadius: theme.borderRadius,
     },
 
     'tbody > tr:hover > &': {
       backgroundColor: `rgb(${theme.color.accent})`,
-
       color: `rgb(${theme.color['accent-foreground']})`,
     },
 
-    [`${striped} > tbody > tr:nth-of-type(odd) > &`]: {
+    [`${striped} tbody > tr:nth-of-type(odd) > &`]: {
       backgroundColor: `rgb(${theme.color.card})`,
-
       color: `rgb(${theme.color['accent-foreground']})`,
     },
 

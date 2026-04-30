@@ -1,15 +1,14 @@
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-
 import { theme } from '#themes';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
-export const children = style({
+export const children = styleWithComponents({
   overflow: 'hidden',
+
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 });
 
-export const icon = recipe({
+export const icon = recipeWithComponents({
   base: {
     flexShrink: '0',
 
@@ -32,19 +31,20 @@ export const icon = recipe({
   },
 });
 
-export const selectTrigger = recipe({
+export const selectTrigger = recipeWithComponents({
   base: {
     display: 'flex',
+
     alignItems: 'center',
     gap: '0.5em',
     justifyContent: 'space-between',
 
     width: '100%',
 
-    transition: 'border-color 0.2s ease',
-
     cursor: 'pointer',
     userSelect: 'none',
+
+    transition: 'border-color 0.2s ease',
   },
 
   variants: {
@@ -56,12 +56,14 @@ export const selectTrigger = recipe({
     variant: {
       contained: {
         padding: '0.75em 0.75em',
+
         borderRadius: theme.borderRadius,
 
         backgroundColor: `rgb(${theme.color.secondary})`,
       },
       outlined: {
         padding: '0.75em 0.5em',
+
         border: '1px solid',
         borderColor: `rgb(${theme.color.border})`,
         borderRadius: theme.borderRadius,

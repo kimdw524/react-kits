@@ -21,14 +21,15 @@ globalStyle('body', {
   margin: '0',
 
   backgroundColor: `rgb(${theme.color.background})`,
-
-  lineHeight: '1',
   color: `rgb(${theme.color.foreground})`,
+
+  lineHeight: '1.5',
 });
 
 globalStyle('a', {
-  textDecoration: 'none',
   color: 'inherit',
+
+  textDecoration: 'none',
 });
 
 globalStyle('svg', {

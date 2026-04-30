@@ -1,13 +1,16 @@
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
-export const container = recipeWithLayer({
+export const container = recipeWithComponents({
   base: {
     position: 'relative',
+
     overflow: 'hidden',
 
     height: '100%',
+
     padding: '0 0.75em',
+
     border: '0',
 
     backgroundColor: 'transparent',
@@ -16,9 +19,9 @@ export const container = recipeWithLayer({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
 
-    transition: 'border-bottom-color 0.15s ease, color 0.15s ease',
-
     cursor: 'pointer',
+
+    transition: 'border-bottom-color 0.15s ease, color 0.15s ease',
   },
 
   variants: {

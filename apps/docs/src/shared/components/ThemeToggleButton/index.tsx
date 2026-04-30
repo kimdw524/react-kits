@@ -16,11 +16,10 @@ export const ThemeToggleButton = ({
     <Button
       variant="ghost"
       color="secondary"
-      size="icon-md"
+      size="md"
       onClick={onClick}
       aria-label="Toggle Theme"
-    >
-      {theme === 'light' ? <SunIcon /> : <MoonIcon />}
-    </Button>
+      icon={theme === 'light' ? <SunIcon /> : <MoonIcon />}
+    />
   );
 };

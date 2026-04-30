@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Animated } from '@kimdw-rtk/animation';
-import { Box, Button, Typography } from '@kimdw-rtk/ui';
+import { Button, Flex, Typography } from '@kimdw-rtk/ui';
 import { useOverlay } from '@kimdw-rtk/utils';
 import { type HeadFC, type PageProps } from 'gatsby';
 
@@ -37,23 +37,21 @@ const ThemePage: React.FC<PageProps> = () => {
         initial={{ opacity: 0, transform: 'translateY(1rem)' }}
         animate={{ opacity: 1, transform: 'translateY(0)' }}
       >
-        <Box
+        <Flex
           className={theme}
-          flex
           flexDirection="column"
           gap="lg"
           padding="md"
           backgroundColor="background"
-          rounded
+          isRounded
         >
           {/* page header */}
-          <Box
-            flex
+          <Flex
             alignItems="center"
             justifyContent="space-between"
             padding="md"
             backgroundColor="accent"
-            rounded
+            isRounded
           >
             <ThemeToggleButton
               theme={theme}
@@ -67,7 +65,7 @@ const ThemePage: React.FC<PageProps> = () => {
             >
               Generate Code
             </Button>
-          </Box>
+          </Flex>
           {/* Token Editor */}
           <TokenEditor vars={vars} onUpdate={handleVarsUpdate} />
           {/* Preview samples */}
@@ -79,7 +77,7 @@ const ThemePage: React.FC<PageProps> = () => {
             Theme Preview
           </Typography>
           <Preview theme={theme} vars={vars} />
-        </Box>
+        </Flex>
       </Animated.Box>
     </Layout>
   );

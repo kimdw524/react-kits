@@ -1,18 +1,21 @@
-import { styleWithLayer } from '#styleUtils';
+import { styleWithComponents } from '#utils';
 
-export const container = styleWithLayer({
+export const container = styleWithComponents({
+  boxSizing: 'border-box',
+
   maxWidth: 'calc(100vw - 2rem)',
   minWidth: 'min(20rem, calc(100vw - 2rem))',
+
   padding: '1rem',
+
   borderRadius: '0.25rem',
-  boxSizing: 'border-box',
 
   backgroundColor: '#fff',
 
   userSelect: 'none',
 });
 
-export const message = styleWithLayer({
+export const message = styleWithComponents({
   marginBottom: '1rem',
 
   lineHeight: '150%',

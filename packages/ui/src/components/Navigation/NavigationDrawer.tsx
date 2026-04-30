@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 import { AlignJustifyIcon, XIcon } from 'lucide-react';
 
-import { Box, Button } from '#components';
+import { Box, Button, Flex } from '#components';
 
 import * as s from './NavigationDrawer.css';
 
@@ -41,25 +41,23 @@ export const NavigationDrawer = ({ menu, aside }: NavigationDrawerProps) => {
       <div className={s.narrow}>
         <Button
           color="secondary"
-          size="icon-md"
+          icon={isExpanded ? <XIcon /> : <AlignJustifyIcon />}
+          size="md"
           variant="ghost"
           onClick={handleClick}
-        >
-          {isExpanded ? <XIcon /> : <AlignJustifyIcon />}
-        </Button>
+        />
         <div className={s.popup({ isVisible: isExpanded })}>
-          <Box
+          <Flex
             alignItems="flex-end"
             flexDirection="column-reverse"
             gap="xl"
             paddingY="lg"
-            flex
           >
             <Box width="100%" onClick={() => setIsExpanded(false)}>
               {menu}
             </Box>
             {aside}
-          </Box>
+          </Flex>
         </div>
       </div>
     </>

@@ -2,12 +2,15 @@ import { forwardRef } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '#styles';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
 import * as s from './Chip.css';
 
-type ChipProps = UIComponent<'div', typeof s.chip>;
+interface ChipProps extends UIComponent<'div', typeof s.chip> {
+  size?: keyof typeof typography.size;
+}
 
 export const Chip = forwardRef<HTMLDivElement, ChipProps>(
   (
@@ -24,7 +27,12 @@ export const Chip = forwardRef<HTMLDivElement, ChipProps>(
     return (
       <div
         ref={ref}
-        className={clsx(s.chip({ color, size }), className, sx(propSx))}
+        className={clsx(
+          s.chip({ color }),
+          sprinkles({ fontSize: size }),
+          className,
+          sx(propSx),
+        )}
         {...props}
       >
         <span>{children}</span>

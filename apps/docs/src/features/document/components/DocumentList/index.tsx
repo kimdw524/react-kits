@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Typography } from '@kimdw-rtk/ui';
+import { Flex, Typography } from '@kimdw-rtk/ui';
 import { Link } from 'gatsby';
 
 interface DocumentListProps {
@@ -8,7 +8,7 @@ interface DocumentListProps {
 
 export const DocumentList = ({ items, currentDocument }: DocumentListProps) => {
   return (
-    <Box flex flexDirection="column" padding="md">
+    <Flex flexDirection="column" padding="md">
       {items.map(({ docs }) => (
         <Link key={docs.slug} to={docs.slug} draggable={false}>
           <Typography
@@ -20,6 +20,6 @@ export const DocumentList = ({ items, currentDocument }: DocumentListProps) => {
           </Typography>
         </Link>
       ))}
-    </Box>
+    </Flex>
   );
 };
