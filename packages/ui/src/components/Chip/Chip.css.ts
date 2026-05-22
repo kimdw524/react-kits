@@ -43,7 +43,6 @@ export const chip = recipeWithComponents({
     display: 'inline-flex',
 
     alignItems: 'center',
-    gap: '0.125em',
 
     height: '2em',
 
