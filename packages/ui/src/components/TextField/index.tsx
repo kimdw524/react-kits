@@ -2,12 +2,15 @@ import { forwardRef } from 'react';
 
 import { clsx } from 'clsx';
 
-import { sx } from '#styles';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
 import * as s from './TextField.css';
 
-interface TextFieldProps extends UIComponent<'input', typeof s.textField> {
+interface TextFieldProps
+  extends Omit<UIComponent<'input', typeof s.textField>, 'size'> {
+  size?: keyof typeof typography.size;
   type?: React.HTMLInputTypeAttribute;
 }
 
@@ -26,7 +29,12 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     return (
       <input
         ref={ref}
-        className={clsx(className, s.textField({ size, color }), sx(propSx))}
+        className={clsx(
+          className,
+          s.textField({ color }),
+          sprinkles({ fontSize: size }),
+          sx(propSx),
+        )}
         type={type}
         {...props}
       />

@@ -1,5 +1,5 @@
-import { styleWithLayer } from '#styleUtils';
+import { styleWithComponents } from '#utils';
 
-export const navigationLogo = styleWithLayer({
+export const navigationLogo = styleWithComponents({
   marginRight: '0.5em',
 });

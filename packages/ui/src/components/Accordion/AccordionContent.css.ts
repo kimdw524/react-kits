@@ -1,8 +1,8 @@
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 import { paddingVar } from './Accordion.css';
 
-export const container = recipeWithLayer({
+export const container = recipeWithComponents({
   base: {
     overflow: 'hidden',
 
@@ -24,6 +24,6 @@ export const container = recipeWithLayer({
   },
 });
 
-export const inner = styleWithLayer({
+export const inner = styleWithComponents({
   padding: paddingVar,
 });

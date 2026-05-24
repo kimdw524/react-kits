@@ -1,11 +1,11 @@
 import { ComponentProps } from 'react';
 
 import {
-  Box,
   Button,
   Card,
   CardContent,
   CardHeader,
+  Flex,
   Typography,
 } from '@kimdw-rtk/ui';
 import { CheckIcon, XIcon } from 'lucide-react';
@@ -20,14 +20,10 @@ export const Confirm = (props: ComponentProps<typeof Card>) => {
       </CardHeader>
       <CardContent>
         <Typography>Would you like to accept the request?</Typography>
-        <Box flex gap="md" justifyContent="flex-end" marginTop="lg">
-          <Button color="success" size="icon-sm">
-            <CheckIcon />
-          </Button>
-          <Button color="danger" size="icon-sm">
-            <XIcon />
-          </Button>
-        </Box>
+        <Flex gap="md" justifyContent="flex-end" marginTop="lg">
+          <Button color="success" size="sm" icon={<CheckIcon />} />
+          <Button color="danger" size="sm" icon={<XIcon />} />
+        </Flex>
       </CardContent>
     </Card>
   );

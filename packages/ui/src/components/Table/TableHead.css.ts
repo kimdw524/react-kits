@@ -1,10 +1,13 @@
-import { styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
-export const tableHead = styleWithLayer({
-  padding: '0.5em 0.625em',
+import { paddingVar } from './Table.css';
+
+export const tableHead = styleWithComponents({
+  padding: paddingVar,
 
   color: `rgb(${theme.color['accent-foreground']})`,
+
   fontSize: '0.9375em',
   fontWeight: '500',
 });

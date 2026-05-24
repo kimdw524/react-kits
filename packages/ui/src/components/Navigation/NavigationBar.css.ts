@@ -1,28 +1,28 @@
 import { createContainer } from '@vanilla-extract/css';
 
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
 export const navigationBarContainer = createContainer();
 
-export const navigationBar = recipeWithLayer({
+export const navigationBar = recipeWithComponents({
   base: {
-    zIndex: '20',
     position: 'sticky',
     top: '0',
+    zIndex: '20',
 
     width: '100%',
+
     borderBottom: '1px solid',
 
     backgroundColor: `rgba(${theme.color.background}, 0.75)`,
-    backdropFilter: 'blur(2rem) saturate(150%)',
 
-    color: `rgb(${theme.color.border})`,
+    backdropFilter: 'blur(2rem) saturate(150%)',
 
     transition: 'border-bottom-color 0.2s ease',
 
-    containerType: 'inline-size',
     containerName: navigationBarContainer,
+    containerType: 'inline-size',
   },
   variants: {
     size: {

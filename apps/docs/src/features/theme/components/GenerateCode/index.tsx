@@ -37,7 +37,7 @@ export const GenerateCode = ({ vars }: GenerateCodeProps) => {
         <Box
           backgroundColor="secondary"
           padding="lg"
-          rounded
+          isRounded
           style={{ maxHeight: '50vh', overflowY: 'scroll' }}
         >
           <Typography fontSize="sm">

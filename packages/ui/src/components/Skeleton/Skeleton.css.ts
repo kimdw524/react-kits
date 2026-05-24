@@ -1,7 +1,7 @@
 import { keyframes } from '@vanilla-extract/css';
 
-import { styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
 const shimmer = keyframes({
   '0%': {
@@ -13,10 +13,11 @@ const shimmer = keyframes({
   },
 });
 
-export const skeleton = styleWithLayer({
+export const skeleton = styleWithComponents({
   display: 'block',
 
   maxWidth: '100%',
+
   borderRadius: theme.borderRadius,
 
   background: `linear-gradient(90deg, rgba(${theme.color.accent}, 0.4) 30%, rgba(${theme.color.accent}, 0.2) 65%, rgba(${theme.color.accent}, 0.4))`,

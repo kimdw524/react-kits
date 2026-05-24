@@ -1,15 +1,9 @@
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
-export const box = recipeWithLayer({
+export const box = recipeWithComponents({
   variants: {
-    flex: {
-      true: {
-        display: 'flex',
-      },
-    },
-
-    rounded: {
+    isRounded: {
       true: {
         borderRadius: theme.borderRadius,
       },

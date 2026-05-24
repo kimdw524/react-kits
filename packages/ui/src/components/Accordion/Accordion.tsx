@@ -4,7 +4,8 @@ import { forwardRef, useReducer } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '#styles';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
 import * as s from './Accordion.css';
@@ -12,6 +13,7 @@ import { AccordionContext, accordionReducer } from './AccordionContext';
 
 interface AccordionProps extends UIComponent<'div', typeof s.accordion> {
   isExpanded?: boolean;
+  size?: keyof typeof typography.size;
 }
 
 export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
@@ -19,6 +21,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     {
       children,
       className,
+      size = 'md',
       isPadding = true,
       isExpanded: initIsExpaned = false,
       sx: propSx,
@@ -31,7 +34,12 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     return (
       <div
         ref={ref}
-        className={clsx(s.accordion({ isPadding }), className, sx(propSx))}
+        className={clsx(
+          s.accordion({ isPadding }),
+          sprinkles({ fontSize: size }),
+          className,
+          sx(propSx),
+        )}
         {...props}
       >
         <AccordionContext.Provider value={{ isExpanded, dispatch }}>

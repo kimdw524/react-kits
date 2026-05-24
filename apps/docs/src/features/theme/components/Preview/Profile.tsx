@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 
 import {
-  Box,
   Button,
   Card,
   CardContent,
@@ -56,12 +55,12 @@ export const Profile = (props: ComponentProps<typeof Card>) => {
             </Flex>
           </Flex>
         </Flex>
-        <Box flex gap="md" justifyContent="flex-end" marginTop="lg">
+        <Flex gap="md" justifyContent="flex-end" marginTop="lg">
           <Button size="sm" color="secondary">
             Cancel
           </Button>
           <Button size="sm">Update</Button>
-        </Box>
+        </Flex>
       </CardContent>
     </Card>
   );

@@ -1,10 +1,10 @@
 import { createVar } from '@vanilla-extract/css';
 
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
-import { semanticColor, spacing } from '#tokens';
+import { semanticColor } from '#tokens';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
-import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
+import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 import { cardInteraction } from './CardInteraction.css';
 
 export const paddingVar = createVar();
@@ -12,29 +12,31 @@ export const paddingVar = createVar();
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: styleWithLayer({
+    [color]: styleWithComponents({
       backgroundColor: `rgb(${theme.color[color]})`,
     }),
   }),
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = SCALE_COLOR.reduce(
+const scaleColors = scaleColor.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: styleWithLayer({
+    [value]: styleWithComponents({
       backgroundColor: `color-mix(in srgb, rgb(${theme.color[value][500]}) 20%, rgb(${theme.color.background}) 80%)`,
     }),
   }),
   {} as Record<ScaleColor, string>,
 );
 
-export const card = recipeWithLayer({
+export const card = recipeWithComponents({
   base: {
-    display: 'flex',
-    flexDirection: 'column',
     position: 'relative',
+
+    display: 'flex',
     overflow: 'clip',
+
+    flexDirection: 'column',
 
     borderRadius: theme.borderRadius,
 
@@ -67,38 +69,6 @@ export const card = recipeWithLayer({
       ...scaleColors,
       transparent: {
         backgroundColor: 'transparent',
-      },
-    },
-
-    size: {
-      sm: {
-        vars: {
-          [paddingVar]: spacing.sm,
-        },
-      },
-
-      md: {
-        vars: {
-          [paddingVar]: spacing.md,
-        },
-      },
-
-      lg: {
-        vars: {
-          [paddingVar]: spacing.lg,
-        },
-      },
-
-      xl: {
-        vars: {
-          [paddingVar]: spacing.xl,
-        },
-      },
-
-      '2xl': {
-        vars: {
-          [paddingVar]: spacing['2xl'],
-        },
       },
     },
   },

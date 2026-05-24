@@ -56,10 +56,10 @@ export const Search = (props: ComponentProps<typeof Card>) => {
             </Box>
           </Flex>
         </Flex>
-        <Box flex gap="md" justifyContent="flex-end" marginTop="lg">
+        <Flex gap="md" justifyContent="flex-end" marginTop="lg">
           <Button color="secondary">Cancel</Button>
           <Button>Search</Button>
-        </Box>
+        </Flex>
       </CardContent>
     </Card>
   );

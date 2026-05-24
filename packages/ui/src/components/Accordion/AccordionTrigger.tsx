@@ -27,7 +27,7 @@ export const AccordionTrigger = ({
   const { dispatch, isExpanded } = accordionContext;
 
   return (
-    <div
+    <button
       aria-expanded={isExpanded}
       className={s.triggerContainer({ iconPosition })}
       onClick={() => dispatch(!isExpanded)}
@@ -36,6 +36,6 @@ export const AccordionTrigger = ({
       <span className={s.arrow({ expand: isExpanded })}>
         <ChevronDownIcon size="1em" />
       </span>
-    </div>
+    </button>
   );
 };

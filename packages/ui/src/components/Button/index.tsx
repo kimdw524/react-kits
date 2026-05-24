@@ -5,23 +5,26 @@ import { forwardRef, useRef, type ReactElement } from 'react';
 import { clsx } from 'clsx';
 
 import { useRipple } from '#hooks';
-import { sx } from '#styles';
-import type { RecipeVariantsProps, UIComponent } from '#types';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
+import type { UIComponent } from '#types';
 
 import * as s from './Button.css';
 
 interface ButtonProps extends UIComponent<'button', typeof s.button> {
   icon?: ReactElement;
-  fontSize?: RecipeVariantsProps<typeof s.span>['size'];
+  size?: keyof typeof typography.size;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<
+  HTMLButtonElement,
+  Omit<ButtonProps, 'isIcon'>
+>(
   (
     {
       children,
       color = 'primary',
       size = 'md',
-      fontSize,
       variant = 'contained',
       pulse = false,
       className,
@@ -35,6 +38,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const elementRef = ref || localRef;
     const { ripple } = useRipple<HTMLButtonElement>(elementRef);
 
+    const hasIcon = icon !== undefined;
+    const isIcon = icon !== undefined && children === undefined;
+
     return (
       <button
         ref={elementRef}
@@ -42,17 +48,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className,
           s.button({
             color,
-            size,
             variant,
             pulse,
-            hasIcon: icon !== undefined,
+            hasIcon,
+            isIcon,
           }),
+          sprinkles({ fontSize: size }),
           sx(propSx),
         )}
         {...props}
       >
-        {icon !== undefined && <span className={s.icon}>{icon}</span>}
-        <span className={s.span({ size: fontSize ?? size })}>{children}</span>
+        {hasIcon && (
+          <span className={s.icon({ isIconOnly: isIcon })}>{icon}</span>
+        )}
+        {!isIcon && <span>{children}</span>}
         {ripple}
       </button>
     );

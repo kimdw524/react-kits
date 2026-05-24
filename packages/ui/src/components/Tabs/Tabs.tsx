@@ -4,13 +4,14 @@ import { forwardRef, useReducer } from 'react';
 
 import clsx from 'clsx';
 
-import { sx } from '#styles';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
-import * as s from './Tabs.css';
 import { TabsContext, tabsReducer, type TabsState } from './TabsProvider';
 
-interface TabsProps extends UIComponent<'div', typeof s.tabs> {
+interface TabsProps extends UIComponent<'div'> {
+  size?: keyof typeof typography.size;
   defaultValue?: number | string;
 }
 
@@ -41,7 +42,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       >
         <div
           ref={ref}
-          className={clsx(s.tabs({ size }), className, sx(propSx))}
+          className={clsx(sprinkles({ fontSize: size }), className, sx(propSx))}
           {...props}
         >
           {children}

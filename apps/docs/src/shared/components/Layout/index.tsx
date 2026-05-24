@@ -11,7 +11,7 @@ import {
 } from '@kimdw-rtk/ui';
 import { Link } from 'gatsby';
 
-import '@/styles/globalStyle.css.ts';
+import '@/styles/globalStyle.css';
 
 interface LayoutProps {
   children: ReactNode;

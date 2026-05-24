@@ -7,8 +7,12 @@ export const colorVar = createVar();
 
 export const ripple = recipe({
   base: {
-    position: 'absolute',
+    vars: {
+      [colorVar]: `color-mix(in srgb, rgba(${theme.color.accent}, 0.2) 20%, rgba(${theme.color.foreground}, 0.2) 80%)`,
+    },
+
     left: '0',
+    position: 'absolute',
     top: '0',
 
     borderRadius: '50%',
@@ -16,20 +20,17 @@ export const ripple = recipe({
     backgroundColor: colorVar,
 
     opacity: '0',
-    transformOrigin: 'center center',
 
     pointerEvents: 'none',
 
-    vars: {
-      [colorVar]: `color-mix(in srgb, rgba(${theme.color.accent}, 0.2) 20%, rgba(${theme.color.foreground}, 0.2) 80%)`,
-    },
+    transformOrigin: 'center center',
   },
   variants: {
     animation: {
       true: {
+        transform: 'translate(-50%, -50%) scale(1, 1)',
         transition:
           'opacity 0.25s linear, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-        transform: 'translate(-50%, -50%) scale(1, 1)',
       },
 
       false: {

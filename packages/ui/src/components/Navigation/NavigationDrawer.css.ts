@@ -1,9 +1,9 @@
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
 import { navigationBarContainer } from './NavigationBar.css';
 
-export const narrow = styleWithLayer({
+export const narrow = styleWithComponents({
   display: 'none',
 
   '@container': {
@@ -13,12 +13,13 @@ export const narrow = styleWithLayer({
   },
 });
 
-export const wide = styleWithLayer({
+export const wide = styleWithComponents({
   display: 'flex',
+
   alignItems: 'center',
-  justifyContent: 'space-between',
-  gap: '0.5em',
   flexGrow: '1',
+  gap: '0.5em',
+  justifyContent: 'space-between',
 
   '@container': {
     [`${navigationBarContainer} (max-width: 800px)`]: {
@@ -27,17 +28,19 @@ export const wide = styleWithLayer({
   },
 });
 
-export const popup = recipeWithLayer({
+export const popup = recipeWithComponents({
   base: {
+    left: '0',
     position: 'absolute',
     top: '100%',
-    height: 'calc(100vh - 100%)',
-    left: '0',
-    width: '100%',
     zIndex: '100',
 
+    height: 'calc(100vh - 100%)',
     maxHeight: '100vh',
+    width: '100%',
+
     padding: '0.75em',
+
     borderBottom: `1px solid rgb(${theme.color.border})`,
 
     backgroundColor: `rgb(${theme.color.background})`,

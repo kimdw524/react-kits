@@ -1,43 +1,47 @@
 import { keyframes } from '@vanilla-extract/css';
 
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { recipeWithComponents } from '#utils';
 
 const fadeIn = keyframes({
   '0%': {
-    transform: 'scale(0.95)',
     opacity: 0,
+
+    transform: 'scale(0.95)',
   },
 
   '100%': {
-    transform: 'scale(1)',
     opacity: 1,
+
+    transform: 'scale(1)',
   },
 });
 
-export const container = recipeWithLayer({
+export const container = recipeWithComponents({
   base: {
-    overflowY: 'auto',
     position: 'absolute',
     zIndex: '10',
 
+    overflowY: 'auto',
+
     width: '100%',
-    border: `1px solid rgb(${theme.color.border})`,
-    borderRadius: theme.borderRadius,
+
     margin: '0.5rem 0',
 
+    border: `1px solid rgb(${theme.color.border})`,
+    borderRadius: theme.borderRadius,
+
     backgroundColor: `rgb(${theme.color.background})`,
+
+    userSelect: 'none',
 
     animation: `${fadeIn} 0.3s ease 1`,
     transformOrigin: '0 0',
 
-    userSelect: 'none',
-
     '::-webkit-scrollbar': {
-      width: '0.25rem',
       height: '0.25rem',
+      width: '0.25rem',
     },
-
     '::-webkit-scrollbar-thumb': {
       borderRadius: '0.5rem',
 

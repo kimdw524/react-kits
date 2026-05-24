@@ -2,16 +2,19 @@ import { globalStyle, style } from '@vanilla-extract/css';
 
 export const enter = style({
   opacity: '1 !important',
+
   transition: 'all 0.2s ease',
 });
 
 export const base = style({
+  inset: '0',
+  position: 'fixed',
+  zIndex: '100',
+
   display: 'flex',
+
   alignItems: 'center',
   justifyContent: 'center',
-  position: 'fixed',
-  inset: '0',
-  zIndex: '100',
 
   backgroundColor: '#00000080',
 
@@ -20,9 +23,10 @@ export const base = style({
 
 export const exit = style({
   opacity: '0 !important',
-  transition: 'all 0.2s ease',
 
   pointerEvents: 'none',
+
+  transition: 'all 0.2s ease',
 });
 
 globalStyle(`${enter} > div`, {

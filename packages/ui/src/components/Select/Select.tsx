@@ -7,16 +7,17 @@ import {
   useEffect,
   useReducer,
   useRef,
-  type ReactNode,
   type ComponentProps,
   type CSSProperties,
+  type ReactNode,
   type RefObject,
 } from 'react';
 
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
-import { sx } from '#styles';
+import { sprinkles, sx } from '#styles';
+import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
 import * as s from './Select.css';
@@ -24,9 +25,9 @@ import { SelectContext, selectReducer } from './SelectContext';
 import SelectOptionList from './SelectOptionList';
 import SelectTrigger from './SelectTrigger';
 
-interface SelectProps
-  extends Omit<UIComponent<'div', typeof s.select>, 'ref' | 'onChange'> {
+interface SelectProps extends Omit<UIComponent<'div'>, 'ref' | 'onChange'> {
   ref?: RefObject<{ value?: string } | null>;
+  size?: keyof typeof typography.size;
   name?: string;
   width?: CSSProperties['width'];
   defaultValue?: string;
@@ -121,7 +122,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       <SelectContext.Provider value={{ state, dispatch }}>
         <div
           ref={targetRef}
-          className={clsx(s.select({ size }), className, sx(propSx))}
+          className={clsx(
+            s.select,
+            sprinkles({ fontSize: size }),
+            className,
+            sx(propSx),
+          )}
           style={{ ...style, width }}
           {...props}
         >

@@ -1,22 +1,22 @@
-import { recipeWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { spacing, typography } from '#tokens';
+import { recipeWithComponents } from '#utils';
 
 import { narrow } from './NavigationDrawer.css';
 
-export const container = recipeWithLayer({
+export const container = recipeWithComponents({
   base: {
     position: 'relative',
 
-    lineHeight: '0',
     padding: spacing.lg,
 
     fontSize: '0.9375em',
     fontWeight: typography.weight.semiBold,
-
-    transition: 'color 0.2s ease',
+    lineHeight: '0',
 
     cursor: 'pointer',
+
+    transition: 'color 0.2s ease',
 
     ':hover': {
       color: `rgb(${theme.color.foreground})`,

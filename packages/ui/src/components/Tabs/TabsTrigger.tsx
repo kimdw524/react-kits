@@ -26,6 +26,10 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
     const isSelected = tabsContext.value === value;
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      if (isSelected) {
+        return;
+      }
+
       tabsContext.selectTab(value, event.currentTarget);
       onClick?.(event);
     };

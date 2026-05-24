@@ -1,7 +1,7 @@
-import { styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
+import { styleWithComponents } from '#utils';
 
-export const selectOption = styleWithLayer({
+export const selectOption = styleWithComponents({
   overflowX: 'hidden',
 
   padding: '0.75em 0.5em',
@@ -9,9 +9,9 @@ export const selectOption = styleWithLayer({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 
-  transition: 'background-color 0.2s ease',
-
   cursor: 'default',
+
+  transition: 'background-color 0.2s ease',
 
   ':hover': {
     backgroundColor: `rgb(${theme.color.accent})`,

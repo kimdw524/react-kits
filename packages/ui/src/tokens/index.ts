@@ -1,4 +1,4 @@
-export { darkColor, lightColor } from './scale/color';
+export { darkColor, lightColor, scaleColor } from './scale/color';
 export { breakpoint } from './semantic/breakpoint';
 export { semanticColor } from './semantic/color';
 export { spacing } from './semantic/spacing';

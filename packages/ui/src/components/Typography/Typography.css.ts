@@ -1,7 +1,7 @@
-import { recipeWithLayer } from '#styleUtils';
 import { gradientFrom, gradientTo } from '#styles';
+import { recipeWithComponents } from '#utils';
 
-export const typography = recipeWithLayer({
+export const typography = recipeWithComponents({
   base: {
     margin: '0',
   },
@@ -10,15 +10,14 @@ export const typography = recipeWithLayer({
       true: {
         overflow: 'hidden',
 
-        whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
       },
     },
     isGradient: {
       true: {
         background: `linear-gradient(90deg, ${gradientFrom}, ${gradientTo})`,
         backgroundClip: 'text',
-
         color: 'transparent !important',
       },
     },

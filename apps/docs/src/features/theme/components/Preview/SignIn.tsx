@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 
 import {
-  Box,
   Button,
   Card,
   CardContent,
@@ -26,10 +25,10 @@ export const SignIn = (props: ComponentProps<typeof Card>) => {
           <Typography fontWeight="medium">Password</Typography>
           <TextField type="password" />
         </Flex>
-        <Box flex gap="md" justifyContent="flex-end" marginTop="lg">
+        <Flex gap="md" justifyContent="flex-end" marginTop="lg">
           <Button variant="outlined">Create account</Button>
           <Button>Sign in</Button>
-        </Box>
+        </Flex>
       </CardContent>
     </Card>
   );

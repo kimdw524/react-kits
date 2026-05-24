@@ -1,17 +1,17 @@
 import { createVar } from '@vanilla-extract/css';
 
-import { recipeWithLayer, styleWithLayer } from '#styleUtils';
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
+import { styleWithComponents, recipeWithComponents } from '#utils';
 
-import { SCALE_COLOR, type ScaleColor } from '../../tokens/scale/color';
+import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
 const backgroundVar = createVar();
 
 const semanticColors = semanticColor.reduce(
   (prev, color) => ({
     ...prev,
-    [color]: styleWithLayer({
+    [color]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[color],
       },
@@ -20,10 +20,10 @@ const semanticColors = semanticColor.reduce(
   {} as Record<(typeof semanticColor)[number], string>,
 );
 
-const scaleColors = SCALE_COLOR.reduce(
+const scaleColors = scaleColor.reduce(
   (prev, value) => ({
     ...prev,
-    [value]: styleWithLayer({
+    [value]: styleWithComponents({
       vars: {
         [backgroundVar]: theme.color[value][100],
       },
@@ -32,15 +32,15 @@ const scaleColors = SCALE_COLOR.reduce(
   {} as Record<ScaleColor, string>,
 );
 
-export const range = recipeWithLayer({
+export const range = recipeWithComponents({
   base: {
     position: 'relative',
 
-    width: '100%',
     height: '2em',
+    width: '100%',
 
-    userSelect: 'none',
     touchAction: 'none',
+    userSelect: 'none',
   },
 
   variants: {
@@ -48,58 +48,45 @@ export const range = recipeWithLayer({
       ...semanticColors,
       ...scaleColors,
     },
-
-    size: {
-      sm: {
-        fontSize: '0.75em',
-      },
-
-      md: {
-        fontSize: '1em',
-      },
-
-      lg: {
-        fontSize: '1.25em',
-      },
-    },
   },
 });
 
-export const thumb = styleWithLayer({
-  display: 'inline-block',
+export const thumb = styleWithComponents({
   position: 'absolute',
   top: '50%',
 
-  width: '1.25em',
+  display: 'inline-block',
+
   height: '1.25em',
+  width: '1.25em',
 
   borderRadius: '50%',
 
-  boxShadow: `0 0 0.375em 0.125em rgba(${backgroundVar}, 0.33)`,
   backgroundColor: `rgb(${backgroundVar})`,
 
-  transform: 'translate(-50%, -50%)',
+  boxShadow: `0 0 0.375em 0.125em rgba(${backgroundVar}, 0.33)`,
 
   cursor: 'pointer',
   touchAction: 'none',
 
-  '::before': {
-    position: 'absolute',
-    inset: '-0.75em',
-
-    content: '',
-  },
+  transform: 'translate(-50%, -50%)',
 
   '::after': {
-    position: 'absolute',
     inset: '0',
+    position: 'absolute',
 
     borderRadius: '50%',
 
     boxShadow: `0 0 0.5em 0.125em rgba(${backgroundVar}, 0.5)`,
-
     opacity: '0',
+
     transition: 'opacity 0.2s ease',
+
+    content: '',
+  },
+  '::before': {
+    inset: '-0.75em',
+    position: 'absolute',
 
     content: '',
   },
@@ -111,7 +98,7 @@ export const thumb = styleWithLayer({
   },
 });
 
-export const fill = styleWithLayer({
+export const fill = styleWithComponents({
   position: 'absolute',
   top: '0',
 
@@ -120,12 +107,13 @@ export const fill = styleWithLayer({
   backgroundColor: `rgb(${backgroundVar})`,
 });
 
-export const bar = styleWithLayer({
+export const bar = styleWithComponents({
   position: 'absolute',
   top: '50%',
 
-  width: '100%',
   height: '0.5em',
+  width: '100%',
+
   borderRadius: theme.borderRadius,
 
   backgroundColor: `rgb(${theme.color.muted})`,
