@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { sprinkles } from '#styles';
+
 import { RadioGroup, RadioGroupItem } from '.';
 import { uiTest } from '../../tests';
 
@@ -87,5 +89,46 @@ describe('RadioGroup component', () => {
     await user.click(screen.getByRole('radio', { name: 'Pro' }));
 
     expect(handleChange).not.toHaveBeenCalled();
+  });
+
+  it('wraps items with Interaction when RadioGroup interaction is not none', () => {
+    render(
+      <RadioGroup interaction="sm" label="Plan">
+        <RadioGroupItem value="starter">Starter</RadioGroupItem>
+      </RadioGroup>,
+    );
+
+    const radio = screen.getByRole('radio', { name: 'Starter' });
+
+    expect(radio.closest('div')).toHaveClass(sprinkles({ padding: 'sm' }));
+  });
+
+  it('uses RadioGroupItem interaction before RadioGroup interaction', () => {
+    render(
+      <RadioGroup interaction="sm" label="Plan">
+        <RadioGroupItem interaction="lg" value="starter">
+          Starter
+        </RadioGroupItem>
+      </RadioGroup>,
+    );
+
+    const radio = screen.getByRole('radio', { name: 'Starter' });
+
+    expect(radio.closest('div')).toHaveClass(sprinkles({ padding: 'lg' }));
+    expect(radio.closest('div')).not.toHaveClass(sprinkles({ padding: 'sm' }));
+  });
+
+  it('allows RadioGroupItem interaction none to override RadioGroup interaction', () => {
+    render(
+      <RadioGroup interaction="sm" label="Plan">
+        <RadioGroupItem interaction="none" value="starter">
+          Starter
+        </RadioGroupItem>
+      </RadioGroup>,
+    );
+
+    const radio = screen.getByRole('radio', { name: 'Starter' });
+
+    expect(radio.closest('div')).not.toHaveClass(sprinkles({ padding: 'sm' }));
   });
 });

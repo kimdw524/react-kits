@@ -43,7 +43,14 @@ export const container = styleWithComponents({
 
   color: `rgb(${theme.color.foreground})`,
 
+  cursor: 'pointer',
   userSelect: 'none',
+
+  selectors: {
+    '&:has(input:disabled)': {
+      cursor: 'default',
+    },
+  },
 });
 
 export const control = styleWithComponents({
@@ -124,11 +131,14 @@ export const icon = styleWithComponents({
 
   pointerEvents: 'none',
 
-  transition: 'opacity 0.15s ease',
+  transform: 'scale(0)',
+  transition: 'opacity 0.1s ease, transform 0.15s ease',
 
   selectors: {
     [`${checkbox.classNames.base}:checked + &`]: {
       opacity: 1,
+
+      transform: 'scale(1)',
     },
     [`${checkbox.classNames.base}:disabled:checked + &`]: {
       color: `rgb(${theme.color['muted-foreground']})`,

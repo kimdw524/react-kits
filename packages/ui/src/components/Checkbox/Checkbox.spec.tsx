@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { sprinkles } from '#styles';
+
 import { Checkbox } from '.';
 import { uiTest } from '../../tests';
 
@@ -30,5 +32,21 @@ describe('Checkbox component', () => {
     await user.click(screen.getByRole('checkbox', { name: 'Agree' }));
 
     expect(handleChange).not.toHaveBeenCalled();
+  });
+
+  it('does not wrap with Interaction by default', () => {
+    render(<Checkbox>Agree</Checkbox>);
+
+    const checkbox = screen.getByRole('checkbox', { name: 'Agree' });
+
+    expect(checkbox.parentElement?.parentElement?.tagName).toBe('LABEL');
+  });
+
+  it('wraps with Interaction when interaction is not none', () => {
+    render(<Checkbox interaction="sm">Agree</Checkbox>);
+
+    const checkbox = screen.getByRole('checkbox', { name: 'Agree' });
+
+    expect(checkbox.closest('div')).toHaveClass(sprinkles({ padding: 'sm' }));
   });
 });

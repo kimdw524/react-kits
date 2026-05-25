@@ -1,5 +1,12 @@
+import type { ComponentProps } from 'react';
+
 import { Checkbox } from '@kimdw-rtk/ui';
-import { scaleColor, semanticColor, typography } from '@kimdw-rtk/ui/token';
+import {
+  scaleColor,
+  semanticColor,
+  spacing,
+  typography,
+} from '@kimdw-rtk/ui/token';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 
@@ -7,6 +14,17 @@ const colorOptions = [...semanticColor, ...scaleColor];
 const sizeOptions = Object.keys(
   typography.size,
 ) as (keyof typeof typography.size)[];
+type CheckboxInteraction = NonNullable<
+  ComponentProps<typeof Checkbox>['interaction']
+>;
+const interactionSizeOptions = Object.keys(spacing) as Exclude<
+  CheckboxInteraction,
+  'none'
+>[];
+const interactionOptions: CheckboxInteraction[] = [
+  'none',
+  ...interactionSizeOptions,
+];
 
 const meta = {
   title: 'Components/Checkbox',
@@ -26,6 +44,10 @@ const meta = {
     size: {
       control: 'select',
       options: sizeOptions,
+    },
+    interaction: {
+      control: 'select',
+      options: interactionOptions,
     },
     disabled: {
       control: 'boolean',
@@ -49,6 +71,7 @@ const meta = {
   args: {
     children: 'Checkbox',
     color: 'primary',
+    interaction: undefined,
     size: 'md',
     disabled: false,
     defaultChecked: false,
@@ -93,6 +116,25 @@ export const States: Story = {
       <Checkbox {...args} defaultChecked disabled>
         Checked disabled
       </Checkbox>
+    </div>
+  ),
+};
+
+export const Interactions: Story = {
+  render: (args) => (
+    <div
+      style={{
+        display: 'flex',
+        gap: 12,
+        alignItems: 'center',
+        flexWrap: 'wrap',
+      }}
+    >
+      {interactionOptions.map((interaction) => (
+        <Checkbox key={interaction} {...args} interaction={interaction}>
+          {interaction}
+        </Checkbox>
+      ))}
     </div>
   ),
 };
