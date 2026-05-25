@@ -9,12 +9,16 @@ import type { spacing, typography } from '#tokens';
 import type { UIComponent } from '#types';
 
 import * as s from './RadioGroup.css';
-import { RadioGroupContext } from './RadioGroupContext';
+import {
+  RadioGroupContext,
+  type RadioGroupInteraction,
+} from './RadioGroupContext';
 
 export interface RadioGroupProps
   extends Omit<UIComponent<'fieldset', typeof s.radioGroup>, 'onChange'> {
   defaultValue?: string;
   gap?: keyof typeof spacing;
+  interaction?: RadioGroupInteraction;
   label?: ReactNode;
   name?: string;
   onChange?: (value: string) => void;
@@ -31,7 +35,8 @@ export const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
       color = 'primary',
       defaultValue,
       disabled,
-      gap = 'md',
+      gap = 'none',
+      interaction = 'md',
       label,
       name,
       onChange,
@@ -50,6 +55,7 @@ export const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
         value={{
           defaultValue,
           disabled,
+          interaction,
           name: name ?? generatedName,
           onChange,
           value,
