@@ -1,3 +1,5 @@
+import type { ComponentProps } from 'react';
+
 import { RadioGroup, RadioGroupItem } from '@kimdw-rtk/ui';
 import {
   scaleColor,
@@ -13,6 +15,17 @@ const sizeOptions = Object.keys(
   typography.size,
 ) as (keyof typeof typography.size)[];
 const gapOptions = Object.keys(spacing) as (keyof typeof spacing)[];
+type RadioGroupInteraction = NonNullable<
+  ComponentProps<typeof RadioGroup>['interaction']
+>;
+const interactionSizeOptions = Object.keys(spacing) as Exclude<
+  RadioGroupInteraction,
+  'none'
+>[];
+const interactionOptions: RadioGroupInteraction[] = [
+  'none',
+  ...interactionSizeOptions,
+];
 
 const planItems = (
   <>
@@ -46,6 +59,10 @@ const meta = {
       control: 'select',
       options: gapOptions,
     },
+    interaction: {
+      control: 'select',
+      options: interactionOptions,
+    },
     disabled: {
       control: 'boolean',
     },
@@ -73,6 +90,7 @@ const meta = {
     defaultValue: 'item2',
     disabled: false,
     gap: undefined,
+    interaction: undefined,
     label: 'RadioGroup',
     children: planItems,
     orientation: 'vertical',

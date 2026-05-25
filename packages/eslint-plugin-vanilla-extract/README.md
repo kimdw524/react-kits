@@ -1,4 +1,4 @@
-# @repo/eslint-plugin-vanilla-extract
+# @kimdw-rtk/eslint-plugin-vanilla-extract
 
 An ESLint plugin that groups and sorts CSS properties inside `vanilla-extract`
 style objects, including wrappers whose names start with `style` or `recipe`.
@@ -29,7 +29,7 @@ style objects, including wrappers whose names start with `style` or `recipe`.
 ## Usage
 
 ```js
-import vanillaExtractPlugin from '@repo/eslint-plugin-vanilla-extract';
+import vanillaExtractPlugin from '@kimdw-rtk/eslint-plugin-vanilla-extract';
 
 export default [...vanillaExtractPlugin.configs.recommended];
 ```

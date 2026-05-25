@@ -7,23 +7,38 @@ import clsx from 'clsx';
 import { sx } from '#styles';
 import type { UIComponent } from '#types';
 
+import { Interaction } from '../Interaction';
 import * as s from './RadioGroup.css';
-import { useRadioGroupContext } from './RadioGroupContext';
+import {
+  type RadioGroupInteraction,
+  useRadioGroupContext,
+} from './RadioGroupContext';
 
 export interface RadioGroupItemProps
   extends Omit<
     UIComponent<'input'>,
     'checked' | 'defaultChecked' | 'name' | 'size' | 'type'
   > {
+  interaction?: RadioGroupInteraction;
   value: string;
 }
 
 export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
   (
-    { children, className, disabled, onChange, sx: propSx, value, ...props },
+    {
+      children,
+      className,
+      disabled,
+      interaction,
+      onChange,
+      sx: propSx,
+      value,
+      ...props
+    },
     ref,
   ) => {
     const context = useRadioGroupContext();
+    const interactionSize = interaction ?? context.interaction ?? 'none';
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       onChange?.(event);
@@ -33,7 +48,7 @@ export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
       }
     };
 
-    return (
+    const item = (
       <label className={s.item}>
         <span className={s.control}>
           <input
@@ -58,6 +73,12 @@ export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
         {children !== undefined && <span className={s.text}>{children}</span>}
       </label>
     );
+
+    if (interactionSize === 'none') {
+      return item;
+    }
+
+    return <Interaction size={interactionSize}>{item}</Interaction>;
   },
 );
 RadioGroupItem.displayName = 'RadioGroupItem';
