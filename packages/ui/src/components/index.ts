@@ -9,6 +9,7 @@ export * from './Confirm';
 export * from './Container';
 export * from './Dialog';
 export * from './Flex';
+export * from './Interaction';
 export * from './Navigation';
 export * from './Portal';
 export * from './RadioGroup';
