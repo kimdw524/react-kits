@@ -43,7 +43,14 @@ export const container = styleWithComponents({
 
   color: `rgb(${theme.color.foreground})`,
 
+  cursor: 'pointer',
   userSelect: 'none',
+
+  selectors: {
+    '&:has(input:disabled)': {
+      cursor: 'default',
+    },
+  },
 });
 
 export const control = styleWithComponents({
