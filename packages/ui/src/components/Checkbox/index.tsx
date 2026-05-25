@@ -22,7 +22,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       children,
       className,
       color = 'primary',
-      interaction = 'none',
+      interaction = 'md',
       size = 'md',
       sx: propSx,
       ...props

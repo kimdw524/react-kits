@@ -71,7 +71,7 @@ const meta = {
   args: {
     children: 'Checkbox',
     color: 'primary',
-    interaction: 'none',
+    interaction: undefined,
     size: 'md',
     disabled: false,
     defaultChecked: false,
