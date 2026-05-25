@@ -278,12 +278,12 @@ importers:
       '@eslint/js':
         specifier: ^9.30.0
         version: 9.30.0
+      '@kimdw-rtk/eslint-plugin-vanilla-extract':
+        specifier: workspace:*
+        version: link:../eslint-plugin-vanilla-extract
       '@next/eslint-plugin-next':
         specifier: ^15.3.0
         version: 15.3.0
-      '@repo/eslint-plugin-vanilla-extract':
-        specifier: workspace:*
-        version: link:../eslint-plugin-vanilla-extract
       eslint:
         specifier: ^9.30.0
         version: 9.30.0

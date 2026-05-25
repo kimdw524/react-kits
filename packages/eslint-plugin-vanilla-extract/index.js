@@ -2,8 +2,8 @@ import sortPropertiesRule from './rules/sort-properties.js';
 
 const plugin = {
   meta: {
-    name: '@repo/eslint-plugin-vanilla-extract',
-    version: '0.0.1',
+    name: '@kimdw-rtk/eslint-plugin-vanilla-extract',
+    version: '0.0.2',
   },
   rules: {
     'sort-properties': sortPropertiesRule,
