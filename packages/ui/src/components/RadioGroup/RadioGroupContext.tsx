@@ -3,10 +3,10 @@
 import type { ComponentProps } from 'react';
 import { createContext, useContext } from 'react';
 
-import type { Interaction } from '../Interaction';
+import type { LabelInteraction } from '../LabelInteraction';
 
 export type RadioGroupInteraction =
-  | ComponentProps<typeof Interaction>['size']
+  | ComponentProps<typeof LabelInteraction>['size']
   | 'none';
 
 export interface RadioGroupContextValue {

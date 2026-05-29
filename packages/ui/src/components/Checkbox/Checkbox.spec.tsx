@@ -34,7 +34,7 @@ describe('Checkbox component', () => {
     expect(handleChange).not.toHaveBeenCalled();
   });
 
-  it('does not wrap with Interaction by default', () => {
+  it('does not wrap with LabelInteraction by default', () => {
     render(<Checkbox>Agree</Checkbox>);
 
     const checkbox = screen.getByRole('checkbox', { name: 'Agree' });
@@ -42,11 +42,11 @@ describe('Checkbox component', () => {
     expect(checkbox.parentElement?.parentElement?.tagName).toBe('LABEL');
   });
 
-  it('wraps with Interaction when interaction is not none', () => {
+  it('applies LabelInteraction to the label when interaction is not none', () => {
     render(<Checkbox interaction="sm">Agree</Checkbox>);
 
     const checkbox = screen.getByRole('checkbox', { name: 'Agree' });
 
-    expect(checkbox.closest('div')).toHaveClass(sprinkles({ padding: 'sm' }));
+    expect(checkbox.closest('label')).toHaveClass(sprinkles({ padding: 'sm' }));
   });
 });

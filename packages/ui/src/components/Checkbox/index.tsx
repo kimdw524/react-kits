@@ -7,12 +7,12 @@ import { sprinkles, sx } from '#styles';
 import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
-import { Interaction } from '../Interaction';
+import { LabelInteraction } from '../LabelInteraction';
 import * as s from './Checkbox.css';
 
 interface CheckboxProps
   extends Omit<UIComponent<'input', typeof s.checkbox>, 'size' | 'type'> {
-  interaction?: ComponentProps<typeof Interaction>['size'] | 'none';
+  interaction?: ComponentProps<typeof LabelInteraction>['size'] | 'none';
   size?: keyof typeof typography.size;
 }
 
@@ -48,7 +48,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       return checkbox;
     }
 
-    return <Interaction size={interaction}>{checkbox}</Interaction>;
+    return <LabelInteraction size={interaction}>{checkbox}</LabelInteraction>;
   },
 );
 Checkbox.displayName = 'Checkbox';
