@@ -1,20 +1,17 @@
-import { createRef } from 'react';
-
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { sprinkles } from '#styles';
 
+import * as rippleCss from '../../hooks/useRipple/ripple.css';
 import { LabelInteraction } from './';
+import * as s from './LabelInteraction.css';
 
 describe('LabelInteraction component', () => {
-  it('applies interaction styles to the child element', () => {
-    const ref = createRef<HTMLButtonElement>();
-
+  it('applies interaction styles and ripple to the child element', () => {
     render(
       <LabelInteraction size="sm">
         <button
-          ref={ref}
           className="test"
           data-testid="interaction"
           style={{ color: 'red' }}
@@ -28,9 +25,12 @@ describe('LabelInteraction component', () => {
     const interaction = screen.getByTestId('interaction');
 
     expect(interaction).toHaveClass('test');
+    expect(interaction).toHaveClass(s.labelInteraction);
     expect(interaction).toHaveClass(sprinkles({ padding: 'sm' }));
     expect(interaction).toHaveStyle({ color: 'red' });
-    expect(ref.current).toBe(interaction);
+    expect(interaction.lastElementChild).toHaveClass(
+      rippleCss.ripple({ animation: false }),
+    );
   });
 
   it('renders children and preserves child events', () => {
