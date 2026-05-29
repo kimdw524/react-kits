@@ -91,7 +91,7 @@ describe('RadioGroup component', () => {
     expect(handleChange).not.toHaveBeenCalled();
   });
 
-  it('wraps items with Interaction when RadioGroup interaction is not none', () => {
+  it('applies LabelInteraction to items when RadioGroup interaction is not none', () => {
     render(
       <RadioGroup interaction="sm" label="Plan">
         <RadioGroupItem value="starter">Starter</RadioGroupItem>
@@ -100,7 +100,7 @@ describe('RadioGroup component', () => {
 
     const radio = screen.getByRole('radio', { name: 'Starter' });
 
-    expect(radio.closest('div')).toHaveClass(sprinkles({ padding: 'sm' }));
+    expect(radio.closest('label')).toHaveClass(sprinkles({ padding: 'sm' }));
   });
 
   it('uses RadioGroupItem interaction before RadioGroup interaction', () => {
@@ -114,8 +114,10 @@ describe('RadioGroup component', () => {
 
     const radio = screen.getByRole('radio', { name: 'Starter' });
 
-    expect(radio.closest('div')).toHaveClass(sprinkles({ padding: 'lg' }));
-    expect(radio.closest('div')).not.toHaveClass(sprinkles({ padding: 'sm' }));
+    expect(radio.closest('label')).toHaveClass(sprinkles({ padding: 'lg' }));
+    expect(radio.closest('label')).not.toHaveClass(
+      sprinkles({ padding: 'sm' }),
+    );
   });
 
   it('allows RadioGroupItem interaction none to override RadioGroup interaction', () => {
@@ -129,6 +131,8 @@ describe('RadioGroup component', () => {
 
     const radio = screen.getByRole('radio', { name: 'Starter' });
 
-    expect(radio.closest('div')).not.toHaveClass(sprinkles({ padding: 'sm' }));
+    expect(radio.closest('label')).not.toHaveClass(
+      sprinkles({ padding: 'sm' }),
+    );
   });
 });

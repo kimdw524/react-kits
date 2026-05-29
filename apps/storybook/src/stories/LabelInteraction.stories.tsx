@@ -1,13 +1,12 @@
-import { Checkbox, Interaction } from '@kimdw-rtk/ui';
+import { LabelInteraction } from '@kimdw-rtk/ui';
 import { spacing } from '@kimdw-rtk/ui/token';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
 
 const sizeOptions = Object.keys(spacing) as (keyof typeof spacing)[];
 
 const meta = {
-  title: 'Components/Interaction',
-  component: Interaction,
+  title: 'Components/LabelInteraction',
+  component: LabelInteraction,
   parameters: {
     layout: 'centered',
   },
@@ -23,34 +22,35 @@ const meta = {
         disable: true,
       },
     },
-    onClick: {
-      control: false,
-      table: {
-        disable: true,
-      },
-    },
   },
   args: {
     size: 'md',
-    onClick: fn(),
   },
-} satisfies Meta<typeof Interaction>;
+} satisfies Meta<typeof LabelInteraction>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
-  render: (args) => (
-    <Interaction {...args}>
-      <Checkbox>Child</Checkbox>
-    </Interaction>
-  ),
+  args: {
+    children: (
+      <label style={{ gap: 8 }}>
+        <input type="checkbox" />
+        Child
+      </label>
+    ),
+  },
+  render: (args) => <LabelInteraction {...args} />,
 };
 
 export const DisabledChild: Story = {
-  render: (args) => (
-    <Interaction {...args}>
-      <Checkbox disabled>Disabled child</Checkbox>
-    </Interaction>
-  ),
+  args: {
+    children: (
+      <label style={{ gap: 8 }}>
+        <input disabled type="checkbox" />
+        Disabled child
+      </label>
+    ),
+  },
+  render: (args) => <LabelInteraction {...args} />,
 };
