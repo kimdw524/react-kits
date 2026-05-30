@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { sx } from '#styles';
 import type { UIComponent } from '#types';
 
-import { Interaction } from '../Interaction';
+import { LabelInteraction } from '../LabelInteraction';
 import * as s from './RadioGroup.css';
 import {
   type RadioGroupInteraction,
@@ -78,7 +78,7 @@ export const RadioGroupItem = forwardRef<HTMLInputElement, RadioGroupItemProps>(
       return item;
     }
 
-    return <Interaction size={interactionSize}>{item}</Interaction>;
+    return <LabelInteraction size={interactionSize}>{item}</LabelInteraction>;
   },
 );
 RadioGroupItem.displayName = 'RadioGroupItem';

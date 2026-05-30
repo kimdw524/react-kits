@@ -3,7 +3,7 @@ import { globalStyle } from '@vanilla-extract/css';
 import { theme } from '#themes';
 import { styleWithComponents } from '#utils';
 
-export const interaction = styleWithComponents({
+export const labelInteraction = styleWithComponents({
   position: 'relative',
 
   display: 'inline-flex',
@@ -33,6 +33,6 @@ export const interaction = styleWithComponents({
   },
 });
 
-globalStyle(`${interaction}:has(:disabled) *`, {
+globalStyle(`${labelInteraction}:has(:disabled) *`, {
   cursor: 'default',
 });

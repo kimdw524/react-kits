@@ -120,25 +120,6 @@ export const States: Story = {
   ),
 };
 
-export const Interactions: Story = {
-  render: (args) => (
-    <div
-      style={{
-        display: 'flex',
-        gap: 12,
-        alignItems: 'center',
-        flexWrap: 'wrap',
-      }}
-    >
-      {interactionOptions.map((interaction) => (
-        <Checkbox key={interaction} {...args} interaction={interaction}>
-          {interaction}
-        </Checkbox>
-      ))}
-    </div>
-  ),
-};
-
 export const SemanticPalette: Story = {
   render: (args) => (
     <div
