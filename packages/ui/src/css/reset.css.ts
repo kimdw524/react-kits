@@ -1,20 +1,12 @@
-import { assignVars, globalStyle } from '@vanilla-extract/css';
+import { globalStyle } from '@vanilla-extract/css';
 
-import { darkThemeVars, lightThemeVars, theme } from '#themes';
+import { theme } from '#themes';
 
 globalStyle('*', {
   boxSizing: 'border-box',
 
   overscrollBehavior: 'auto',
   WebkitTapHighlightColor: 'transparent',
-});
-
-globalStyle('.light', {
-  vars: assignVars(theme, lightThemeVars),
-});
-
-globalStyle('.dark', {
-  vars: assignVars(theme, darkThemeVars),
 });
 
 globalStyle('body', {
