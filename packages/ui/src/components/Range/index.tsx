@@ -93,5 +93,3 @@ export const Range = forwardRef<HTMLDivElement, RangeProps>(
   },
 );
 Range.displayName = 'Range';
-
-export { s as rangeCss };
