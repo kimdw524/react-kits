@@ -59,6 +59,10 @@ const meta = {
       control: 'select',
       options: gapOptions,
     },
+    labelGap: {
+      control: 'select',
+      options: gapOptions,
+    },
     interaction: {
       control: 'select',
       options: interactionOptions,
@@ -92,6 +96,7 @@ const meta = {
     gap: undefined,
     interaction: undefined,
     label: 'RadioGroup',
+    labelGap: undefined,
     children: planItems,
     orientation: 'vertical',
     size: 'md',
