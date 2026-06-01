@@ -1,0 +1,131 @@
+import { Box, Container, Flex, Typography } from '@kimdw-rtk/ui';
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import '@kimdw-rtk/ui/css/default-style';
+import '@kimdw-rtk/ui/css/reset';
+
+<Meta title="Getting Started" />
+
+<Container size="sm" className="light">
+  <Flex flexDirection="column" gap="md">
+    <Box>
+      <Typography as="h1">@kimdw-rtk/ui</Typography>
+      <Typography>
+        A React component library built with customizable design tokens.
+      </Typography>
+    </Box>
+
+    <Box>
+      <Typography as="h2">Installation</Typography>
+
+```bash
+pnpm add @kimdw-rtk/ui @kimdw-rtk/animation @kimdw-rtk/utils
+```
+
+    </Box>
+
+    <Box>
+      <Typography as="h2">Setup</Typography>
+
+      <Typography as="h3">Reset styles</Typography>
+      <Typography>
+        Apply the CSS reset to ensure that components work as intended.
+      </Typography>
+
+```ts
+import '@kimdw-rtk/ui/css/reset';
+```
+
+      <Typography as="h3">Theme styles</Typography>
+
+      <Typography as="h4">Option 1: Use the default themes</Typography>
+      <Typography>
+        Import the default stylesheet to enable the built-in styles.
+      </Typography>
+
+```ts
+import '@kimdw-rtk/ui/css/default-style';
+```
+
+      <Typography as="h4">Option 2: Customize the themes</Typography>
+      <Typography>
+        Use the <a href="./?path=/docs/theme-customizer--docs" target="_top">Theme Customizer</a> to adjust design tokens and generate theme code.
+      </Typography>
+
+      <Typography as="h3">Theme class</Typography>
+      <Typography>
+        Apply the `light` or `dark` class to your root element.
+      </Typography>
+
+```html
+<html class="light"></html>
+```
+
+<Typography>
+  When using `Next.js`, use `next-themes` with the class attribute.
+</Typography>
+
+```tsx
+import { ThemeProvider } from 'next-themes';
+
+export const Providers = ({ children }: { children: React.ReactNode }) => (
+  <ThemeProvider attribute="class">{children}</ThemeProvider>
+);
+```
+
+      <Typography as="h3">UIProvider</Typography>
+      <Typography>
+        Wrap your application with `UIProvider` to support overlays.
+      </Typography>
+
+```tsx
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import { UIProvider } from '@kimdw-rtk/ui';
+import '@kimdw-rtk/ui/css/default-style';
+import '@kimdw-rtk/ui/css/reset';
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <UIProvider container={document.body}>
+      <App />
+    </UIProvider>
+  </StrictMode>,
+);
+```
+
+      <Typography as="h3">Utility classes</Typography>
+      <Typography>
+        Use the `sx` function to generate utility classes. This allows you to
+        apply styles based on design tokens as well as responsive values.
+      </Typography>
+
+```tsx
+import { Box, sx } from '@kimdw-rtk/ui';
+
+// Use sx directly in className for HTML elements.
+<div
+  className={sx({
+    display: 'flex',
+    paddingX: { mobile: 'md', desktop: 'xl' },
+  })}
+>
+  Div
+</div>;
+
+// Use the sx prop with UI components.
+<Box
+  sx={{
+    display: 'flex',
+    paddingX: { mobile: 'md', desktop: 'xl' },
+  }}
+>
+  Box
+</Box>;
+```
+
+    </Box>
+
+  </Flex>
+</Container>
