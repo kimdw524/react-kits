@@ -1,25 +1,30 @@
 import { keyframes } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
-import { recipeWithComponents } from '#utils';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
 const fadeIn = keyframes({
   '0%': {
     opacity: 0,
 
-    transform: 'scale(0.95)',
+    transform: 'scaleY(0.9)',
   },
 
   '100%': {
     opacity: 1,
 
-    transform: 'scale(1)',
+    transform: 'scaleY(1)',
   },
+});
+
+export const block = styleWithComponents({
+  inset: '0',
+  position: 'fixed',
 });
 
 export const container = recipeWithComponents({
   base: {
-    position: 'absolute',
+    position: 'fixed',
     zIndex: '10',
 
     overflowY: 'auto',
@@ -56,15 +61,6 @@ export const container = recipeWithComponents({
       },
       false: {
         display: 'none',
-      },
-    },
-
-    isAbove: {
-      true: {
-        top: '100%',
-      },
-      false: {
-        bottom: '100%',
       },
     },
   },

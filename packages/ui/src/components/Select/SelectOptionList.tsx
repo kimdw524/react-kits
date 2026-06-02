@@ -1,7 +1,14 @@
-import { useContext, useMemo, useRef, type ReactNode } from 'react';
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  type ReactNode,
+} from 'react';
 
 import clsx from 'clsx';
 
+import { Portal } from '#components';
 import { sprinkles } from '#styles';
 
 import { SelectContext } from './SelectContext';
@@ -19,40 +26,82 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
     throw new Error('SelectOption must be rendered within a Select.');
   }
 
-  const { state } = selectContext;
+  const { state, dispatch } = selectContext;
 
-  const isAbove = useMemo(() => {
+  useEffect(() => {
     const container = containerRef.current;
-    const parent = state.containerRef.current;
 
+    if (!container) {
+      return;
+    }
+
+    const handleClose = () => {
+      if (state.isActive) {
+        dispatch({ type: 'TOGGLE' });
+      }
+    };
+
+    window.addEventListener('scroll', handleClose);
+    window.addEventListener('resize', handleClose);
+    window.addEventListener('blur', handleClose);
+
+    return () => {
+      window.removeEventListener('scroll', handleClose);
+      window.removeEventListener('resize', handleClose);
+      window.removeEventListener('blur', handleClose);
+    };
+  }, [state.isActive, dispatch]);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current,
+      parent = state.containerRef.current;
     if (!state.isActive || !container || !parent) {
       return;
     }
 
     const parentRect = parent.getBoundingClientRect();
-    container.style.display = 'block';
     const containerRect = container.getBoundingClientRect();
-    container.style.display = '';
+    const computedStyle = window.getComputedStyle(container);
+    const margin =
+      (Number.parseFloat(computedStyle.marginTop) || 0) +
+      (Number.parseFloat(computedStyle.marginBottom) || 0);
+    const viewportHeight = document.documentElement.clientHeight;
+    const spaceAbove = parentRect.top;
+    const spaceBelow = viewportHeight - parentRect.bottom;
+    const nextIsBelow =
+      containerRect.height + margin <= spaceBelow || spaceBelow >= spaceAbove;
+    const availableHeight = (nextIsBelow ? spaceBelow : spaceAbove) - margin;
 
-    // 하단에 리스트를 모두 보여줄 공간이 충분한 경우
-    if (containerRect.top + containerRect.height < window.innerHeight) {
-      return true;
-    }
-
-    // 그렇지 않으면 parent의 상단/하단 중 공간이 더 넓은 쪽으로 리스트를 보여줌
-    return parentRect.top + parentRect.height / 2 < window.innerHeight / 2;
+    container.style.top = nextIsBelow ? `${parentRect.bottom}px` : '';
+    container.style.bottom = nextIsBelow
+      ? ''
+      : `${viewportHeight - parentRect.top}px`;
+    container.style.left = `${parentRect.left}px`;
+    container.style.width = `${parentRect.width}px`;
+    container.style.maxHeight = `${Math.max(availableHeight, 0)}px`;
+    container.style.transformOrigin = nextIsBelow ? 'top' : 'bottom';
   }, [state.isActive, state.containerRef]);
 
   return (
-    <div
-      ref={containerRef}
-      className={clsx(
-        s.container({ isVisible: state.isActive, isAbove }),
-        sprinkles({ boxShadow: 'accent-sm' }),
+    <Portal>
+      {state.isActive && (
+        <div
+          className={s.block}
+          onMouseDown={() => dispatch({ type: 'TOGGLE' })}
+        >
+          <div
+            ref={containerRef}
+            className={clsx(
+              s.container({ isVisible: state.isActive }),
+              sprinkles({ boxShadow: 'accent-sm' }),
+            )}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            {children}
+          </div>
+        </div>
       )}
-    >
-      {children}
-    </div>
+    </Portal>
   );
 };
 
