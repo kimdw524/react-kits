@@ -13,6 +13,7 @@ import { sprinkles } from '#styles';
 
 import { SelectContext } from './SelectContext';
 import * as s from './SelectOptionList.css';
+import { setListPosition } from './SelectOptionList.util';
 
 interface SelectOptionListProps {
   children: ReactNode;
@@ -41,14 +42,43 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
       }
     };
 
+    const handleKeyDown = (event: globalThis.KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowDown':
+          event.preventDefault();
+          dispatch({ type: 'DOWN' });
+          break;
+        case 'ArrowUp':
+          event.preventDefault();
+          dispatch({ type: 'UP' });
+          break;
+        case 'Home':
+          event.preventDefault();
+          dispatch({ type: 'HOME' });
+          break;
+        case 'End':
+          event.preventDefault();
+          dispatch({ type: 'END' });
+          break;
+        case 'Escape':
+          event.preventDefault();
+          dispatch({ type: 'TOGGLE' });
+          break;
+        default:
+          return;
+      }
+    };
+
     window.addEventListener('scroll', handleClose);
     window.addEventListener('resize', handleClose);
     window.addEventListener('blur', handleClose);
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.removeEventListener('scroll', handleClose);
       window.removeEventListener('resize', handleClose);
       window.removeEventListener('blur', handleClose);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [state.isActive, dispatch]);
 
@@ -59,27 +89,7 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
       return;
     }
 
-    const parentRect = parent.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-    const computedStyle = window.getComputedStyle(container);
-    const margin =
-      (Number.parseFloat(computedStyle.marginTop) || 0) +
-      (Number.parseFloat(computedStyle.marginBottom) || 0);
-    const viewportHeight = document.documentElement.clientHeight;
-    const spaceAbove = parentRect.top;
-    const spaceBelow = viewportHeight - parentRect.bottom;
-    const nextIsBelow =
-      containerRect.height + margin <= spaceBelow || spaceBelow >= spaceAbove;
-    const availableHeight = (nextIsBelow ? spaceBelow : spaceAbove) - margin;
-
-    container.style.top = nextIsBelow ? `${parentRect.bottom}px` : '';
-    container.style.bottom = nextIsBelow
-      ? ''
-      : `${viewportHeight - parentRect.top}px`;
-    container.style.left = `${parentRect.left}px`;
-    container.style.width = `${parentRect.width}px`;
-    container.style.maxHeight = `${Math.max(availableHeight, 0)}px`;
-    container.style.transformOrigin = nextIsBelow ? 'top' : 'bottom';
+    setListPosition(container, parent);
   }, [state.isActive, state.containerRef]);
 
   return (
@@ -95,7 +105,11 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
               s.container({ isVisible: state.isActive }),
               sprinkles({ boxShadow: 'accent-sm' }),
             )}
+            role="listbox"
             onMouseDown={(e) => e.stopPropagation()}
+            onMouseLeave={() => {
+              dispatch({ type: 'FOCUS', payload: { value: undefined } });
+            }}
           >
             {children}
           </div>
