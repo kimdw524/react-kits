@@ -1,11 +1,19 @@
-import { useContext, useMemo, useRef, type ReactNode } from 'react';
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  type ReactNode,
+} from 'react';
 
 import clsx from 'clsx';
 
+import { Portal } from '#components';
 import { sprinkles } from '#styles';
 
 import { SelectContext } from './SelectContext';
 import * as s from './SelectOptionList.css';
+import { setListPosition } from './SelectOptionList.util';
 
 interface SelectOptionListProps {
   children: ReactNode;
@@ -19,40 +27,95 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
     throw new Error('SelectOption must be rendered within a Select.');
   }
 
-  const { state } = selectContext;
+  const { state, dispatch } = selectContext;
 
-  const isAbove = useMemo(() => {
+  useEffect(() => {
     const container = containerRef.current;
-    const parent = state.containerRef.current;
 
+    if (!container) {
+      return;
+    }
+
+    const handleClose = () => {
+      if (state.isActive) {
+        dispatch({ type: 'TOGGLE' });
+      }
+    };
+
+    const handleKeyDown = (event: globalThis.KeyboardEvent) => {
+      switch (event.key) {
+        case 'ArrowDown':
+          event.preventDefault();
+          dispatch({ type: 'DOWN' });
+          break;
+        case 'ArrowUp':
+          event.preventDefault();
+          dispatch({ type: 'UP' });
+          break;
+        case 'Home':
+          event.preventDefault();
+          dispatch({ type: 'HOME' });
+          break;
+        case 'End':
+          event.preventDefault();
+          dispatch({ type: 'END' });
+          break;
+        case 'Escape':
+          event.preventDefault();
+          dispatch({ type: 'TOGGLE' });
+          break;
+        default:
+          return;
+      }
+    };
+
+    window.addEventListener('scroll', handleClose);
+    window.addEventListener('resize', handleClose);
+    window.addEventListener('blur', handleClose);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('scroll', handleClose);
+      window.removeEventListener('resize', handleClose);
+      window.removeEventListener('blur', handleClose);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [state.isActive, dispatch]);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current,
+      parent = state.containerRef.current;
     if (!state.isActive || !container || !parent) {
       return;
     }
 
-    const parentRect = parent.getBoundingClientRect();
-    container.style.display = 'block';
-    const containerRect = container.getBoundingClientRect();
-    container.style.display = '';
-
-    // 하단에 리스트를 모두 보여줄 공간이 충분한 경우
-    if (containerRect.top + containerRect.height < window.innerHeight) {
-      return true;
-    }
-
-    // 그렇지 않으면 parent의 상단/하단 중 공간이 더 넓은 쪽으로 리스트를 보여줌
-    return parentRect.top + parentRect.height / 2 < window.innerHeight / 2;
+    setListPosition(container, parent);
   }, [state.isActive, state.containerRef]);
 
   return (
-    <div
-      ref={containerRef}
-      className={clsx(
-        s.container({ isVisible: state.isActive, isAbove }),
-        sprinkles({ boxShadow: 'accent-sm' }),
+    <Portal>
+      {state.isActive && (
+        <div
+          className={s.block}
+          onMouseDown={() => dispatch({ type: 'TOGGLE' })}
+        >
+          <div
+            ref={containerRef}
+            className={clsx(
+              s.container({ isVisible: state.isActive }),
+              sprinkles({ boxShadow: 'accent-sm' }),
+            )}
+            role="listbox"
+            onMouseDown={(e) => e.stopPropagation()}
+            onMouseLeave={() => {
+              dispatch({ type: 'FOCUS', payload: { value: undefined } });
+            }}
+          >
+            {children}
+          </div>
+        </div>
       )}
-    >
-      {children}
-    </div>
+    </Portal>
   );
 };
 

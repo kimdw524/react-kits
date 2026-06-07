@@ -1,4 +1,6 @@
 import { UIProvider } from '@kimdw-rtk/ui';
+import '@kimdw-rtk/ui/css/default-style';
+import '@kimdw-rtk/ui/css/reset';
 import { withThemeByClassName } from '@storybook/addon-themes';
 import type { Preview } from '@storybook/react-vite';
 
@@ -20,6 +22,12 @@ const preview: Preview = {
     }),
   ],
   parameters: {
+    options: {
+      storySort: {
+        order: ['Getting Started', '*'],
+      },
+    },
+
     controls: {
       matchers: {
         color: /(background|color)$/i,

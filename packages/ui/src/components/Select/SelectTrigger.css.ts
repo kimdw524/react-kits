@@ -41,6 +41,12 @@ export const selectTrigger = recipeWithComponents({
 
     width: '100%',
 
+    border: '0',
+
+    color: 'inherit',
+
+    font: 'inherit',
+
     cursor: 'pointer',
     userSelect: 'none',
 

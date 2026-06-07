@@ -19,6 +19,7 @@ export * from './ScrollArea';
 export * from './Select';
 export * from './Separator';
 export * from './Skeleton';
+export * from './Slider';
 export * from './Table';
 export * from './Tabs';
 export * from './TextField';

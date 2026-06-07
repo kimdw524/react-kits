@@ -16,6 +16,7 @@
   },
   "exports": {
     ".": "./src/index.ts",
+    "./css/*": "./src/css/*.css.ts",
     "./theme": "./src/themes/theme.css.ts",
     "./token": "./src/tokens/index.ts"
   },
@@ -74,6 +75,11 @@
         "import": "./dist/index.js",
         "require": "./dist/index.cjs",
         "types": "./dist/index.d.ts"
+      },
+      "./css/*": {
+        "import": "./dist/css/*.css.vanilla.js",
+        "require": "./dist/css/*.css.vanilla.cjs",
+        "types": "./dist/css/*.css.d.ts"
       },
       "./theme": {
         "import": "./dist/themes/index.js",

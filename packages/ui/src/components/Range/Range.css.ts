@@ -2,7 +2,7 @@ import { createVar } from '@vanilla-extract/css';
 
 import { theme } from '#themes';
 import { semanticColor } from '#tokens';
-import { styleWithComponents, recipeWithComponents } from '#utils';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
 import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
@@ -110,6 +110,8 @@ export const fill = styleWithComponents({
 export const bar = styleWithComponents({
   position: 'absolute',
   top: '50%',
+
+  overflow: 'clip',
 
   height: '0.5em',
   width: '100%',

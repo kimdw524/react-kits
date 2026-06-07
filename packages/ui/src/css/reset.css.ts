@@ -1,6 +1,6 @@
-import { assignVars, globalStyle } from '@vanilla-extract/css';
+import { globalStyle } from '@vanilla-extract/css';
 
-import { darkThemeVars, lightThemeVars, theme } from '#themes';
+import { theme } from '#themes';
 
 globalStyle('*', {
   boxSizing: 'border-box',
@@ -9,12 +9,9 @@ globalStyle('*', {
   WebkitTapHighlightColor: 'transparent',
 });
 
-globalStyle('.light', {
-  vars: assignVars(theme, lightThemeVars),
-});
-
-globalStyle('.dark', {
-  vars: assignVars(theme, darkThemeVars),
+globalStyle('*:focus-visible', {
+  outline: `0.125rem solid rgba(${theme.color.primary}, 0.66)`,
+  outlineOffset: '0.125rem',
 });
 
 globalStyle('body', {
