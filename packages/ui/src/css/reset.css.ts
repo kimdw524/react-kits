@@ -9,6 +9,11 @@ globalStyle('*', {
   WebkitTapHighlightColor: 'transparent',
 });
 
+globalStyle('*:focus-visible', {
+  outline: `0.125rem solid rgba(${theme.color.primary}, 0.66)`,
+  outlineOffset: '0.125rem',
+});
+
 globalStyle('body', {
   margin: '0',
 

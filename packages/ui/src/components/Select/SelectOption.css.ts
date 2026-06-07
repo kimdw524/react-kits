@@ -22,7 +22,7 @@ export const selectOption = styleWithComponents({
   userSelect: 'none',
 
   ':focus-visible': {
-    outline: '0',
+    outline: '0 !important',
 
     backgroundColor: `rgb(${theme.color.accent})`,
   },
