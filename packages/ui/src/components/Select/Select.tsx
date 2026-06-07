@@ -88,28 +88,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       getDefaultSelectedLabel(children, selected);
 
     useEffect(() => {
-      const container = containerRef.current;
-
-      if (!container) {
-        return;
-      }
-
-      const handleOutsideClick = (e: MouseEvent) => {
-        if (container.contains(e.target as Node) || !state.isActive) {
-          return;
-        }
-
-        dispatch({ type: 'TOGGLE' });
-      };
-
-      window.addEventListener('mousedown', handleOutsideClick);
-
-      return () => {
-        window.removeEventListener('mousedown', handleOutsideClick);
-      };
-    }, [state.isActive, dispatch]);
-
-    useEffect(() => {
       if (!onChange || !state.items.size) {
         return;
       }

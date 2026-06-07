@@ -20,6 +20,7 @@ export interface RadioGroupProps
   gap?: keyof typeof spacing;
   interaction?: RadioGroupInteraction;
   label?: ReactNode;
+  labelGap?: keyof typeof spacing;
   name?: string;
   onChange?: (value: string) => void;
   orientation?: 'horizontal' | 'vertical';
@@ -38,6 +39,7 @@ export const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
       gap = 'md',
       interaction = 'none',
       label,
+      labelGap = 'md',
       name,
       onChange,
       orientation = 'vertical',
@@ -73,7 +75,11 @@ export const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
           role="radiogroup"
           {...props}
         >
-          {label !== undefined && <legend className={s.legend}>{label}</legend>}
+          {label !== undefined && (
+            <legend className={clsx(s.legend, sx({ marginBottom: labelGap }))}>
+              {label}
+            </legend>
+          )}
           <div className={clsx(s.list({ orientation }), sprinkles({ gap }))}>
             {children}
           </div>

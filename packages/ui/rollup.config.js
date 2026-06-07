@@ -8,8 +8,18 @@ import preserveDirectives from 'rollup-plugin-preserve-directives';
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
 const peerDeps = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
+const cssEntries = fs
+  .readdirSync('./src/css')
+  .filter((name) => name.endsWith('.css.ts'))
+  .map((name) => `src/css/${name}`);
+
 export default {
-  input: ['src/index.ts', 'src/tokens/index.ts', 'src/themes/index.ts'],
+  input: [
+    'src/index.ts',
+    ...cssEntries,
+    'src/tokens/index.ts',
+    'src/themes/index.ts',
+  ],
   output: [
     {
       dir: 'dist',

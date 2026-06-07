@@ -22,6 +22,18 @@ describe('RadioGroup component', () => {
     expect(screen.getByRole('radio', { name: 'Pro' })).toBeChecked();
   });
 
+  it('applies labelGap to the legend margin', () => {
+    render(
+      <RadioGroup label="Plan" labelGap="lg">
+        <RadioGroupItem value="starter">Starter</RadioGroupItem>
+      </RadioGroup>,
+    );
+
+    expect(screen.getByText('Plan')).toHaveClass(
+      sprinkles({ marginBottom: 'lg' }),
+    );
+  });
+
   it('calls onChange when an item is selected', async () => {
     const user = userEvent.setup();
     const handleChange = jest.fn();
