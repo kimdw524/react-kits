@@ -1,8 +1,4 @@
-import { createVar } from '@vanilla-extract/css';
-
 import { styleWithComponents } from '#utils';
-
-export const paddingVar = createVar();
 
 export const scrollArea = styleWithComponents({
   overflowX: 'scroll',
@@ -16,20 +12,6 @@ export const scrollArea = styleWithComponents({
   },
 });
 
-export const mask = styleWithComponents({
-  maskImage: `linear-gradient(to right,
-
-  transparent 0%,
-
-  black ${paddingVar},
-
-  black calc(100% - ${paddingVar}),
-
-  transparent 100%)`,
-});
-
 export const wrapper = styleWithComponents({
   width: 'max-content',
-
-  paddingInline: paddingVar,
 });

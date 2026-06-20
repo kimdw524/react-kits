@@ -3,25 +3,20 @@
 import { forwardRef, useEffect, useRef } from 'react';
 
 import { useCombinedRefs } from '@kimdw-rtk/utils';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
 import clsx from 'clsx';
 
 import { useMouseScroll } from '#hooks/useMouseScroll';
-import { sx } from '#styles';
-import { spacing } from '#tokens';
+import { sprinkles, sx, type SprinklesProps } from '#styles';
 import type { UIComponent } from '#types';
 
 import * as s from './ScrollArea.css';
 
 interface ScrollAreaProps extends UIComponent<'div'> {
-  innerPadding?: keyof typeof spacing;
+  innerPadding?: SprinklesProps['paddingX'];
 }
 
 export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
-  (
-    { children, className, innerPadding = 'lg', sx: propSx, style, ...props },
-    ref,
-  ) => {
+  ({ children, className, innerPadding = 'lg', sx: propSx, ...props }, ref) => {
     const scrollAreaRef = useRef<HTMLDivElement>(null);
     const targetRef = useCombinedRefs(ref, scrollAreaRef);
     useMouseScroll(scrollAreaRef);
@@ -55,14 +50,12 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
     return (
       <div
         ref={targetRef}
-        className={clsx(s.scrollArea, className, sx(propSx), s.mask)}
+        className={clsx(s.scrollArea, className, sx(propSx))}
         {...props}
-        style={{
-          ...style,
-          ...assignInlineVars({ [s.paddingVar]: spacing[innerPadding] }),
-        }}
       >
-        <div className={s.wrapper}>{children}</div>
+        <div className={clsx(s.wrapper, sprinkles({ paddingX: innerPadding }))}>
+          {children}
+        </div>
       </div>
     );
   },
