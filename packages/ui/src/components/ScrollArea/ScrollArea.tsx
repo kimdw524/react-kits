@@ -6,7 +6,7 @@ import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
 import { useMouseScroll } from '#hooks/useMouseScroll';
-import { sprinkles, sx, type VarsSprinklesProps } from '#styles';
+import { sx, type VarsSprinklesProps } from '#styles';
 import type { UIComponent } from '#types';
 
 import { varsSprinkles } from '../../styles/varsSprinkles';
@@ -22,7 +22,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
       children,
       className,
       innerPadding,
-      showScrollbar = true,
+      showScrollbar = false,
       sx: propSx,
       ...props
     },
