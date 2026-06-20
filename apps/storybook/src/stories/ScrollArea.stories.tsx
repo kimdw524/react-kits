@@ -16,6 +16,9 @@ const meta = {
       control: 'select',
       options: spacingOptions,
     },
+    showScrollbar: {
+      control: 'boolean',
+    },
     children: {
       control: false,
     },
