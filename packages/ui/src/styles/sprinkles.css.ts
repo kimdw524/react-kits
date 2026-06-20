@@ -1,9 +1,9 @@
 import { createVar } from '@vanilla-extract/css';
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
 
-import { sprinklesLayer } from '#styles';
+import { conditions, sprinklesLayer } from '#styles';
 import { theme } from '#themes';
-import { breakpoint, lightColor, spacing, typography } from '#tokens';
+import { lightColor, spacing, typography } from '#tokens';
 
 type ColorName = keyof typeof lightColor;
 type ColorScale<C extends ColorName> = keyof (typeof lightColor)[C];
@@ -72,10 +72,7 @@ const size = {
 
 export const boxProperties = defineProperties({
   '@layer': sprinklesLayer,
-  conditions: {
-    mobile: {},
-    desktop: { '@media': 'screen and (min-width: 1024px)' },
-  },
+  conditions,
   defaultCondition: 'mobile',
   properties: {
     display: ['flex', 'block', 'none', 'inline', 'inline-block', 'inline-flex'],
@@ -137,10 +134,7 @@ export const boxProperties = defineProperties({
 
 export const typographyProperties = defineProperties({
   '@layer': sprinklesLayer,
-  conditions: {
-    mobile: {},
-    desktop: { '@media': `screen and (min-width: ${breakpoint.md})` },
-  },
+  conditions,
   defaultCondition: 'mobile',
   properties: {
     lineHeight: typography.lineHeight,
