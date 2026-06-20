@@ -38,8 +38,6 @@ export const LabelInteraction = ({
   const targetRef = useCombinedRefs(child.props.ref, elementRef);
   const { ripple } = useRipple<HTMLElement>(elementRef);
 
-  console.log(child);
-
   return cloneElement(child, {
     ref: targetRef,
     className: clsx(
