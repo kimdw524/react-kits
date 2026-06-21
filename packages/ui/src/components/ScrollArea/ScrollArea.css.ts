@@ -1,18 +1,44 @@
-import { createVar } from '@vanilla-extract/css';
+import { sprinklesVars } from '#styles';
+import { theme } from '#themes';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
-import { styleWithComponents } from '#utils';
+export const scrollArea = recipeWithComponents({
+  base: {
+    overflowX: 'scroll',
 
-export const paddingVar = createVar();
+    width: '100%',
 
-export const scrollArea = styleWithComponents({
-  overflowX: 'scroll',
+    userSelect: 'none',
+  },
 
-  width: '100%',
+  variants: {
+    showScrollbar: {
+      true: {
+        paddingBottom: '0.25rem',
 
-  userSelect: 'none',
+        '::-webkit-scrollbar': {
+          height: '0.25rem',
+          width: '0.25rem',
+        },
+        '::-webkit-scrollbar-button': {
+          height: sprinklesVars.spacing,
+          width: sprinklesVars.spacing,
+        },
+        '::-webkit-scrollbar-thumb': {
+          borderRadius: '0.5rem',
 
-  '::-webkit-scrollbar': {
-    display: 'none',
+          backgroundColor: `rgb(${theme.color['border']})`,
+        },
+        '::-webkit-scrollbar-track': {
+          backgroundColor: 'transparent',
+        },
+      },
+      false: {
+        '::-webkit-scrollbar': {
+          display: 'none',
+        },
+      },
+    },
   },
 });
 
@@ -21,9 +47,9 @@ export const mask = styleWithComponents({
 
   transparent 0%,
 
-  black ${paddingVar},
+  black ${sprinklesVars.spacing},
 
-  black calc(100% - ${paddingVar}),
+  black calc(100% - ${sprinklesVars.spacing}),
 
   transparent 100%)`,
 });
@@ -31,5 +57,5 @@ export const mask = styleWithComponents({
 export const wrapper = styleWithComponents({
   width: 'max-content',
 
-  paddingInline: paddingVar,
+  paddingInline: sprinklesVars.spacing,
 });
