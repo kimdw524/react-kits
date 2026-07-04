@@ -13,7 +13,7 @@ export const indicator = styleWithComponents({
 
   backgroundColor: `rgb(${theme.color.primary})`,
 
-  transition: 'transform 0.25s ease',
+  transformOrigin: '0',
 
   selectors: {
     [`${isAnimated} &`]: {

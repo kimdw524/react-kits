@@ -1,7 +1,13 @@
 'use client';
 
-import { forwardRef, useContext, type MouseEvent } from 'react';
+import {
+  forwardRef,
+  useContext,
+  useLayoutEffect,
+  type MouseEvent,
+} from 'react';
 
+import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
 import { sx } from '#styles';
@@ -18,6 +24,7 @@ interface TabsTriggerProps extends UIComponent<'button'> {
 export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
   ({ children, value, className, sx: propSx, onClick, ...props }, ref) => {
     const tabsContext = useContext(TabsContext);
+    const triggerRef = useCombinedRefs<HTMLButtonElement>(ref);
 
     if (tabsContext === undefined) {
       throw new Error('TabsTrigger must be used within a Tabs.');
@@ -26,17 +33,29 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
     const isSelected = tabsContext.value === value;
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      if (isSelected) {
+      const trigger = triggerRef.current;
+
+      if (isSelected || !trigger) {
         return;
       }
 
-      tabsContext.selectTab(value, event.currentTarget);
+      tabsContext.selectTab(value, trigger);
       onClick?.(event);
     };
 
+    useLayoutEffect(() => {
+      const trigger = triggerRef.current;
+
+      if (!isSelected || tabsContext.selectedElement || !trigger) {
+        return;
+      }
+
+      tabsContext.selectTab(value, trigger);
+    }, [value, isSelected, tabsContext, triggerRef]);
+
     return (
       <button
-        ref={ref}
+        ref={triggerRef}
         className={clsx(className, s.container({ isSelected }), sx(propSx))}
         {...props}
         onClick={handleClick}

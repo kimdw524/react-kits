@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useReducer } from 'react';
+import { forwardRef, useCallback, useReducer } from 'react';
 
 import clsx from 'clsx';
 
@@ -25,12 +25,15 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       selectedElement: undefined,
     } satisfies TabsState);
 
-    const selectTab = (
-      value: TabsState['value'],
-      selectedElement: TabsState['selectedElement'],
-    ) => {
-      dispatch({ type: 'SELECT_TAB', value, selectedElement });
-    };
+    const selectTab = useCallback(
+      (
+        value: TabsState['value'],
+        selectedElement: TabsState['selectedElement'],
+      ) => {
+        dispatch({ type: 'SELECT_TAB', value, selectedElement });
+      },
+      [],
+    );
 
     return (
       <TabsContext.Provider
