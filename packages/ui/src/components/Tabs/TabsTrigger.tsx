@@ -40,6 +40,7 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
       }
 
       tabsContext.selectTab(value, trigger);
+      tabsContext.onChange?.(value);
       onClick?.(event);
     };
 

@@ -18,6 +18,7 @@ type TabsAction = {
 };
 
 interface TabsContext extends TabsState {
+  onChange?: (value: number | string) => void;
   selectTab: (
     value: TabsState['value'],
     selectedElement: TabsState['selectedElement'],

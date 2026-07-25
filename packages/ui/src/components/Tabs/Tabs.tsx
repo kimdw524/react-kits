@@ -10,9 +10,10 @@ import type { UIComponent } from '#types';
 
 import { TabsContext, tabsReducer, type TabsState } from './TabsProvider';
 
-interface TabsProps extends UIComponent<'div'> {
+interface TabsProps extends Omit<UIComponent<'div'>, 'onChange'> {
   size?: keyof typeof typography.size;
   defaultValue?: number | string;
+  onChange?: (value: number | string) => void;
   variant?: 'primary' | 'secondary';
 }
 
@@ -22,6 +23,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       children,
       defaultValue,
       className,
+      onChange,
       sx: propSx,
       size = 'md',
       variant = 'primary',
@@ -42,7 +44,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       ) => {
         dispatch({ type: 'SELECT_TAB', value, selectedElement, variant });
       },
-      [],
+      [variant],
     );
 
     return (
@@ -50,6 +52,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         value={{
           value: state.value,
           selectedElement: state.selectedElement,
+          onChange,
           variant,
           selectTab,
         }}
