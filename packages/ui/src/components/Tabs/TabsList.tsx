@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  forwardRef,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react';
+import { forwardRef, useContext, useLayoutEffect, useRef } from 'react';
 
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
@@ -98,6 +92,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       animateIndicator();
 
       const handleTransitionEnd = () => {
+        indicator.style.display = 'none';
         tabsList.classList.remove(s.isAnimated);
       };
 

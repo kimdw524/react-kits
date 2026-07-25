@@ -5,11 +5,7 @@ import { isAnimated } from './TabsList.css';
 
 export const indicator = recipeWithComponents({
   base: {
-    bottom: '0',
-    left: '0',
     position: 'absolute',
-
-    width: '100%',
 
     transformOrigin: '0',
 
@@ -22,16 +18,29 @@ export const indicator = recipeWithComponents({
   variants: {
     variant: {
       primary: {
+        bottom: '0',
+        left: '0',
+
         height: 'calc((1em - 0.625em) / 2)',
+        width: '100%',
 
         backgroundColor: `rgb(${theme.color.primary})`,
       },
       secondary: {
-        height: '100%',
+        inset: '0',
 
-        borderRadius: theme.borderRadius,
+        '::after': {
+          inset: '0.125em',
+          position: 'absolute',
 
-        backgroundColor: `rgb(${theme.color.primary})`,
+          borderRadius: theme.borderRadius,
+
+          backgroundColor: `rgb(${theme.color.background})`,
+
+          boxShadow: `0 0 0.125em 0.0625em rgba(${theme.color.border}, 0.66)`,
+
+          content: '',
+        },
       },
     },
   },
