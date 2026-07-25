@@ -42,4 +42,27 @@ describe('Tabs 컴포넌트', () => {
     expect(screen.queryByText('Content1')).not.toBeInTheDocument();
     expect(screen.queryByText('Content2')).toBeInTheDocument();
   });
+  it('calls onChange with the selected tab value.', () => {
+    const handleChange = jest.fn();
+
+    render(
+      <Tabs defaultValue={1} onChange={handleChange}>
+        <TabsList>
+          <TabsTrigger value={1}>Trigger1</TabsTrigger>
+          <TabsTrigger value={2}>Trigger2</TabsTrigger>
+        </TabsList>
+        <TabsContent value={1}>Content1</TabsContent>
+        <TabsContent value={2}>Content2</TabsContent>
+      </Tabs>,
+    );
+
+    expect(handleChange).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByText('Trigger2'));
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith(2);
+
+    fireEvent.click(screen.getByText('Trigger2'));
+    expect(handleChange).toHaveBeenCalledTimes(1);
+  });
 });

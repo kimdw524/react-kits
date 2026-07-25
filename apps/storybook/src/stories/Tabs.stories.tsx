@@ -22,6 +22,10 @@ const meta = {
       control: 'select',
       options: sizeOptions,
     },
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary'],
+    },
     children: {
       control: false,
     },
@@ -29,6 +33,7 @@ const meta = {
   args: {
     defaultValue: 'overview',
     size: 'md',
+    variant: 'primary',
   },
 } satisfies Meta<typeof Tabs>;
 
@@ -36,6 +41,34 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
+  render: (args) => (
+    <Tabs {...args} style={{ width: '600px' }}>
+      <TabsList>
+        <TabsTrigger value="overview">Overview</TabsTrigger>
+        <TabsTrigger value="activity">Activity</TabsTrigger>
+        <TabsTrigger value="settings">Settings</TabsTrigger>
+      </TabsList>
+      <TabsContent value="overview">
+        <Typography>
+          Project status, release notes, and health metrics.
+        </Typography>
+      </TabsContent>
+      <TabsContent value="activity">
+        <Typography>Recent commits, reviews, and deployment events.</Typography>
+      </TabsContent>
+      <TabsContent value="settings">
+        <Typography>
+          Permissions, environment variables, and access rules.
+        </Typography>
+      </TabsContent>
+    </Tabs>
+  ),
+};
+
+export const Secondary: Story = {
+  args: {
+    variant: 'secondary',
+  },
   render: (args) => (
     <Tabs {...args} style={{ width: '600px' }}>
       <TabsList>

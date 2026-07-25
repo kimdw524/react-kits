@@ -40,6 +40,7 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
       }
 
       tabsContext.selectTab(value, trigger);
+      tabsContext.onChange?.(value);
       onClick?.(event);
     };
 
@@ -60,8 +61,10 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         {...props}
         onClick={handleClick}
       >
+        {isSelected && (
+          <TabsIndicator style={{ zIndex: -1 }} variant={tabsContext.variant} />
+        )}
         {children}
-        {isSelected && <TabsIndicator />}
       </button>
     );
   },

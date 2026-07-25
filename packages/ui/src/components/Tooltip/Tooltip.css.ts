@@ -20,6 +20,10 @@ export const tooltip = styleWithComponents({
   top: '50%',
   zIndex: 100,
 
+  boxSizing: 'border-box',
+
+  maxWidth: 'calc(100vw - 16px)',
+
   padding: spacing.md,
 
   borderRadius: theme.borderRadius,
@@ -27,8 +31,9 @@ export const tooltip = styleWithComponents({
   backgroundColor: `rgb(${theme.color.foreground})`,
   color: `rgb(${theme.color.background})`,
 
+  overflowWrap: 'break-word',
+
   pointerEvents: 'none',
 
   animation: `${fadeIn} 0.15s ease 1`,
-  transform: 'translateX(-50%)',
 });
