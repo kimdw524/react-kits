@@ -13,16 +13,26 @@ import { TabsContext, tabsReducer, type TabsState } from './TabsProvider';
 interface TabsProps extends UIComponent<'div'> {
   size?: keyof typeof typography.size;
   defaultValue?: number | string;
+  variant?: 'primary' | 'secondary';
 }
 
 export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
   (
-    { children, defaultValue, className, sx: propSx, size = 'md', ...props },
+    {
+      children,
+      defaultValue,
+      className,
+      sx: propSx,
+      size = 'md',
+      variant = 'primary',
+      ...props
+    },
     ref,
   ) => {
     const [state, dispatch] = useReducer(tabsReducer, {
       value: defaultValue,
       selectedElement: undefined,
+      variant,
     } satisfies TabsState);
 
     const selectTab = useCallback(
@@ -30,7 +40,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         value: TabsState['value'],
         selectedElement: TabsState['selectedElement'],
       ) => {
-        dispatch({ type: 'SELECT_TAB', value, selectedElement });
+        dispatch({ type: 'SELECT_TAB', value, selectedElement, variant });
       },
       [],
     );
@@ -40,6 +50,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         value={{
           value: state.value,
           selectedElement: state.selectedElement,
+          variant,
           selectTab,
         }}
       >

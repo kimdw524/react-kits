@@ -1,23 +1,38 @@
 import { theme } from '#themes';
-import { styleWithComponents } from '#utils';
+import { recipeWithComponents } from '#utils';
 
 import { isAnimated } from './TabsList.css';
 
-export const indicator = styleWithComponents({
-  bottom: '0',
-  left: '0',
-  position: 'absolute',
+export const indicator = recipeWithComponents({
+  base: {
+    bottom: '0',
+    left: '0',
+    position: 'absolute',
 
-  height: 'calc((1em - 0.625em) / 2)',
-  width: '100%',
+    width: '100%',
 
-  backgroundColor: `rgb(${theme.color.primary})`,
+    transformOrigin: '0',
 
-  transformOrigin: '0',
+    selectors: {
+      [`${isAnimated} &`]: {
+        display: 'none',
+      },
+    },
+  },
+  variants: {
+    variant: {
+      primary: {
+        height: 'calc((1em - 0.625em) / 2)',
 
-  selectors: {
-    [`${isAnimated} &`]: {
-      display: 'none',
+        backgroundColor: `rgb(${theme.color.primary})`,
+      },
+      secondary: {
+        height: '100%',
+
+        borderRadius: theme.borderRadius,
+
+        backgroundColor: `rgb(${theme.color.primary})`,
+      },
     },
   },
 });

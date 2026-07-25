@@ -5,6 +5,7 @@ export const container = recipeWithComponents({
   base: {
     position: 'relative',
 
+    isolation: 'isolate',
     overflow: 'hidden',
 
     height: '100%',

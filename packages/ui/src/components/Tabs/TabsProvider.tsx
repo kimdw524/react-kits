@@ -1,16 +1,20 @@
 'use client';
 
-import { createContext } from 'react';
+import { createContext, type ComponentProps } from 'react';
+
+import type { Tabs } from '#components';
 
 export interface TabsState {
   value: number | string | undefined;
   selectedElement: HTMLElement | undefined;
+  variant: NonNullable<ComponentProps<typeof Tabs>['variant']>;
 }
 
 type TabsAction = {
   type: 'SELECT_TAB';
   value: TabsState['value'];
   selectedElement: TabsState['selectedElement'];
+  variant: TabsState['variant'];
 };
 
 interface TabsContext extends TabsState {

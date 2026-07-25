@@ -1,16 +1,27 @@
 import { theme } from '#themes';
-import { styleWithComponents } from '#utils';
+import { recipeWithComponents, styleWithComponents } from '#utils';
 
 export const isAnimated = styleWithComponents({});
 
-export const container = styleWithComponents({
-  position: 'relative',
+export const container = recipeWithComponents({
+  base: {
+    position: 'relative',
 
-  display: 'flex',
+    display: 'flex',
 
-  height: '2.5em',
+    height: '2.5em',
 
-  backgroundColor: `rgb(${theme.color.background})`,
+    backgroundColor: `rgb(${theme.color.background})`,
+  },
 
-  boxShadow: `inset 0 -0.1875em 0 rgb(${theme.color.muted})`,
+  variants: {
+    variant: {
+      primary: {
+        boxShadow: `inset 0 -0.1875em 0 rgb(${theme.color.muted})`,
+      },
+      secondary: {
+        // boxShadow: `inset 0 -0.1875em 0 rgb(${theme.color.muted})`,
+      },
+    },
+  },
 });
