@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useReducer } from 'react';
+import { forwardRef, useCallback, useReducer } from 'react';
 
 import clsx from 'clsx';
 
@@ -10,33 +10,50 @@ import type { UIComponent } from '#types';
 
 import { TabsContext, tabsReducer, type TabsState } from './TabsProvider';
 
-interface TabsProps extends UIComponent<'div'> {
+interface TabsProps extends Omit<UIComponent<'div'>, 'onChange'> {
   size?: keyof typeof typography.size;
   defaultValue?: number | string;
+  onChange?: (value: number | string) => void;
+  variant?: 'primary' | 'secondary';
 }
 
 export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
   (
-    { children, defaultValue, className, sx: propSx, size = 'md', ...props },
+    {
+      children,
+      defaultValue,
+      className,
+      onChange,
+      sx: propSx,
+      size = 'md',
+      variant = 'primary',
+      ...props
+    },
     ref,
   ) => {
     const [state, dispatch] = useReducer(tabsReducer, {
       value: defaultValue,
       selectedElement: undefined,
+      variant,
     } satisfies TabsState);
 
-    const selectTab = (
-      value: TabsState['value'],
-      selectedElement: TabsState['selectedElement'],
-    ) => {
-      dispatch({ type: 'SELECT_TAB', value, selectedElement });
-    };
+    const selectTab = useCallback(
+      (
+        value: TabsState['value'],
+        selectedElement: TabsState['selectedElement'],
+      ) => {
+        dispatch({ type: 'SELECT_TAB', value, selectedElement, variant });
+      },
+      [variant],
+    );
 
     return (
       <TabsContext.Provider
         value={{
           value: state.value,
           selectedElement: state.selectedElement,
+          onChange,
+          variant,
           selectTab,
         }}
       >

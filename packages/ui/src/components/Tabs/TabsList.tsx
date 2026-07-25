@@ -20,6 +20,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
   ({ children, className, sx: propSx, ...props }, ref) => {
     const tabsContext = useContext(TabsContext);
     const indicatorRef = useRef<HTMLDivElement>(null);
+    const prevSelectedRef = useRef<HTMLElement>(undefined);
     const tabsListRef = useCombinedRefs(ref);
 
     if (tabsContext === undefined) {
@@ -27,23 +28,68 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
     }
 
     useLayoutEffect(() => {
+      const indicator = indicatorRef.current;
+
+      if (indicator === null) {
+        return;
+      }
+
+      if (tabsContext.variant === 'primary') {
+        indicator.style.width = `${baseWidth}px`;
+      }
+
+      indicator.style.transform = '';
+    }, [tabsContext.variant]);
+
+    useLayoutEffect(() => {
       const element = tabsContext.selectedElement,
         indicator = indicatorRef.current,
         tabsList = tabsListRef.current;
+
+      const variant = tabsContext.variant;
 
       if (!element || !indicator || !tabsList) {
         return;
       }
 
-      const animatedIndicator = () => {
+      if (prevSelectedRef.current === undefined) {
+        prevSelectedRef.current = element;
+        return;
+      }
+
+      const animateIndicator = () => {
         const left = element.offsetLeft,
           width = element.offsetWidth;
-        indicator.style.transformOrigin = '0';
-        indicator.style.transform = `translateX(${left}px) scaleX(${width / baseWidth})`;
+
+        if (indicator.style.transform === '') {
+          const prevLeft = prevSelectedRef.current?.offsetLeft ?? 0,
+            prevWidth = prevSelectedRef.current?.offsetWidth ?? baseWidth;
+
+          indicator.style.transition = 'none';
+
+          if (variant === 'primary') {
+            indicator.style.transform = `translateX(${prevLeft}px) scaleX(${prevWidth / baseWidth})`;
+            void indicator.offsetLeft;
+            indicator.style.transition = 'transform 0.25s ease';
+          } else if (variant === 'secondary') {
+            indicator.style.transform = `translateX(${prevLeft}px)`;
+            indicator.style.width = `${prevWidth}px`;
+            void indicator.offsetLeft;
+            indicator.style.transition =
+              'width 0.25s ease, transform 0.25s ease';
+          }
+        }
+
+        if (variant === 'primary') {
+          indicator.style.transform = `translateX(${left}px) scaleX(${width / baseWidth})`;
+        } else if (variant === 'secondary') {
+          indicator.style.transform = `translateX(${left}px)`;
+          indicator.style.width = `${width}px`;
+        }
       };
 
       indicator.style.display = 'block';
-      animatedIndicator();
+      animateIndicator();
 
       const handleTransitionEnd = () => {
         indicator.style.display = 'none';
@@ -54,22 +100,27 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       indicator.addEventListener('transitionend', handleTransitionEnd);
 
       return () => {
-        animatedIndicator();
+        prevSelectedRef.current = tabsContext.selectedElement;
         indicator.removeEventListener('transitionend', handleTransitionEnd);
       };
-    }, [tabsContext.selectedElement, tabsListRef]);
+    }, [tabsContext.selectedElement, tabsContext.variant, tabsListRef]);
 
     return (
       <div
         ref={tabsListRef}
-        className={clsx(className, s.container, sx(propSx))}
+        className={clsx(
+          className,
+          s.container({ variant: tabsContext.variant }),
+          sx(propSx),
+        )}
         {...props}
       >
-        {children}
         <TabsIndicator
           ref={indicatorRef}
-          style={{ display: 'none', width: `${baseWidth}px` }}
+          style={{ display: 'none', width: baseWidth }}
+          variant={tabsContext.variant}
         />
+        {children}
       </div>
     );
   },
