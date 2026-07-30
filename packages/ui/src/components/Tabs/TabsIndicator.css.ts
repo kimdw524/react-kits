@@ -21,7 +21,7 @@ export const indicator = recipeWithComponents({
         bottom: '0',
         left: '0',
 
-        height: 'calc((1em - 0.625em) / 2)',
+        height: '0.1875em',
         width: '100%',
 
         backgroundColor: `rgb(${theme.color.primary})`,
@@ -30,14 +30,12 @@ export const indicator = recipeWithComponents({
         inset: '0',
 
         '::after': {
-          inset: '0.125em',
+          inset: '0.25em',
           position: 'absolute',
 
           borderRadius: theme.borderRadius,
 
           backgroundColor: `rgb(${theme.color.background})`,
-
-          boxShadow: `0 0 0.125em 0.0625em rgba(${theme.color.border}, 0.66)`,
 
           content: '',
         },
