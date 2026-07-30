@@ -17,7 +17,7 @@ export const container = recipeWithComponents({
       primary: {
         backgroundColor: `rgb(${theme.color.background})`,
 
-        boxShadow: `inset 0 -0.1875em 0 rgb(${theme.color.muted})`,
+        boxShadow: `inset 0 -0.0625em 0 rgb(${theme.color.muted})`,
       },
       secondary: {
         borderRadius: theme.borderRadius,
