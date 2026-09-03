@@ -3,17 +3,20 @@ import { useContext, useLayoutEffect, useRef, type KeyboardEvent } from 'react';
 import clsx from 'clsx';
 import { ChevronDownIcon } from 'lucide-react';
 
-import { sx } from '#styles';
+import { sprinkles, sx, type ColorProperties } from '#styles';
 import type { UIComponent } from '#types';
 
 import { SelectContext } from './SelectContext';
 import * as s from './SelectTrigger.css';
 
-type SelectTriggerProps = UIComponent<'button', typeof s.selectTrigger>;
+type SelectTriggerProps = UIComponent<'button', typeof s.selectTrigger> & {
+  color?: ColorProperties['backgroundColor'];
+};
 
 const SelectTrigger = ({
   children,
   className,
+  color,
   variant,
   sx: propSx,
 }: SelectTriggerProps) => {
@@ -59,7 +62,13 @@ const SelectTrigger = ({
       aria-expanded={state.isActive}
       aria-haspopup="listbox"
       className={clsx(
-        s.selectTrigger({ isActive: state.isActive, variant }),
+        s.selectTrigger({ variant }),
+        variant === 'contained' &&
+          sprinkles({ backgroundColor: color ?? 'secondary' }),
+        variant === 'outlined' &&
+          sprinkles({
+            borderColor: state.isActive ? (color ?? 'primary') : 'border',
+          }),
         className,
         sx(propSx),
       )}

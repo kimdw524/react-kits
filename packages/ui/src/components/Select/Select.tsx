@@ -16,7 +16,7 @@ import {
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
-import { sprinkles, sx } from '#styles';
+import { sprinkles, sx, type ColorProperties } from '#styles';
 import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
@@ -28,6 +28,7 @@ import SelectTrigger from './SelectTrigger';
 interface SelectProps extends Omit<UIComponent<'div'>, 'ref' | 'onChange'> {
   ref?: RefObject<{ value?: string } | null>;
   size?: keyof typeof typography.size;
+  color?: ColorProperties['backgroundColor'];
   name?: string;
   width?: CSSProperties['width'];
   defaultValue?: string;
@@ -61,6 +62,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     {
       children,
       className,
+      color,
       style,
       name,
       defaultValue,
@@ -111,7 +113,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           style={{ ...style, width }}
           {...props}
         >
-          <SelectTrigger variant={variant}>{selectedLabel}</SelectTrigger>
+          <SelectTrigger color={color} variant={variant}>
+            {selectedLabel}
+          </SelectTrigger>
           <SelectOptionList>{children}</SelectOptionList>
           <input name={name} type="hidden" value={selected || ''} />
         </div>
