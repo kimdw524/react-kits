@@ -103,7 +103,7 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
             ref={containerRef}
             className={clsx(
               s.container({ isVisible: state.isActive }),
-              sprinkles({ boxShadow: 'accent-sm' }),
+              sprinkles({ boxShadow: 'border-sm' }),
             )}
             role="listbox"
             onMouseDown={(e) => e.stopPropagation()}
