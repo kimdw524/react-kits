@@ -80,8 +80,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       selected: defaultValue,
       containerRef,
       defaultValue,
+      size,
       items: new Map(),
     });
+    const contextState = { ...state, size };
     const selected = state.selected ?? defaultValue;
     const selectedLabel =
       state.items.get(selected || '') ??
@@ -97,7 +99,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     }, [state.selected]);
 
     return (
-      <SelectContext.Provider value={{ state, dispatch }}>
+      <SelectContext.Provider value={{ state: contextState, dispatch }}>
         <div
           ref={targetRef}
           className={clsx(

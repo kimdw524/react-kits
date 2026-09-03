@@ -1,10 +1,13 @@
 import { createContext, type Dispatch, type ReactNode } from 'react';
 
+import type { typography } from '#tokens';
+
 type SelectState = {
   isActive: boolean;
   selected?: string;
   focused?: string;
   defaultValue?: string;
+  size: keyof typeof typography.size;
   items: Map<string, ReactNode>;
   containerRef: React.RefObject<HTMLDivElement | null>;
 };
