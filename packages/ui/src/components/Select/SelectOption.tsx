@@ -3,6 +3,9 @@
 import { forwardRef, useContext, useEffect, type ReactNode } from 'react';
 
 import { useCombinedRefs } from '@kimdw-rtk/utils';
+import clsx from 'clsx';
+
+import { sprinkles } from '#styles';
 
 import { SelectContext } from './SelectContext';
 import * as s from './SelectOption.css';
@@ -62,7 +65,7 @@ export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
       <button
         ref={containerRef}
         aria-selected={state.selected === value}
-        className={s.selectOption}
+        className={clsx(s.selectOption, sprinkles({ fontSize: state.size }))}
         role="option"
         tabIndex={0}
         type="button"

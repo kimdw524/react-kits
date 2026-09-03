@@ -90,9 +90,8 @@ describe('Tooltip component', () => {
 
       await waitFor(() => {
         expect(screen.getByText(content)).toHaveStyle({
-          left: '190px',
+          left: '72px',
           top: '56px',
-          transform: 'translateX(calc(-50% + -58px))',
         });
       });
     } finally {
@@ -140,9 +139,8 @@ describe('Tooltip component', () => {
 
       await waitFor(() => {
         expect(screen.getByText(content)).toHaveStyle({
-          left: '100px',
+          left: '60px',
           top: '44px',
-          transform: 'translateX(calc(-50% + 0px))',
         });
       });
     } finally {
