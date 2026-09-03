@@ -17,7 +17,6 @@ import { sprinkles } from '#styles';
 import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 import {
-  getCenteredFloatingShift,
   getCenteredFloatingPosition,
   getVerticalFloatingPlacement,
 } from '#utils';
@@ -47,11 +46,10 @@ export const Tooltip = ({
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
-  const [position, setPosition] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
+  const [position, setPosition] = useState<{ left: number; top: number }>({
+    left: TOOLTIP_VIEWPORT_PADDING,
+    top: 0,
   });
-  const [translateX, setTranslateX] = useState(0);
 
   useLayoutEffect(() => {
     const tooltip = tooltipRef.current;
@@ -73,17 +71,11 @@ export const Tooltip = ({
       placement,
       viewportPadding: TOOLTIP_VIEWPORT_PADDING,
     });
-    const nextTranslateX = getCenteredFloatingShift({
-      anchorRect,
-      floatingRect: tooltipRect,
-      viewportPadding: TOOLTIP_VIEWPORT_PADDING,
-    });
 
     setPosition({
-      x: anchorRect.left + anchorRect.width / 2,
-      y: nextPosition.top,
+      left: nextPosition.left,
+      top: nextPosition.top,
     });
-    setTranslateX(nextTranslateX);
   }, [anchorRect, className, content, isVisible, size, style]);
 
   const handlePointerOver = (e: React.PointerEvent) => {
@@ -92,10 +84,9 @@ export const Tooltip = ({
     setIsVisible(true);
     setAnchorRect(rect);
     setPosition({
-      x: rect.left + rect.width / 2,
-      y: rect.bottom + TOOLTIP_OFFSET,
+      left: TOOLTIP_VIEWPORT_PADDING,
+      top: rect.bottom + TOOLTIP_OFFSET,
     });
-    setTranslateX(0);
     children.props?.onPointerOver?.(e);
   };
 
@@ -121,9 +112,8 @@ export const Tooltip = ({
               className,
             )}
             style={{
-              top: position.y,
-              left: position.x,
-              transform: `translateX(calc(-50% + ${translateX}px))`,
+              top: position.top,
+              left: position.left,
               ...style,
             }}
             {...rest}

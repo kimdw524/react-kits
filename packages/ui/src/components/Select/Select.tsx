@@ -16,7 +16,7 @@ import {
 import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
-import { sprinkles, sx } from '#styles';
+import { sprinkles, sx, type ColorProperties } from '#styles';
 import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
@@ -28,6 +28,7 @@ import SelectTrigger from './SelectTrigger';
 interface SelectProps extends Omit<UIComponent<'div'>, 'ref' | 'onChange'> {
   ref?: RefObject<{ value?: string } | null>;
   size?: keyof typeof typography.size;
+  color?: ColorProperties['backgroundColor'];
   name?: string;
   width?: CSSProperties['width'];
   defaultValue?: string;
@@ -61,6 +62,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     {
       children,
       className,
+      color,
       style,
       name,
       defaultValue,
@@ -80,8 +82,10 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       selected: defaultValue,
       containerRef,
       defaultValue,
+      size,
       items: new Map(),
     });
+    const contextState = { ...state, size };
     const selected = state.selected ?? defaultValue;
     const selectedLabel =
       state.items.get(selected || '') ??
@@ -97,7 +101,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     }, [state.selected]);
 
     return (
-      <SelectContext.Provider value={{ state, dispatch }}>
+      <SelectContext.Provider value={{ state: contextState, dispatch }}>
         <div
           ref={targetRef}
           className={clsx(
@@ -109,7 +113,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           style={{ ...style, width }}
           {...props}
         >
-          <SelectTrigger variant={variant}>{selectedLabel}</SelectTrigger>
+          <SelectTrigger color={color} variant={variant}>
+            {selectedLabel}
+          </SelectTrigger>
           <SelectOptionList>{children}</SelectOptionList>
           <input name={name} type="hidden" value={selected || ''} />
         </div>

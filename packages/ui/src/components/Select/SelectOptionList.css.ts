@@ -1,21 +1,5 @@
-import { keyframes } from '@vanilla-extract/css';
-
 import { theme } from '#themes';
 import { recipeWithComponents, styleWithComponents } from '#utils';
-
-const fadeIn = keyframes({
-  '0%': {
-    opacity: 0,
-
-    transform: 'scaleY(0.9)',
-  },
-
-  '100%': {
-    opacity: 1,
-
-    transform: 'scaleY(1)',
-  },
-});
 
 export const block = styleWithComponents({
   inset: '0',
@@ -31,7 +15,7 @@ export const container = recipeWithComponents({
 
     width: '100%',
 
-    margin: '0.5rem 0',
+    margin: '0.375rem 0',
 
     border: `1px solid rgb(${theme.color.border})`,
     borderRadius: theme.borderRadius,
@@ -40,7 +24,6 @@ export const container = recipeWithComponents({
 
     userSelect: 'none',
 
-    animation: `${fadeIn} 0.3s ease 1`,
     transformOrigin: '0 0',
 
     '::-webkit-scrollbar': {

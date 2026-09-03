@@ -1,8 +1,12 @@
 import { Select, SelectOption } from '@kimdw-rtk/ui';
-import { typography } from '@kimdw-rtk/ui/token';
+import { scaleColor, semanticColor, typography } from '@kimdw-rtk/ui/token';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 
+const colorOptions = [
+  ...semanticColor,
+  ...scaleColor.map((color) => `${color}-500`),
+];
 const sizeOptions = Object.keys(typography.size);
 const meta = {
   title: 'Components/Select',
@@ -16,6 +20,10 @@ const meta = {
       control: 'inline-radio',
       options: ['outlined', 'contained'],
     },
+    color: {
+      control: 'select',
+      options: colorOptions,
+    },
     size: {
       control: 'select',
       options: sizeOptions,
@@ -27,6 +35,7 @@ const meta = {
   args: {
     defaultValue: 'pro',
     variant: 'outlined',
+    color: 'primary',
     size: 'md',
     onChange: fn(),
   },

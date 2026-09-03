@@ -50,28 +50,20 @@ export const selectTrigger = recipeWithComponents({
     cursor: 'pointer',
     userSelect: 'none',
 
-    transition: 'border-color 0.2s ease',
+    transition: 'background-color 0.2s ease, border-color 0.2s ease',
   },
 
   variants: {
-    isActive: {
-      true: {
-        borderColor: `rgb(${theme.color.primary})`,
-      },
-    },
     variant: {
       contained: {
         padding: '0.75em 0.75em',
 
         borderRadius: theme.borderRadius,
-
-        backgroundColor: `rgb(${theme.color.secondary})`,
       },
       outlined: {
         padding: '0.75em 0.5em',
 
         border: '1px solid',
-        borderColor: `rgb(${theme.color.border})`,
         borderRadius: theme.borderRadius,
 
         backgroundColor: `rgb(${theme.color.background})`,
