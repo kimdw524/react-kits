@@ -1,31 +1,33 @@
 import { forwardRef } from 'react';
 
-import { assignInlineVars } from '@vanilla-extract/dynamic';
 import clsx from 'clsx';
 
-import { sx } from '#styles';
-import { spacing } from '#tokens';
+import { sx, type TypographyProperties } from '#styles';
 import type { UIComponent } from '#types';
 
 import * as s from './Table.css';
 
 interface TableProps extends UIComponent<'table'> {
-  size?: keyof typeof spacing;
+  size?: TypographyProperties['fontSize'];
   isStriped?: boolean;
+  isBordered?: boolean;
 }
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
-  ({ isStriped, className, size = 'md', sx: propSx, style, ...props }, ref) => {
+  (
+    { isStriped, isBordered, className, size = 'md', sx: propSx, ...props },
+    ref,
+  ) => {
     return (
       <table
         ref={ref}
-        className={clsx(s.table, isStriped && s.striped, sx(propSx), className)}
-        style={{
-          ...assignInlineVars({
-            [s.paddingVar]: spacing[size],
-          }),
-          ...style,
-        }}
+        className={clsx(
+          s.table,
+          isStriped && s.striped,
+          isBordered && s.bordered,
+          sx({ fontSize: size, ...propSx }),
+          className,
+        )}
         {...props}
       />
     );

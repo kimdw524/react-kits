@@ -6,10 +6,10 @@ import {
   TableHeader,
   TableRow,
 } from '@kimdw-rtk/ui';
-import { spacing } from '@kimdw-rtk/ui/token';
+import { typography } from '@kimdw-rtk/ui/token';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-const sizeOptions = Object.keys(spacing);
+const sizeOptions = Object.keys(typography.size);
 
 const meta = {
   title: 'Components/Table',
@@ -28,6 +28,7 @@ const meta = {
     },
   },
   args: {
+    isBordered: true,
     isStriped: true,
     size: 'md',
   },

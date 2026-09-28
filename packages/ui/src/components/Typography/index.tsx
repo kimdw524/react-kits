@@ -30,7 +30,7 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps>(
       children,
       as: Component = 'p',
       className,
-      color = 'foreground',
+      color,
       fontSize = 'md',
       fontWeight = 'normal',
       isEllipsis = false,

@@ -16,7 +16,7 @@ export const darkThemeVars = {
     border: '38, 43, 51',
     'border.weak': '32, 32, 32',
     card: '23, 23, 25',
-    'card-foreground': '238, 238, 238',
+    'card-foreground': '188, 188, 188',
     'card.gradient': '255, 255, 255',
     success: '22, 163, 74',
     'success-foreground': '255, 255, 255',
