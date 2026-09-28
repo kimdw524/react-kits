@@ -1,13 +1,19 @@
 import { theme } from '#themes';
 import { styleWithComponents } from '#utils';
 
-import { paddingVar } from './Table.css';
+import { bordered } from './Table.css';
 
 export const tableHead = styleWithComponents({
-  padding: paddingVar,
+  padding: '0.5em',
 
   color: `rgb(${theme.color['accent-foreground']})`,
 
   fontSize: '0.9375em',
   fontWeight: '500',
+
+  selectors: {
+    [`${bordered} thead > tr > &`]: {
+      borderBottom: `1px solid rgb(${theme.color.border})`,
+    },
+  },
 });

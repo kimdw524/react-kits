@@ -1,32 +1,19 @@
 import { theme } from '#themes';
 import { styleWithComponents } from '#utils';
 
-import { paddingVar, striped } from './Table.css';
+import { bordered, striped } from './Table.css';
 import { interactive } from './TableRow.css';
 
 export const tableCell = styleWithComponents({
-  paddingBlock: paddingVar,
-  paddingInline: `calc(${paddingVar} / 2)`,
-
-  transition: 'background-color 0.1s ease, color 0.1s ease',
+  padding: '0.75em',
 
   selectors: {
     [`${interactive} > &`]: {
       cursor: 'pointer',
     },
 
-    'tr > &:first-child': {
-      paddingLeft: paddingVar,
-
-      borderBottomLeftRadius: theme.borderRadius,
-      borderTopLeftRadius: theme.borderRadius,
-    },
-
-    'tr > &:last-child': {
-      paddingRight: paddingVar,
-
-      borderBottomRightRadius: theme.borderRadius,
-      borderTopRightRadius: theme.borderRadius,
+    [`${bordered} tbody > tr > &`]: {
+      borderBottom: `1px solid rgb(${theme.color['border.weak']})`,
     },
 
     'tbody > tr:hover > &': {
