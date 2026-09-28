@@ -1,8 +1,4 @@
-import { createVar } from '@vanilla-extract/css';
-
 import { styleWithComponents } from '#utils';
-
-export const paddingVar = createVar();
 
 export const table = styleWithComponents({
   width: '100%',
@@ -12,3 +8,5 @@ export const table = styleWithComponents({
 });
 
 export const striped = styleWithComponents({});
+
+export const bordered = styleWithComponents({});
