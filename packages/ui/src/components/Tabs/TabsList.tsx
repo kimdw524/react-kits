@@ -42,11 +42,14 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
     }, [tabsContext.variant]);
 
     useLayoutEffect(() => {
-      const element = tabsContext.selectedElement,
-        indicator = indicatorRef.current,
+      const indicator = indicatorRef.current,
         tabsList = tabsListRef.current;
 
       const variant = tabsContext.variant;
+
+      const element = tabsList?.querySelector<HTMLElement>(
+        '[data-tabs-selected="true"]',
+      );
 
       if (!element || !indicator || !tabsList) {
         return;
@@ -100,10 +103,10 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       indicator.addEventListener('transitionend', handleTransitionEnd);
 
       return () => {
-        prevSelectedRef.current = tabsContext.selectedElement;
+        prevSelectedRef.current = element;
         indicator.removeEventListener('transitionend', handleTransitionEnd);
       };
-    }, [tabsContext.selectedElement, tabsContext.variant, tabsListRef]);
+    }, [tabsContext.value, tabsContext.variant, tabsListRef]);
 
     return (
       <div
@@ -114,6 +117,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
           sx(propSx),
         )}
         {...props}
+        role="tablist"
       >
         <TabsIndicator
           ref={indicatorRef}
