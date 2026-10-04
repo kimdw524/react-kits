@@ -85,7 +85,7 @@ export const checkbox = recipeWithComponents({
     appearance: 'none',
     cursor: 'pointer',
 
-    transition: 'background-color 0.15s ease, border-color 0.15s ease',
+    transition: 'background-color 0.1s ease, border-color 0.1s ease',
 
     ':checked': {
       borderColor: `rgb(${backgroundVar})`,
@@ -132,7 +132,7 @@ export const icon = styleWithComponents({
   pointerEvents: 'none',
 
   transform: 'scale(0)',
-  transition: 'opacity 0.1s ease, transform 0.15s ease',
+  transition: 'opacity 0.066s ease, transform 0.1s ease',
 
   selectors: {
     [`${checkbox.classNames.base}:checked + &`]: {

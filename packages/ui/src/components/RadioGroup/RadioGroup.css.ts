@@ -126,7 +126,7 @@ export const radio = styleWithComponents({
   appearance: 'none',
   cursor: 'pointer',
 
-  transition: 'background-color 0.15s ease, border-color 0.15s ease',
+  transition: 'background-color 0.1s ease, border-color 0.1s ease',
 
   '::after': {
     left: '50%',
@@ -143,7 +143,7 @@ export const radio = styleWithComponents({
     opacity: 0,
 
     transform: 'translate(-50%, -50%) scale(0)',
-    transition: 'opacity 0.15s ease, transform 0.15s ease',
+    transition: 'opacity 0.1s ease, transform 0.1s ease',
 
     content: '',
   },
