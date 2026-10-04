@@ -1,30 +1,26 @@
 'use client';
 
-import {
-  forwardRef,
-  useContext,
-  useLayoutEffect,
-  type MouseEvent,
-} from 'react';
+import { forwardRef, useContext, type MouseEvent } from 'react';
 
-import { useCombinedRefs } from '@kimdw-rtk/utils';
 import clsx from 'clsx';
 
 import { sx } from '#styles';
 import type { UIComponent } from '#types';
 
 import { TabsIndicator } from './TabsIndicator';
-import { TabsContext } from './TabsProvider';
+import { getTabsValueId, TabsContext, type TabsValue } from './TabsProvider';
 import * as s from './TabsTrigger.css';
 
 interface TabsTriggerProps extends UIComponent<'button'> {
-  value: number | string;
+  value: TabsValue;
 }
 
 export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
-  ({ children, value, className, sx: propSx, onClick, ...props }, ref) => {
+  (
+    { children, value, className, sx: propSx, onClick, type, ...props },
+    ref,
+  ) => {
     const tabsContext = useContext(TabsContext);
-    const triggerRef = useCombinedRefs<HTMLButtonElement>(ref);
 
     if (tabsContext === undefined) {
       throw new Error('TabsTrigger must be used within a Tabs.');
@@ -33,32 +29,25 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
     const isSelected = tabsContext.value === value;
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      const trigger = triggerRef.current;
-
-      if (isSelected || !trigger) {
+      if (isSelected) {
         return;
       }
 
-      tabsContext.selectTab(value, trigger);
-      tabsContext.onChange?.(value);
+      tabsContext.selectTab(value);
       onClick?.(event);
     };
 
-    useLayoutEffect(() => {
-      const trigger = triggerRef.current;
-
-      if (!isSelected || tabsContext.selectedElement || !trigger) {
-        return;
-      }
-
-      tabsContext.selectTab(value, trigger);
-    }, [value, isSelected, tabsContext, triggerRef]);
-
     return (
       <button
-        ref={triggerRef}
+        ref={ref}
         className={clsx(className, s.container({ isSelected }), sx(propSx))}
         {...props}
+        aria-controls={`${tabsContext.id}-content-${getTabsValueId(value)}`}
+        aria-selected={isSelected}
+        data-tabs-selected={isSelected ? 'true' : undefined}
+        id={`${tabsContext.id}-trigger-${getTabsValueId(value)}`}
+        role="tab"
+        type={type ?? 'button'}
         onClick={handleClick}
       >
         {isSelected && (

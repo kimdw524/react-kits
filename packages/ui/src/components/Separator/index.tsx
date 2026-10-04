@@ -1,21 +1,33 @@
-import { Fragment, type ReactElement, type ReactNode, Children } from 'react';
+import { Children, Fragment, isValidElement, type ReactNode } from 'react';
 
 interface SeparatorProps {
-  children: ReactElement | ReactElement[];
+  children: ReactNode;
   separator: ReactNode;
 }
 
 export const Separator = ({ children, separator }: SeparatorProps) => {
-  const items = Children.toArray(children) as ReactElement[];
+  const items: ReactNode[] = [];
+
+  Children.forEach(children, (child) => {
+    if (!child) {
+      return;
+    }
+
+    items.push(child);
+  });
 
   return (
     <>
-      {items.map((child, index) => (
-        <Fragment key={child.key || index}>
-          {index > 0 && separator}
-          {child}
-        </Fragment>
-      ))}
+      {items.map((child, index) => {
+        return (
+          <Fragment
+            key={isValidElement(child) && child.key != null ? child.key : index}
+          >
+            {index > 0 && separator}
+            {child}
+          </Fragment>
+        );
+      })}
     </>
   );
 };
