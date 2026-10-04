@@ -7,11 +7,11 @@ import clsx from 'clsx';
 import { sx } from '#styles';
 import type { UIComponent } from '#types';
 
-import { TabsContext } from './TabsProvider';
+import { getTabsValueId, TabsContext, type TabsValue } from './TabsProvider';
 
 interface TabsContentProps extends UIComponent<'div'> {
   children: ReactNode;
-  value: string | number;
+  value: TabsValue;
 }
 
 export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
@@ -26,7 +26,16 @@ export const TabsContent = forwardRef<HTMLDivElement, TabsContentProps>(
       return null;
     }
 
-    return <div ref={ref} className={clsx(className, sx(propSx))} {...props} />;
+    return (
+      <div
+        ref={ref}
+        className={clsx(className, sx(propSx))}
+        {...props}
+        aria-labelledby={`${tabsContext.id}-trigger-${getTabsValueId(value)}`}
+        id={`${tabsContext.id}-content-${getTabsValueId(value)}`}
+        role="tabpanel"
+      />
+    );
   },
 );
 TabsContent.displayName = 'TabsContent';

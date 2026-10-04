@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useCallback, useReducer } from 'react';
+import { forwardRef, useCallback, useId, useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 
@@ -8,12 +8,13 @@ import { sprinkles, sx } from '#styles';
 import type { typography } from '#tokens';
 import type { UIComponent } from '#types';
 
-import { TabsContext, tabsReducer, type TabsState } from './TabsProvider';
+import { TabsContext, type TabsValue } from './TabsProvider';
 
 interface TabsProps extends Omit<UIComponent<'div'>, 'onChange'> {
   size?: keyof typeof typography.size;
-  defaultValue?: number | string;
-  onChange?: (value: number | string) => void;
+  defaultValue?: TabsValue;
+  onChange?: (value: TabsValue) => void;
+  value?: TabsValue;
   variant?: 'primary' | 'secondary';
 }
 
@@ -26,37 +27,41 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       onChange,
       sx: propSx,
       size = 'md',
+      value,
       variant = 'primary',
       ...props
     },
     ref,
   ) => {
-    const [state, dispatch] = useReducer(tabsReducer, {
-      value: defaultValue,
-      selectedElement: undefined,
-      variant,
-    } satisfies TabsState);
+    const id = useId();
+    const isControlled = value !== undefined;
+    const [internalValue, setInternalValue] = useState<TabsValue | undefined>(
+      defaultValue,
+    );
+    const selectedValue = isControlled ? value : internalValue;
 
     const selectTab = useCallback(
-      (
-        value: TabsState['value'],
-        selectedElement: TabsState['selectedElement'],
-      ) => {
-        dispatch({ type: 'SELECT_TAB', value, selectedElement, variant });
+      (nextValue: TabsValue) => {
+        if (!isControlled) {
+          setInternalValue(nextValue);
+        }
+
+        onChange?.(nextValue);
       },
-      [variant],
+      [isControlled, onChange],
+    );
+    const contextValue = useMemo(
+      () => ({
+        id,
+        value: selectedValue,
+        variant,
+        selectTab,
+      }),
+      [id, selectedValue, selectTab, variant],
     );
 
     return (
-      <TabsContext.Provider
-        value={{
-          value: state.value,
-          selectedElement: state.selectedElement,
-          onChange,
-          variant,
-          selectTab,
-        }}
-      >
+      <TabsContext.Provider value={contextValue}>
         <div
           ref={ref}
           className={clsx(sprinkles({ fontSize: size }), className, sx(propSx))}
