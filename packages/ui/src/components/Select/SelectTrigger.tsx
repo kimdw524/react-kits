@@ -30,7 +30,7 @@ const SelectTrigger = ({
   const { state, dispatch } = selectContext;
 
   const handleClick = () => {
-    dispatch({ type: 'TOGGLE' });
+    dispatch({ type: 'TOGGLE', payload: { selected: state.selected } });
   };
 
   const handleKeydown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -40,7 +40,7 @@ const SelectTrigger = ({
 
     if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
       event.preventDefault();
-      dispatch({ type: 'TOGGLE' });
+      dispatch({ type: 'TOGGLE', payload: { selected: state.selected } });
     }
   };
 

@@ -24,14 +24,14 @@ export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
       throw new Error('SelectOption must be rendered within a Select.');
     }
 
-    const { state, dispatch } = selectContext;
+    const { state, dispatch, selectOption } = selectContext;
 
     const handleMouseEnter = () => {
       dispatch({ type: 'FOCUS', payload: { value } });
     };
 
     const handleClick = () => {
-      dispatch({ type: 'SELECT', payload: { value } });
+      selectOption(value);
     };
 
     useEffect(() => {
@@ -51,15 +51,6 @@ export const SelectOption = forwardRef<HTMLButtonElement, SelectOptionProps>(
         }
       };
     }, [state.focused, value, containerRef]);
-
-    useEffect(() => {
-      dispatch({ type: 'ADD', payload: { value, children } });
-
-      return () => {
-        dispatch({ type: 'REMOVE', payload: { value } });
-      };
-      // eslint-disable-next-line
-    }, [dispatch, value]);
 
     return (
       <button
