@@ -1,3 +1,5 @@
+import { Profiler } from 'react';
+
 import { fireEvent, render, screen, within } from '@testing-library/react';
 
 import { Select, SelectOption } from '.';
@@ -82,5 +84,68 @@ describe('Select 컴포넌트', () => {
     const select = screen.getByTestId('select');
 
     expect(select).toHaveTextContent('2번');
+  });
+
+  it('supports controlled value changes.', () => {
+    const handleChange = jest.fn();
+    const renderSelect = (value: string) => (
+      <TestProvider>
+        <Select
+          data-testid="select"
+          name="select"
+          value={value}
+          onChange={handleChange}
+        >
+          <SelectOption value="1">1번</SelectOption>
+          <SelectOption value="2">2번</SelectOption>
+        </Select>
+      </TestProvider>
+    );
+
+    const { rerender } = render(renderSelect('1'));
+    const select = screen.getByTestId('select');
+
+    expect(select).toHaveTextContent('1번');
+
+    openOptionList();
+    fireEvent.click(getOption('2번'));
+
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith('2');
+    expect(select).toHaveTextContent('1번');
+
+    rerender(renderSelect('2'));
+
+    expect(select).toHaveTextContent('2번');
+  });
+
+  it('commits once when an uncontrolled value changes.', () => {
+    let updateCount = 0;
+
+    render(
+      <TestProvider>
+        <Profiler
+          id="select"
+          onRender={(_, phase) => {
+            if (phase === 'update') {
+              updateCount += 1;
+            }
+          }}
+        >
+          <Select data-testid="select">
+            <SelectOption value="1">1번</SelectOption>
+            <SelectOption value="2">2번</SelectOption>
+          </Select>
+        </Profiler>
+      </TestProvider>,
+    );
+
+    openOptionList();
+    updateCount = 0;
+
+    fireEvent.click(getOption('2번'));
+
+    expect(updateCount).toBe(1);
+    expect(screen.getByTestId('select')).toHaveTextContent('2번');
   });
 });

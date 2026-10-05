@@ -38,31 +38,36 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
 
     const handleClose = () => {
       if (state.isActive) {
-        dispatch({ type: 'TOGGLE' });
+        dispatch({ type: 'TOGGLE', payload: { selected: state.selected } });
       }
     };
 
     const handleKeyDown = (event: globalThis.KeyboardEvent) => {
+      const navigationPayload = {
+        selected: state.selected,
+        values: state.itemValues,
+      };
+
       switch (event.key) {
         case 'ArrowDown':
           event.preventDefault();
-          dispatch({ type: 'DOWN' });
+          dispatch({ type: 'DOWN', payload: navigationPayload });
           break;
         case 'ArrowUp':
           event.preventDefault();
-          dispatch({ type: 'UP' });
+          dispatch({ type: 'UP', payload: navigationPayload });
           break;
         case 'Home':
           event.preventDefault();
-          dispatch({ type: 'HOME' });
+          dispatch({ type: 'HOME', payload: navigationPayload });
           break;
         case 'End':
           event.preventDefault();
-          dispatch({ type: 'END' });
+          dispatch({ type: 'END', payload: navigationPayload });
           break;
         case 'Escape':
           event.preventDefault();
-          dispatch({ type: 'TOGGLE' });
+          dispatch({ type: 'TOGGLE', payload: { selected: state.selected } });
           break;
         default:
           return;
@@ -80,7 +85,7 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
       window.removeEventListener('blur', handleClose);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [state.isActive, dispatch]);
+  }, [state.isActive, state.itemValues, state.selected, dispatch]);
 
   useLayoutEffect(() => {
     const container = containerRef.current,
@@ -97,7 +102,9 @@ const SelectOptionList = ({ children }: SelectOptionListProps) => {
       {state.isActive && (
         <div
           className={s.block}
-          onMouseDown={() => dispatch({ type: 'TOGGLE' })}
+          onMouseDown={() =>
+            dispatch({ type: 'TOGGLE', payload: { selected: state.selected } })
+          }
         >
           <div
             ref={containerRef}
