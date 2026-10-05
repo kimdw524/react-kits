@@ -6,25 +6,31 @@ type SelectState = {
   isActive: boolean;
   selected?: string;
   focused?: string;
-  defaultValue?: string;
   size: keyof typeof typography.size;
   items: Map<string, ReactNode>;
+  itemValues: string[];
   containerRef: React.RefObject<HTMLDivElement | null>;
 };
 
 type SelectAction =
-  | { type: 'ADD'; payload: { value: string; children: ReactNode } }
-  | { type: 'REMOVE'; payload: { value: string } }
-  | { type: 'SELECT'; payload: { value: string } }
+  | {
+      type: 'SELECT';
+      payload: { value: string; shouldUpdateSelected?: boolean };
+    }
   | { type: 'FOCUS'; payload: { value?: string } }
-  | { type: 'UP' }
-  | { type: 'DOWN' }
-  | { type: 'HOME' }
-  | { type: 'END' }
-  | { type: 'TOGGLE' };
+  | { type: 'UP'; payload: { values: string[]; selected?: string } }
+  | { type: 'DOWN'; payload: { values: string[]; selected?: string } }
+  | { type: 'HOME'; payload: { values: string[] } }
+  | { type: 'END'; payload: { values: string[] } }
+  | { type: 'TOGGLE'; payload: { selected?: string } };
 
 export const SelectContext = createContext<
-  { state: SelectState; dispatch: Dispatch<SelectAction> } | undefined
+  | {
+      state: SelectState;
+      dispatch: Dispatch<SelectAction>;
+      selectOption: (value: string) => void;
+    }
+  | undefined
 >(undefined);
 
 export const selectReducer = (
@@ -32,39 +38,14 @@ export const selectReducer = (
   action: SelectAction,
 ): SelectState => {
   switch (action.type) {
-    case 'ADD': {
-      // 현재 selected가 없고, defaultValue === payload.value일 경우 select함.
-      if (
-        state.selected === undefined &&
-        state.defaultValue === action.payload.value
-      ) {
-        return {
-          ...state,
-          selected: action.payload.value,
-          items: new Map(state.items).set(
-            action.payload.value,
-            action.payload.children,
-          ),
-        };
-      }
-      return {
-        ...state,
-        items: new Map(state.items).set(
-          action.payload.value,
-          action.payload.children,
-        ),
-      };
-    }
-    case 'REMOVE': {
-      const newMap = new Map(state.items);
-      newMap.delete(action.payload.value);
-      return { ...state, items: newMap };
-    }
     case 'SELECT':
       return {
         ...state,
         isActive: false,
-        selected: action.payload.value,
+        selected:
+          action.payload.shouldUpdateSelected === false
+            ? state.selected
+            : action.payload.value,
       };
     case 'FOCUS':
       return {
@@ -72,8 +53,8 @@ export const selectReducer = (
         focused: action.payload.value,
       };
     case 'UP': {
-      const values = Array.from(state.items.keys());
-      const focused = state.focused ?? state.selected;
+      const { values, selected } = action.payload;
+      const focused = state.focused ?? selected;
       const focusedIndex = values.indexOf(focused ?? '');
 
       if (focused === undefined || focusedIndex === -1) {
@@ -87,8 +68,8 @@ export const selectReducer = (
       return { ...state, focused: values[focusedIndex - 1] };
     }
     case 'DOWN': {
-      const values = Array.from(state.items.keys());
-      const focused = state.focused ?? state.selected;
+      const { values, selected } = action.payload;
+      const focused = state.focused ?? selected;
       const focusedIndex = values.indexOf(focused ?? '');
 
       if (focused === undefined || focusedIndex === -1) {
@@ -102,7 +83,7 @@ export const selectReducer = (
       return { ...state, focused: values[focusedIndex + 1] };
     }
     case 'HOME': {
-      const [firstValue] = state.items.keys();
+      const [firstValue] = action.payload.values;
 
       if (firstValue === undefined) {
         return state;
@@ -111,8 +92,7 @@ export const selectReducer = (
       return { ...state, focused: firstValue };
     }
     case 'END': {
-      const values = Array.from(state.items.keys());
-      const lastValue = values[values.length - 1];
+      const lastValue = action.payload.values.at(-1);
 
       if (lastValue === undefined) {
         return state;
@@ -124,7 +104,7 @@ export const selectReducer = (
       return {
         ...state,
         isActive: !state.isActive,
-        focused: state.isActive ? undefined : state.selected,
+        focused: state.isActive ? undefined : action.payload.selected,
       };
   }
 };

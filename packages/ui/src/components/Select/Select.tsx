@@ -4,7 +4,8 @@ import {
   Children,
   forwardRef,
   isValidElement,
-  useEffect,
+  useCallback,
+  useMemo,
   useReducer,
   useRef,
   type ComponentProps,
@@ -32,29 +33,24 @@ interface SelectProps extends Omit<UIComponent<'div'>, 'ref' | 'onChange'> {
   name?: string;
   width?: CSSProperties['width'];
   defaultValue?: string;
+  value?: string;
   variant?: ComponentProps<typeof SelectTrigger>['variant'];
   onChange?: (value: string | undefined) => void;
 }
 
-const getDefaultSelectedLabel = (
-  children: ReactNode,
-  value: string | undefined,
-) => {
-  if (!value) {
-    return undefined;
-  }
-
+const getSelectItems = (children: ReactNode) => {
+  const items = new Map<string, ReactNode>();
   for (const child of Children.toArray(children)) {
     if (!isValidElement<{ value?: string; children?: ReactNode }>(child)) {
       continue;
     }
 
-    if (child.props.value === value) {
-      return child.props.children;
+    if (child.props.value !== undefined) {
+      items.set(child.props.value, child.props.children);
     }
   }
 
-  return undefined;
+  return items;
 };
 
 export const Select = forwardRef<HTMLDivElement, SelectProps>(
@@ -66,6 +62,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       style,
       name,
       defaultValue,
+      value,
       width = '100%',
       size = 'md',
       sx: propSx,
@@ -77,31 +74,46 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
   ) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const targetRef = useCombinedRefs(ref, containerRef);
+    const isControlled = value !== undefined;
     const [state, dispatch] = useReducer(selectReducer, {
       isActive: false,
-      selected: defaultValue,
+      selected: isControlled ? value : defaultValue,
       containerRef,
-      defaultValue,
       size,
       items: new Map(),
+      itemValues: [],
     });
-    const contextState = { ...state, size };
-    const selected = state.selected ?? defaultValue;
-    const selectedLabel =
-      state.items.get(selected || '') ??
-      getDefaultSelectedLabel(children, selected);
+    const selected = isControlled ? value : state.selected;
+    const items = useMemo(() => getSelectItems(children), [children]);
+    const itemValues = useMemo(() => Array.from(items.keys()), [items]);
+    const contextState = useMemo(
+      () => ({ ...state, items, itemValues, selected, size }),
+      [itemValues, items, selected, size, state],
+    );
+    const selectedLabel = items.get(selected || '');
 
-    useEffect(() => {
-      if (!onChange || !state.items.size) {
-        return;
-      }
+    const selectOption = useCallback(
+      (nextValue: string) => {
+        dispatch({
+          type: 'SELECT',
+          payload: { value: nextValue, shouldUpdateSelected: !isControlled },
+        });
 
-      onChange(state.selected);
-      //eslint-disable-next-line
-    }, [state.selected]);
+        if (selected === nextValue) {
+          return;
+        }
+
+        onChange?.(nextValue);
+      },
+      [isControlled, onChange, selected],
+    );
+    const contextValue = useMemo(
+      () => ({ state: contextState, dispatch, selectOption }),
+      [contextState, selectOption],
+    );
 
     return (
-      <SelectContext.Provider value={{ state: contextState, dispatch }}>
+      <SelectContext.Provider value={contextValue}>
         <div
           ref={targetRef}
           className={clsx(
