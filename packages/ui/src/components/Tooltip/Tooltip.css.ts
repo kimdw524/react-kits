@@ -18,7 +18,6 @@ export const tooltip = styleWithComponents({
   left: '0',
   position: 'fixed',
   top: '50%',
-  zIndex: 100,
 
   boxSizing: 'border-box',
 
