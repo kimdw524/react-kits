@@ -9,7 +9,6 @@ export const block = styleWithComponents({
 export const container = recipeWithComponents({
   base: {
     position: 'fixed',
-    zIndex: '10',
 
     overflowY: 'auto',
 
