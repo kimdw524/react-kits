@@ -5,7 +5,6 @@ export const container = style({
   left: '1rem',
   position: 'fixed',
   right: '1rem',
-  zIndex: '110',
 
   display: 'flex',
 

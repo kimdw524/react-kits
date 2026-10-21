@@ -9,7 +9,6 @@ export const enter = style({
 export const base = style({
   inset: '0',
   position: 'fixed',
-  zIndex: '100',
 
   display: 'flex',
 
