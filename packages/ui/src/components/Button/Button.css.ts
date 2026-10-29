@@ -4,6 +4,7 @@ import { theme } from '#themes';
 import { semanticColor } from '#tokens';
 import { recipeWithComponents, styleWithComponents } from '#utils';
 
+import { rippleColor } from '../../hooks/useRipple/ripple.css';
 import { scaleColor, type ScaleColor } from '../../tokens/scale/color';
 
 const backgroundVar = createVar();
@@ -67,6 +68,31 @@ export const button = recipeWithComponents({
   },
 
   variants: {
+    disableRipple: {
+      true: {
+        '::before': {
+          inset: '0',
+          position: 'absolute',
+
+          backgroundColor: rippleColor,
+
+          opacity: '0',
+
+          pointerEvents: 'none',
+
+          transition: 'opacity 0.15s ease',
+
+          content: '',
+        },
+
+        selectors: {
+          '&:active:not(:disabled)::before': {
+            opacity: '1',
+          },
+        },
+      },
+    },
+
     hasIcon: {
       true: {
         gap: '0.375em',
