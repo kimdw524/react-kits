@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react';
+import { StrictMode, type FormEvent } from 'react';
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -8,6 +8,71 @@ import { uiTest } from '../../tests';
 
 describe('Tabs 컴포넌트', () => {
   uiTest(Tabs, 'Tabs');
+
+  it.each(['primary', 'secondary'] as const)(
+    'initially hides the list indicator for %s tabs.',
+    (variant) => {
+      render(
+        <StrictMode>
+          <Tabs defaultValue={1} variant={variant}>
+            <TabsList>
+              <TabsTrigger value={1}>Trigger1</TabsTrigger>
+              <TabsTrigger value={2}>Trigger2</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </StrictMode>,
+      );
+
+      expect(
+        screen.getByRole('tablist').querySelector(':scope > div'),
+      ).toHaveStyle({ display: 'none' });
+      expect(
+        screen.getByRole('tab', { name: 'Trigger1' }).querySelector('div'),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('tab', { name: 'Trigger2' }).querySelector('div'),
+      ).toBeNull();
+    },
+  );
+
+  it.each(['primary', 'secondary'] as const)(
+    'shows and hides the same %s list indicator while switching tabs.',
+    (variant) => {
+      render(
+        <Tabs defaultValue={1} variant={variant}>
+          <TabsList>
+            <TabsTrigger value={1}>Trigger1</TabsTrigger>
+            <TabsTrigger value={2}>Trigger2</TabsTrigger>
+          </TabsList>
+        </Tabs>,
+      );
+
+      const tabList = screen.getByRole('tablist');
+      const indicator = tabList.querySelector(':scope > div');
+      const firstTab = screen.getByRole('tab', { name: 'Trigger1' });
+      const secondTab = screen.getByRole('tab', { name: 'Trigger2' });
+      Object.defineProperties(firstTab, {
+        offsetLeft: { value: 0 },
+        offsetWidth: { value: 80 },
+      });
+      Object.defineProperties(secondTab, {
+        offsetLeft: { value: 80 },
+        offsetWidth: { value: 120 },
+      });
+
+      for (const tab of [secondTab, firstTab]) {
+        fireEvent.click(tab);
+
+        expect(tabList.querySelector(':scope > div')).toBe(indicator);
+        expect(indicator).toHaveStyle({ display: 'block' });
+        fireEvent.transitionEnd(indicator!);
+
+        expect(tabList.querySelector(':scope > div')).toBe(indicator);
+        expect(indicator).toHaveStyle({ display: 'none' });
+        expect(tab.querySelector('div')).toBeInTheDocument();
+      }
+    },
+  );
 
   it('disables all triggers and restores their individual states when enabled.', async () => {
     const user = userEvent.setup();
