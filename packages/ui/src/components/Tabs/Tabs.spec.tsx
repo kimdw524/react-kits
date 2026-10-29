@@ -1,12 +1,91 @@
 import type { FormEvent } from 'react';
 
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '.';
 import { uiTest } from '../../tests';
 
 describe('Tabs 컴포넌트', () => {
   uiTest(Tabs, 'Tabs');
+
+  it('disables all triggers and restores their individual states when enabled.', async () => {
+    const user = userEvent.setup();
+    const handleChange = jest.fn();
+    const handleClick = jest.fn();
+    const renderTabs = (disabled: boolean) => (
+      <Tabs defaultValue={1} disabled={disabled} onChange={handleChange}>
+        <TabsList>
+          <TabsTrigger value={1}>Trigger1</TabsTrigger>
+          <TabsTrigger disabled={false} value={2} onClick={handleClick}>
+            Trigger2
+          </TabsTrigger>
+          <TabsTrigger value={3} disabled>
+            Trigger3
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value={1}>Content1</TabsContent>
+        <TabsContent value={2}>Content2</TabsContent>
+      </Tabs>
+    );
+    const { rerender } = render(renderTabs(true));
+
+    screen.getAllByRole('tab').forEach((tab) => expect(tab).toBeDisabled());
+    await user.click(screen.getByRole('tab', { name: 'Trigger2' }));
+
+    expect(handleChange).not.toHaveBeenCalled();
+    expect(handleClick).not.toHaveBeenCalled();
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Content1');
+
+    rerender(renderTabs(false));
+
+    expect(screen.getByRole('tab', { name: 'Trigger1' })).toBeEnabled();
+    expect(screen.getByRole('tab', { name: 'Trigger2' })).toBeEnabled();
+    expect(screen.getByRole('tab', { name: 'Trigger3' })).toBeDisabled();
+    await user.click(screen.getByRole('tab', { name: 'Trigger2' }));
+
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith(2);
+    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Content2');
+  });
+
+  it('skips an individually disabled trigger for clicks and keyboard focus.', async () => {
+    const user = userEvent.setup();
+    const handleChange = jest.fn();
+    const handleClick = jest.fn();
+
+    render(
+      <Tabs defaultValue={1} onChange={handleChange}>
+        <TabsList>
+          <TabsTrigger value={1}>Trigger1</TabsTrigger>
+          <TabsTrigger value={2} disabled onClick={handleClick}>
+            Trigger2
+          </TabsTrigger>
+          <TabsTrigger value={3}>Trigger3</TabsTrigger>
+        </TabsList>
+        <TabsContent value={1}>Content1</TabsContent>
+        <TabsContent value={2}>Content2</TabsContent>
+        <TabsContent value={3}>Content3</TabsContent>
+      </Tabs>,
+    );
+
+    await user.click(screen.getByRole('tab', { name: 'Trigger2' }));
+
+    expect(handleChange).not.toHaveBeenCalled();
+    expect(handleClick).not.toHaveBeenCalled();
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Content1');
+
+    await user.tab();
+    expect(screen.getByRole('tab', { name: 'Trigger1' })).toHaveFocus();
+    await user.tab();
+    expect(screen.getByRole('tab', { name: 'Trigger3' })).toHaveFocus();
+    await user.keyboard('{Enter}');
+
+    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledWith(3);
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Content3');
+  });
 
   it('TabsTrigger를 클릭하면 해당하는 value의 Content를 보여준다.', () => {
     render(
