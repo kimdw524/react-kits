@@ -23,6 +23,14 @@ export const container = recipeWithComponents({
     cursor: 'pointer',
 
     transition: 'border-bottom-color 0.15s ease, color 0.15s ease',
+
+    ':disabled': {
+      color: `rgb(${theme.color['muted-foreground']})`,
+
+      opacity: '0.5',
+
+      cursor: 'default',
+    },
   },
 
   variants: {

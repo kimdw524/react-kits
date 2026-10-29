@@ -12,6 +12,7 @@ import type { UIComponent } from '#types';
 import * as s from './Button.css';
 
 interface ButtonProps extends UIComponent<'button', typeof s.button> {
+  disableRipple?: boolean;
   icon?: ReactElement;
   size?: keyof typeof typography.size;
 }
@@ -27,6 +28,7 @@ export const Button = forwardRef<
       size = 'md',
       variant = 'contained',
       pulse = false,
+      disableRipple = false,
       className,
       sx: propSx,
       icon,
@@ -36,7 +38,9 @@ export const Button = forwardRef<
   ) => {
     const localRef = useRef(null);
     const elementRef = ref || localRef;
-    const { ripple } = useRipple<HTMLButtonElement>(elementRef);
+    const { ripple } = useRipple<HTMLButtonElement>(
+      disableRipple ? undefined : elementRef,
+    );
 
     const hasIcon = icon !== undefined;
     const isIcon = icon !== undefined && children === undefined;
@@ -50,6 +54,7 @@ export const Button = forwardRef<
             color,
             variant,
             pulse,
+            disableRipple,
             hasIcon,
             isIcon,
           }),
@@ -62,7 +67,7 @@ export const Button = forwardRef<
           <span className={s.icon({ isIconOnly: isIcon })}>{icon}</span>
         )}
         {!isIcon && <span>{children}</span>}
-        {ripple}
+        {!disableRipple && ripple}
       </button>
     );
   },
