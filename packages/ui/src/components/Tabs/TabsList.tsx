@@ -55,27 +55,39 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
         return;
       }
 
-      if (prevSelectedRef.current === undefined) {
+      const prevSelected = prevSelectedRef.current;
+
+      if (!prevSelected || prevSelected === element) {
         prevSelectedRef.current = element;
         return;
       }
+
+      if (
+        prevSelected.offsetLeft === element.offsetLeft &&
+        prevSelected.offsetWidth === element.offsetWidth
+      ) {
+        prevSelectedRef.current = element;
+        return;
+      }
+
+      prevSelectedRef.current = element;
 
       const animateIndicator = () => {
         const left = element.offsetLeft,
           width = element.offsetWidth;
 
         if (indicator.style.transform === '') {
-          const prevLeft = prevSelectedRef.current?.offsetLeft ?? 0,
-            prevWidth = prevSelectedRef.current?.offsetWidth ?? baseWidth;
+          const prevLeft = prevSelected.offsetLeft,
+            prevWidth = prevSelected.offsetWidth;
 
           indicator.style.transition = 'none';
 
           if (variant === 'primary') {
-            indicator.style.transform = `translateX(${prevLeft}px) scaleX(${prevWidth / baseWidth})`;
+            indicator.style.transform = `translateX(${(prevLeft / baseWidth) * 100}%) scaleX(${prevWidth / baseWidth})`;
             void indicator.offsetLeft;
             indicator.style.transition = 'transform 0.25s ease';
           } else if (variant === 'secondary') {
-            indicator.style.transform = `translateX(${prevLeft}px)`;
+            indicator.style.transform = `translateX(${(prevLeft / (prevWidth || baseWidth)) * 100}%)`;
             indicator.style.width = `${prevWidth}px`;
             void indicator.offsetLeft;
             indicator.style.transition =
@@ -84,9 +96,9 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
         }
 
         if (variant === 'primary') {
-          indicator.style.transform = `translateX(${left}px) scaleX(${width / baseWidth})`;
+          indicator.style.transform = `translateX(${(left / baseWidth) * 100}%) scaleX(${width / baseWidth})`;
         } else if (variant === 'secondary') {
-          indicator.style.transform = `translateX(${left}px)`;
+          indicator.style.transform = `translateX(${(left / (width || baseWidth)) * 100}%)`;
           indicator.style.width = `${width}px`;
         }
       };
@@ -103,7 +115,8 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       indicator.addEventListener('transitionend', handleTransitionEnd);
 
       return () => {
-        prevSelectedRef.current = element;
+        indicator.style.display = 'none';
+        tabsList.classList.remove(s.isAnimated);
         indicator.removeEventListener('transitionend', handleTransitionEnd);
       };
     }, [tabsContext.value, tabsContext.variant, tabsListRef]);

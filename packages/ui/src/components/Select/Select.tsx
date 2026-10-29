@@ -99,13 +99,9 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           payload: { value: nextValue, shouldUpdateSelected: !isControlled },
         });
 
-        if (selected === nextValue) {
-          return;
-        }
-
         onChange?.(nextValue);
       },
-      [isControlled, onChange, selected],
+      [isControlled, onChange],
     );
     const contextValue = useMemo(
       () => ({ state: contextState, dispatch, selectOption }),

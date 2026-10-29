@@ -36,7 +36,7 @@ describe('Select 컴포넌트', () => {
     expect(select).toHaveTextContent('2번');
   });
 
-  it('새로운 option을 클릭하면 onChange 이벤트가 발생하고, form value, ref.value의 값이 바뀐다.', () => {
+  it('같은 option을 다시 선택해도 onChange가 호출되고, form value가 유지된다.', () => {
     const handleChange = jest.fn();
 
     render(
@@ -61,13 +61,14 @@ describe('Select 컴포넌트', () => {
 
     openOptionList();
     fireEvent.click(getOption('2번'));
-    expect(handleChange).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledTimes(2);
+    expect(handleChange).toHaveBeenLastCalledWith('2');
     expect(new FormData(form).get('select')).toBe('2');
 
     openOptionList();
     fireEvent.click(getOption('1번'));
-    expect(handleChange).toHaveBeenCalledTimes(2);
-    expect(handleChange.mock.calls[1][0]).toBe('1');
+    expect(handleChange).toHaveBeenCalledTimes(3);
+    expect(handleChange).toHaveBeenLastCalledWith('1');
     expect(new FormData(form).get('select')).toBe('1');
   });
 
@@ -116,6 +117,13 @@ describe('Select 컴포넌트', () => {
 
     rerender(renderSelect('2'));
 
+    expect(select).toHaveTextContent('2번');
+
+    openOptionList();
+    fireEvent.click(getOption('2번'));
+
+    expect(handleChange).toHaveBeenCalledTimes(2);
+    expect(handleChange).toHaveBeenLastCalledWith('2');
     expect(select).toHaveTextContent('2번');
   });
 
