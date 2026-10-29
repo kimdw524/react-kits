@@ -17,7 +17,16 @@ interface TabsTriggerProps extends UIComponent<'button'> {
 
 export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
   (
-    { children, value, className, sx: propSx, onClick, type, ...props },
+    {
+      children,
+      value,
+      className,
+      disabled,
+      sx: propSx,
+      onClick,
+      type,
+      ...props
+    },
     ref,
   ) => {
     const tabsContext = useContext(TabsContext);
@@ -27,9 +36,10 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
     }
 
     const isSelected = tabsContext.value === value;
+    const isDisabled = tabsContext.disabled || disabled;
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      if (isSelected) {
+      if (isDisabled || isSelected) {
         return;
       }
 
@@ -45,6 +55,7 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         aria-controls={`${tabsContext.id}-content-${getTabsValueId(value)}`}
         aria-selected={isSelected}
         data-tabs-selected={isSelected ? 'true' : undefined}
+        disabled={isDisabled}
         id={`${tabsContext.id}-trigger-${getTabsValueId(value)}`}
         role="tab"
         type={type ?? 'button'}

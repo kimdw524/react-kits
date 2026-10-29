@@ -13,6 +13,7 @@ import { TabsContext, type TabsValue } from './TabsProvider';
 interface TabsProps extends Omit<UIComponent<'div'>, 'onChange'> {
   size?: keyof typeof typography.size;
   defaultValue?: TabsValue;
+  disabled?: boolean;
   onChange?: (value: TabsValue) => void;
   value?: TabsValue;
   variant?: 'primary' | 'secondary';
@@ -23,6 +24,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     {
       children,
       defaultValue,
+      disabled = false,
       className,
       onChange,
       sx: propSx,
@@ -42,22 +44,27 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
 
     const selectTab = useCallback(
       (nextValue: TabsValue) => {
+        if (disabled) {
+          return;
+        }
+
         if (!isControlled) {
           setInternalValue(nextValue);
         }
 
         onChange?.(nextValue);
       },
-      [isControlled, onChange],
+      [disabled, isControlled, onChange],
     );
     const contextValue = useMemo(
       () => ({
         id,
+        disabled,
         value: selectedValue,
         variant,
         selectTab,
       }),
-      [id, selectedValue, selectTab, variant],
+      [disabled, id, selectedValue, selectTab, variant],
     );
 
     return (

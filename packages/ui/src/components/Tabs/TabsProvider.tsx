@@ -11,6 +11,7 @@ export const getTabsValueId = (value: TabsValue) =>
 
 export interface TabsState {
   id: string;
+  disabled: boolean;
   value: TabsValue | undefined;
   variant: NonNullable<ComponentProps<typeof Tabs>['variant']>;
 }
