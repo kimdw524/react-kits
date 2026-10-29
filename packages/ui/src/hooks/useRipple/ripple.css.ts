@@ -4,11 +4,12 @@ import { recipe } from '@vanilla-extract/recipes';
 import { theme } from '#themes';
 
 export const colorVar = createVar();
+export const rippleColor = `color-mix(in srgb, rgba(${theme.color.accent}, 0.2) 20%, rgba(${theme.color.foreground}, 0.2) 80%)`;
 
 export const ripple = recipe({
   base: {
     vars: {
-      [colorVar]: `color-mix(in srgb, rgba(${theme.color.accent}, 0.2) 20%, rgba(${theme.color.foreground}, 0.2) 80%)`,
+      [colorVar]: rippleColor,
     },
 
     left: '0',

@@ -43,6 +43,9 @@ const meta = {
     disabled: {
       control: 'boolean',
     },
+    disableRipple: {
+      control: 'boolean',
+    },
     pulse: {
       control: 'boolean',
     },
@@ -60,6 +63,7 @@ const meta = {
     size: 'md',
     icon: undefined,
     disabled: false,
+    disableRipple: false,
     pulse: false,
     onClick: fn(),
   },

@@ -18,6 +18,9 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
+    disabled: {
+      control: 'boolean',
+    },
     size: {
       control: 'select',
       options: sizeOptions,
@@ -32,6 +35,7 @@ const meta = {
   },
   args: {
     defaultValue: 'overview',
+    disabled: false,
     size: 'md',
     variant: 'primary',
   },
