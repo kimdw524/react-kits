@@ -2,7 +2,7 @@ import { theme } from '#themes';
 import { styleWithComponents } from '#utils';
 
 export const selectOption = styleWithComponents({
-  overflowX: 'hidden',
+  display: 'block',
 
   width: '100%',
 
@@ -15,7 +15,6 @@ export const selectOption = styleWithComponents({
 
   font: 'inherit',
   textAlign: 'start',
-  textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 
   cursor: 'pointer',
@@ -24,6 +23,6 @@ export const selectOption = styleWithComponents({
   ':focus-visible': {
     outline: '0 !important',
 
-    backgroundColor: `rgb(${theme.color.accent})`,
+    backgroundColor: `rgba(${theme.color.accent}, 0.5)`,
   },
 });

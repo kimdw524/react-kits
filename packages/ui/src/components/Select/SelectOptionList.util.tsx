@@ -9,9 +9,11 @@ export const setListPosition = (
   parent: HTMLElement,
 ) => {
   const parentRect = parent.getBoundingClientRect();
+  container.style.minWidth = `${parentRect.width}px`;
+
   const containerRect = container.getBoundingClientRect();
   const margin = getElementBlockMargin(container);
-  const { height: viewportHeight } = getViewportSize();
+  const { height: viewportHeight, width: viewportWidth } = getViewportSize();
   const { availableHeight, placement } = getVerticalFloatingPlacement({
     anchorRect: parentRect,
     floatingRect: containerRect,
@@ -24,8 +26,10 @@ export const setListPosition = (
   container.style.bottom = isBelow
     ? ''
     : `${viewportHeight - parentRect.top}px`;
-  container.style.left = `${parentRect.left}px`;
-  container.style.width = `${parentRect.width}px`;
+  container.style.left = `${Math.max(
+    0,
+    Math.min(parentRect.left, viewportWidth - containerRect.width),
+  )}px`;
   container.style.maxHeight = `${availableHeight}px`;
   container.style.transformOrigin = isBelow ? 'top' : 'bottom';
 };

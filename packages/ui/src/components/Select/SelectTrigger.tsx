@@ -63,8 +63,7 @@ const SelectTrigger = ({
       aria-haspopup="listbox"
       className={clsx(
         s.selectTrigger({ variant }),
-        variant === 'contained' &&
-          sprinkles({ backgroundColor: color ?? 'secondary' }),
+        variant === 'contained' && s.containedColors[color ?? 'secondary'],
         variant === 'outlined' &&
           sprinkles({
             borderColor: state.isActive ? (color ?? 'primary') : 'border',

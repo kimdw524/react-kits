@@ -28,6 +28,9 @@ const meta = {
       control: 'select',
       options: sizeOptions,
     },
+    width: {
+      control: 'text',
+    },
     children: {
       control: false,
     },
@@ -37,6 +40,7 @@ const meta = {
     variant: 'outlined',
     color: 'primary',
     size: 'md',
+    width: '320px',
     onChange: fn(),
   },
 } satisfies Meta<typeof Select>;
@@ -46,7 +50,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {
   render: (args) => (
-    <Select {...args} width={320}>
+    <Select {...args}>
       <SelectOption value="starter">Starter</SelectOption>
       <SelectOption value="pro">Pro</SelectOption>
       <SelectOption value="enterprise">Enterprise</SelectOption>
