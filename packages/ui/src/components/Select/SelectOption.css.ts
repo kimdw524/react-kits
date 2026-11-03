@@ -23,6 +23,6 @@ export const selectOption = styleWithComponents({
   ':focus-visible': {
     outline: '0 !important',
 
-    backgroundColor: `rgb(${theme.color.accent})`,
+    backgroundColor: `rgba(${theme.color.accent}, 0.5)`,
   },
 });

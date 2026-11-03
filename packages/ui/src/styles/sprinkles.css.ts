@@ -10,7 +10,7 @@ type ColorScale<C extends ColorName> = keyof (typeof lightColor)[C];
 type Color = Record<`${ColorName}-${ColorScale<ColorName>}`, string>;
 type SemanticColor = Record<keyof typeof theme.color, string>;
 
-const colors = Object.assign(
+export const colors = Object.assign(
   {},
   ...[
     ...Object.entries(lightColor).reduce(
