@@ -1,5 +1,16 @@
+import { keyframes } from '@vanilla-extract/css';
+
 import { theme } from '#themes';
 import { recipeWithComponents, styleWithComponents } from '#utils';
+
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const block = styleWithComponents({
   inset: '0',
@@ -12,7 +23,7 @@ export const container = recipeWithComponents({
 
     overflowY: 'auto',
 
-    width: '100%',
+    width: 'max-content',
 
     margin: '0.375rem 0',
 
@@ -40,6 +51,8 @@ export const container = recipeWithComponents({
     isVisible: {
       true: {
         display: 'block',
+
+        animation: `${fadeIn} 0.1s ease 1`,
       },
       false: {
         display: 'none',
