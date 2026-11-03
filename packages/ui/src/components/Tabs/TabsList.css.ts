@@ -22,7 +22,7 @@ export const container = recipeWithComponents({
       secondary: {
         borderRadius: theme.borderRadius,
 
-        backgroundColor: `rgb(${theme.color.muted})`,
+        backgroundColor: `rgb(${theme.color.secondary})`,
       },
     },
   },
